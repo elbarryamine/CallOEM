@@ -1,17 +1,20 @@
 import { Module } from '@nestjs/common';
-import { UsersModule } from './modules/users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
-import { JwtModuleService } from './services/jwt.module';
-import { ConfigModule } from './services/env.module';
+
+import { JwtModuleService } from './modules/shared/jwt.module';
+import { ConfigModule } from './modules/shared/env.module';
+import { UsersModule } from './modules/users/users.module';
+import { TalkModule } from './modules/talk/talk.module';
 
 const MONOGO_CONNECT_STRING = `mongodb+srv://${process.env.dbUserName}:${process.env.dbUserPassword}@cluster0.iig7z.mongodb.net/${process.env.dbName}?retryWrites=true&w=majority`;
 
 @Module({
   imports: [
     UsersModule,
+    TalkModule,
     ConfigModule,
     MongooseModule.forRoot(MONOGO_CONNECT_STRING, { keepAlive: true }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -29,6 +32,7 @@ const MONOGO_CONNECT_STRING = `mongodb+srv://${process.env.dbUserName}:${process
       context: ({ req, res }) => ({ req, res }),
     }),
     JwtModuleService,
+    TalkModule,
   ],
   controllers: [],
   providers: [],
