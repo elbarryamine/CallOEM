@@ -30,6 +30,7 @@ input SignUserInput {
 type User {
   email: String!
   id: String!
+  isEmailVerified: Boolean!
   joinedAt: DateTime!
   password: String!
   username: String!
@@ -38,6 +39,7 @@ type User {
 type UserSign {
   email: String!
   id: String!
+  isEmailVerified: Boolean!
   joinedAt: DateTime!
   username: String!
 }

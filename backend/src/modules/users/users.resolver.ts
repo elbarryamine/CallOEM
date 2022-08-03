@@ -20,9 +20,10 @@ export class UsersResolver {
   async signUp(@Args('createUserInput') createUserInput: CreateUserInput) {
     try {
       const { password, passwordConfirm, email, username } = createUserInput;
+
       // check if password & passconfirm match
       if (password !== passwordConfirm) {
-        throw new HttpException(
+        return new HttpException(
           { message: 'password does not match passwordConfirm' },
           400,
         );
@@ -32,7 +33,7 @@ export class UsersResolver {
 
       const userHasSameEmail = await this.UserModule.findOne({ email });
       if (userHasSameEmail) {
-        throw new HttpException(
+        return new HttpException(
           { message: 'email is assigned with another accound' },
           400,
         );
@@ -41,7 +42,7 @@ export class UsersResolver {
       // check if username being used
       const userHasSameUsername = await this.UserModule.findOne({ username });
       if (userHasSameUsername) {
-        throw new HttpException(
+        return new HttpException(
           { message: 'username is assigned with another accound' },
           400,
         );
@@ -72,20 +73,25 @@ export class UsersResolver {
       // check if user and password match
 
       if (!user) {
-        throw new HttpException(
+        return new HttpException(
           { message: 'wrong email/username & password' },
           400,
         );
       }
-      console.log(password, user.password);
       const match = await compare(password, user.password);
       if (!match) {
-        throw new HttpException(
+        return new HttpException(
           { message: 'wrong email/username & password' },
           400,
         );
       }
+
+      if (!user.isEmailVerified) {
+        return new HttpException({ message: 'email not verified' }, 400);
+      }
+
       // send user and token
+
       return {
         user,
         token: this.jwtService.sign({ id: user.id }),

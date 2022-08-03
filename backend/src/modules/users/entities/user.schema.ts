@@ -9,6 +9,9 @@ export class UserSchemaType {
   @Prop({ required: true })
   email: string;
 
+  @Prop({ default: false })
+  isEmailVerified: boolean;
+
   @Prop({ required: true })
   password: string;
 
