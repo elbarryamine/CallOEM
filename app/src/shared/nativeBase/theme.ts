@@ -41,7 +41,12 @@ const theme = extendTheme({
       defaultProps: fontTextConfig,
     },
     Input: {
-      defaultProps: fontTextConfig,
+      defaultProps: {
+        ...fontTextConfig,
+        _focus: {
+          bg: 'transparent',
+        },
+      },
     },
     Heading: {
       defaultProps: {

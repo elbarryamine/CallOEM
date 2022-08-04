@@ -9,13 +9,14 @@ import {
   FormControl,
   Icon,
 } from 'native-base';
-import {AuthScreenProps} from '@navigation/type';
+import {AuthScreenProps} from '@navigation/NavigationStack';
 import LoginSvg from '@assets/images/login.svg';
 import AuthImageContainer from '../layouts/AuthImageContainer';
+import Feather from 'react-native-vector-icons/Feather';
 
 export default function LoginScreen({navigation}: AuthScreenProps) {
-  const [showing, setShowing] = useState<boolean>(false);
-  const onToggle = () => setShowing(!showing);
+  const [passShowing, setPassShowing] = useState<boolean>(false);
+  const onToggle = () => setPassShowing(!passShowing);
   return (
     <View h="full" w="full" bg="white" p="5" justifyContent="space-between">
       <AuthImageContainer>
@@ -23,7 +24,7 @@ export default function LoginScreen({navigation}: AuthScreenProps) {
       </AuthImageContainer>
       <Stack space={5}>
         <Stack>
-          <Heading>Lets sign you in</Heading>
+          <Heading textTransform="capitalize">Lets sign you in</Heading>
           <Text fontSize="sub" color="gray.500">
             Welcome back, we missed you
           </Text>
@@ -36,12 +37,26 @@ export default function LoginScreen({navigation}: AuthScreenProps) {
         </FormControl>
         <FormControl>
           <Input
-            placeholder="Enter your password"
+            type={passShowing ? 'text' : 'password'}
+            placeholder="Password"
             borderBottomWidth="1"
-            InputRightElement={<Icon as={''} onPress={onToggle} />}
+            InputRightElement={
+              <Button bg="primary" h="100%" borderRadius="0">
+                <Icon
+                  color="white"
+                  as={Feather}
+                  name={passShowing ? 'eye-off' : 'eye'}
+                  onPress={onToggle}
+                />
+              </Button>
+            }
           />
         </FormControl>
-        <Text alignSelf="flex-end" color="primary" fontSize="sub">
+        <Text
+          alignSelf="flex-end"
+          color="primary"
+          fontSize="sub"
+          onPress={() => navigation.navigate('reset-password')}>
           Forgot password ?
         </Text>
         <Button bg="primary">Sign in</Button>

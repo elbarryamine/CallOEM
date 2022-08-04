@@ -8,11 +8,11 @@
     "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
     "baseUrl": ".",
     "paths": {
-      "@assets/*": ["./assets/*"],
-      "@components/*": ["src/components/*"],
-      "@navigation/*": ["src/navigation/*"],
-      "@shared/*": ["src/shared/*"],
-      "@views/*": ["src/views/*"],
+      "@assets/*": ["./assets/*","./assets/"],
+      "@components/*": ["src/components/*","src/components/"],
+      "@navigation/*": ["src/navigation/*","src/navigation/"],
+      "@shared/*": ["src/shared/*","src/shared/"],
+      "@views/*": ["src/views/*","src/views/"],
 
     }
   }

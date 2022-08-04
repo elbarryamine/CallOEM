@@ -9,13 +9,16 @@ import {
   FormControl,
   Icon,
 } from 'native-base';
-import {AuthScreenProps} from '@navigation/type';
+import {AuthScreenProps} from '@navigation/NavigationStack';
 import SignupSvg from '@assets/images/signup.svg';
 import AuthImageContainer from '../layouts/AuthImageContainer';
+import Feather from 'react-native-vector-icons/Feather';
 
 export default function SignupScreen({navigation}: AuthScreenProps) {
-  const [showing, setShowing] = useState<boolean>(false);
-  const onToggle = () => setShowing(!showing);
+  const [passShowing, setPassShowing] = useState<boolean>(false);
+  const [passConfirmShowing, setPassConfirmShowing] = useState<boolean>(false);
+  const onPassToggle = () => setPassShowing(!passShowing);
+  const onPassConfirmToggle = () => setPassConfirmShowing(!passConfirmShowing);
   return (
     <View h="full" w="full" bg="white" p="5" justifyContent="space-between">
       <AuthImageContainer>
@@ -23,7 +26,9 @@ export default function SignupScreen({navigation}: AuthScreenProps) {
       </AuthImageContainer>
       <Stack space={5}>
         <Stack>
-          <Heading>Lets register your account</Heading>
+          <Heading textTransform="capitalize">
+            Lets register your account
+          </Heading>
           <Text fontSize="sub" color="gray.500">
             Hi there, let's start a new journey together
           </Text>
@@ -36,16 +41,36 @@ export default function SignupScreen({navigation}: AuthScreenProps) {
         </FormControl>
         <FormControl>
           <Input
+            type={passShowing ? 'text' : 'password'}
             placeholder="Password"
             borderBottomWidth="1"
-            InputRightElement={<Icon as={''} onPress={onToggle} />}
+            InputRightElement={
+              <Button bg="primary" h="100%" borderRadius="0">
+                <Icon
+                  color="white"
+                  as={Feather}
+                  name={passShowing ? 'eye-off' : 'eye'}
+                  onPress={onPassToggle}
+                />
+              </Button>
+            }
           />
         </FormControl>
         <FormControl>
           <Input
+            type={passConfirmShowing ? 'text' : 'password'}
             placeholder="Password Confirm"
             borderBottomWidth="1"
-            InputRightElement={<Icon as={''} onPress={onToggle} />}
+            InputRightElement={
+              <Button bg="primary" h="100%" borderRadius="0">
+                <Icon
+                  color="white"
+                  as={Feather}
+                  name={passConfirmShowing ? 'eye-off' : 'eye'}
+                  onPress={onPassConfirmToggle}
+                />
+              </Button>
+            }
           />
         </FormControl>
         <Button bg="primary">Sign up</Button>
