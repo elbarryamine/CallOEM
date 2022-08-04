@@ -59,7 +59,9 @@ export default function LoginScreen({navigation}: AuthScreenProps) {
           onPress={() => navigation.navigate('reset-password')}>
           Forgot password ?
         </Text>
-        <Button bg="primary">Sign in</Button>
+        <Button bg="primary" onPress={() => navigation.navigate('room')}>
+          Sign in
+        </Button>
       </Stack>
       <Text textAlign="center" fontSize="sub">
         Don't have an account yet?{' '}

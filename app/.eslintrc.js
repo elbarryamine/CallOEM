@@ -12,6 +12,7 @@ module.exports = {
         'no-undef': 'off',
         'prettier/prettier': 'off',
         '@typescript-eslint/no-unused-vars': 'warn',
+        curly: 'off',
       },
     },
   ],
