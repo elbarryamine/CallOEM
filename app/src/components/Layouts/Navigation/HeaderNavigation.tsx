@@ -4,7 +4,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 export default function HeaderNavigation() {
   return (
-    <View p="20px" shadow="md" borderBottomWidth="1px" borderBottomColor="border">
+    <View p="20px" py="30px" shadow="md" bg="primaryBg">
       <Flex justify="space-between" flexDir="row">
         <HStack alignItems="center" space={'10px'}>
           <Avatar

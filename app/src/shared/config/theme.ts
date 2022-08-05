@@ -1,7 +1,7 @@
 import {extendTheme, ITheme} from 'native-base';
 
 const fontTextConfig = {
-  fontSize: 18,
+  fontSize: 20,
   fontFamily: 'body',
 };
 
@@ -24,10 +24,12 @@ const theme = extendTheme({
       900: {normal: 'Proxima', italic: 'Proxima'},
     },
   },
+
   fontSizes: {
-    mono: '12px',
-    sub: '16px',
-    subheader: '20px',
+    mono: '14px',
+    sub: '18px',
+    body: '20px',
+    subheader: '22px',
   },
   fonts: {
     heading: 'Proxima',
@@ -65,10 +67,10 @@ export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
   const colors = {
     primary: '#0124FB',
     secondary: '#ffffff',
-    text: isDark ? '#000000' : '#000000',
+    text: isDark ? '#292C38' : '#292C38',
     invert: '#ffffff',
     subText: '#ACB1C1',
-    primaryBg: '#ffffff',
+    primaryBg: 'whitesmoke',
     border: 'rgba(0,0,0,0.05)',
   };
   return extendTheme({
