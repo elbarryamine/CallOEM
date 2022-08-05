@@ -1,10 +1,5 @@
 import {extendTheme, ITheme} from 'native-base';
 
-const fontTextConfig = {
-  fontSize: 20,
-  fontFamily: 'body',
-};
-
 const theme = extendTheme({
   config: {
     initialColorMode: 'light',
@@ -26,40 +21,15 @@ const theme = extendTheme({
   },
 
   fontSizes: {
-    mono: '14px',
-    sub: '18px',
-    body: '20px',
-    subheader: '22px',
+    mono: '13px',
+    sub: '16px',
+    body: '18px',
+    subheader: '20px',
   },
   fonts: {
     heading: 'Proxima',
     body: 'Proxima',
     mono: 'Proxima',
-  },
-  components: {
-    Text: {
-      defaultProps: fontTextConfig,
-    },
-    Input: {
-      defaultProps: {
-        ...fontTextConfig,
-        _focus: {
-          bg: 'transparent',
-        },
-      },
-    },
-    Heading: {
-      defaultProps: {
-        fontFamily: 'heading',
-        fontSize: 30,
-      },
-    },
-    Button: {
-      defaultProps: {
-        borderRadius: '10px',
-        _text: fontTextConfig,
-      },
-    },
   },
 });
 
@@ -73,10 +43,37 @@ export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
     primaryBg: 'whitesmoke',
     border: 'rgba(0,0,0,0.05)',
   };
+  const fontTextConfig = {
+    fontSize: 18,
+    fontFamily: 'body',
+    color: colors.text,
+  };
   return extendTheme({
     ...nativeBaseTheme,
     components: {
-      ...nativeBaseTheme.components,
+      Text: {
+        defaultProps: fontTextConfig,
+      },
+      Input: {
+        defaultProps: {
+          ...fontTextConfig,
+          _focus: {
+            bg: 'transparent',
+          },
+        },
+      },
+      Heading: {
+        defaultProps: {
+          fontFamily: 'heading',
+          fontSize: 30,
+        },
+      },
+      Button: {
+        defaultProps: {
+          borderRadius: '10px',
+          _text: fontTextConfig,
+        },
+      },
     },
     colors,
   });

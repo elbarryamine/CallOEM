@@ -1,25 +1,112 @@
 import React from 'react';
-import {Button, Divider, Flex, HStack, Stack, Text, View} from 'native-base';
-import colors from '@shared/constants/colors';
+import {Avatar, Button, Divider, Flex, HStack, ScrollView, Stack, Tag, Text} from 'native-base';
 
 export default function RoomCard() {
   return (
-    <View p="20px" bg="white" borderRadius="10px" shadow="1">
-      <HStack space={5}>
-        <Divider orientation="vertical" h="100%" width="5px" borderRadius="10px" bgColor={colors[Math.floor(Math.random() * (colors.length - 1))]} />
-        <Stack>
-          <Text>My girl left me</Text>
-          <Text fontWeight={100} color="primary">
-            {Math.floor(Math.random() * 8) + 1} Members
-          </Text>
-          <Text fontSize="mono">{`${new Date().toISOString().split('T')[1].slice(0, 5)} PM ${new Date().toISOString().split('T')[0]}`}</Text>
-        </Stack>
-        <Flex flexGrow="1" justify="flex-end">
-          <Button bg="primary" _text={{color: 'invert'}} alignSelf="flex-end" px="30px" _pressed={{opacity: 0.8}}>
+    <Stack borderRadius="10px" bg="secondary" overflow="hidden">
+      <Stack alignItems="center" justifyContent="center" space={3} p="20px">
+        <Flex flexDir="row" justify="space-between" flexWrap="wrap" align="center">
+          <Avatar
+            bg="green.500"
+            size="xl"
+            source={{
+              uri: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
+            }}
+          />
+
+          <Stack flex="1" ml="24px">
+            <Text fontSize="subheader" color="text" fontWeight={900} noOfLines={1}>
+              I got dumped and i want to talk
+            </Text>
+            <Text color="text" fontWeight={200} noOfLines={2}>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatum rerum, labore illo, inventore ab veniam error voluptas sit
+              reiciendis modi sunt dolores magni unde aliquam temporibus tempora fugit deserunt nam!
+            </Text>
+          </Stack>
+        </Flex>
+        <ScrollView horizontal nestedScrollEnabled showsHorizontalScrollIndicator={false} w="100%">
+          <HStack space={2} w="100%" overflow="hidden">
+            <Tag colorScheme="coolGray" borderRadius="10px">
+              Family
+            </Tag>
+            <Tag colorScheme="coolGray" borderRadius="10px">
+              Depression
+            </Tag>
+            <Tag colorScheme="coolGray" borderRadius="10px">
+              Anxiety
+            </Tag>
+            <Tag colorScheme="coolGray" borderRadius="10px">
+              Anxiety
+            </Tag>
+            <Tag colorScheme="coolGray" borderRadius="10px">
+              Anxiety
+            </Tag>
+            <Tag colorScheme="coolGray" borderRadius="10px">
+              Anxiety
+            </Tag>
+          </HStack>
+        </ScrollView>
+
+        <HStack alignSelf="flex-start" alignItems="center" justifyContent="space-between">
+          <HStack alignItems="center" h="100%" flex="1" overflow="hidden" mr="5px">
+            {data.slice(0, Math.floor(Math.random() * (data.length - 2)) + 2).map((el, index) => (
+              <Avatar
+                size="sm"
+                key={index}
+                mr={index === data.length - 1 ? '0px' : '-10px'}
+                bg="green.500"
+                source={{
+                  uri: el,
+                }}
+              />
+            ))}
+          </HStack>
+          <Button bg="primary" _text={{color: 'invert'}} px="30px" _pressed={{opacity: 0.8}}>
             Join
           </Button>
-        </Flex>
-      </HStack>
-    </View>
+        </HStack>
+      </Stack>
+      <Flex p="20px" bg="primary" w="100%" flexDir="row" alignItems="center" justifyContent="space-between">
+        <Text color="invert" fontSize="mono" fontWeight={900}>
+          <Text>8 Members</Text>
+        </Text>
+        <Divider orientation="vertical" />
+        <Text color="invert" fontSize="mono" fontWeight={900}>
+          <Text>2 Spots left</Text>
+        </Text>
+        <Divider orientation="vertical" />
+        <Text color="invert" fontSize="mono" fontWeight={900}>
+          <Text>5 hours ago</Text>
+        </Text>
+      </Flex>
+    </Stack>
   );
 }
+
+const data = [
+  'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyEaZqT3fHeNrPGcnjLLX1v_W4mvBlgpwxnA&usqp=CAU',
+  'https://miro.medium.com/max/1400/0*0fClPmIScV5pTLoE.jpg',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr01zI37DYuR8bMV5exWQBSw28C1v_71CAh8d7GP1mplcmTgQA6Q66Oo--QedAN1B4E1k&usqp=CAU',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBwgu1A5zgPSvfE83nurkuzNEoXs9DMNr8Ww&usqp=CAU',
+  'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyEaZqT3fHeNrPGcnjLLX1v_W4mvBlgpwxnA&usqp=CAU',
+  'https://miro.medium.com/max/1400/0*0fClPmIScV5pTLoE.jpg',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr01zI37DYuR8bMV5exWQBSw28C1v_71CAh8d7GP1mplcmTgQA6Q66Oo--QedAN1B4E1k&usqp=CAU',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBwgu1A5zgPSvfE83nurkuzNEoXs9DMNr8Ww&usqp=CAU',
+  'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyEaZqT3fHeNrPGcnjLLX1v_W4mvBlgpwxnA&usqp=CAU',
+  'https://miro.medium.com/max/1400/0*0fClPmIScV5pTLoE.jpg',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr01zI37DYuR8bMV5exWQBSw28C1v_71CAh8d7GP1mplcmTgQA6Q66Oo--QedAN1B4E1k&usqp=CAU',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBwgu1A5zgPSvfE83nurkuzNEoXs9DMNr8Ww&usqp=CAU',
+  'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyEaZqT3fHeNrPGcnjLLX1v_W4mvBlgpwxnA&usqp=CAU',
+  'https://miro.medium.com/max/1400/0*0fClPmIScV5pTLoE.jpg',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr01zI37DYuR8bMV5exWQBSw28C1v_71CAh8d7GP1mplcmTgQA6Q66Oo--QedAN1B4E1k&usqp=CAU',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBwgu1A5zgPSvfE83nurkuzNEoXs9DMNr8Ww&usqp=CAU',
+  'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyEaZqT3fHeNrPGcnjLLX1v_W4mvBlgpwxnA&usqp=CAU',
+  'https://miro.medium.com/max/1400/0*0fClPmIScV5pTLoE.jpg',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr01zI37DYuR8bMV5exWQBSw28C1v_71CAh8d7GP1mplcmTgQA6Q66Oo--QedAN1B4E1k&usqp=CAU',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBwgu1A5zgPSvfE83nurkuzNEoXs9DMNr8Ww&usqp=CAU',
+];
