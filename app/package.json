@@ -22,7 +22,8 @@
     "react-native-svg": "^12.4.3",
     "react-native-svg-transformer": "^1.0.0",
     "react-native-vector-icons": "^9.2.0",
-    "react-native-webrtc": "^1.100.1"
+    "react-native-webrtc": "^1.100.1",
+    "react-native-webrtc-web-shim": "^1.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

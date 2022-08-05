@@ -1,58 +1,19 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Button, Heading, View, Text} from 'native-base';
-import {
-  RTCPeerConnection,
-  //   ScreenCapturePickerView,
-  //   RTCIceCandidate,
-  //   RTCSessionDescription,
-  //   RTCView,
-  //   MediaStreamTrack,
-  registerGlobals,
-  MediaStream,
-  mediaDevices,
-  RTCView,
-} from 'react-native-webrtc';
+import {RTCView} from 'react-native-webrtc-web-shim';
+
 import RTCDataChannel from 'react-native-webrtc/lib/typescript/RTCDataChannel';
-import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
+import {StyleSheet} from 'react-native';
 
-registerGlobals();
+import {RTCPeerConnection} from 'react-native-webrtc';
+import useGetUserMedia from '../hooks/useGetUserMedia';
 
-const mediaConstraints = {
-  audio: true,
-  video: true,
-};
 const peerConstraints = {iceServers: [{urls: 'stun:stun.l.google.com:19302'}]};
-interface RTCViewerProps {
-  mirror?: boolean;
-  objectFit?: 'cover' | 'contain';
-  streamUrl?: string;
-  zOrder?: number;
-  style?: StyleProp<ViewStyle>;
-}
-
-const RTCViewer = (props: RTCViewerProps) => <RTCView {...props} />;
-
-// registerGlobals();
-
 export default function CreateRoomScreen() {
-  const [localStream, setLocalStream] = useState<MediaStream | null>(null);
-  const [localStreamLoading, setLocalStreamLoading] = useState<boolean>(false);
   const [channel, setChannel] = useState<RTCDataChannel | null>(null);
   const peerConnection = useRef(new RTCPeerConnection(peerConstraints));
-
-  const getUserMedia = async () => {
-    try {
-      const mediaStream = (await mediaDevices.getUserMedia(
-        mediaConstraints,
-      )) as MediaStream;
-
-      setLocalStream(() => mediaStream);
-      setLocalStreamLoading(false);
-      return mediaStream;
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const {localStream, setLocalStream, loading, setIsLoading, mutate} =
+    useGetUserMedia(true);
 
   const hangUp = async () => {
     try {
@@ -66,7 +27,7 @@ export default function CreateRoomScreen() {
 
   const handleCall = async () => {
     try {
-      const stream = localStream ? localStream : await getUserMedia();
+      const stream = await mutate();
       if (!stream) return;
       peerConnection.current.addStream(stream);
       const dataChannel =
@@ -86,48 +47,55 @@ export default function CreateRoomScreen() {
       channel.removeEventListener('message', () => {});
     };
   }, [channel]);
-  console.log(localStream ? localStream.toURL() : '');
   return (
-    <View h="100%" w="100%" bg="white">
+    <View h="100%" w="100%" bg="white" p="15px">
       <Heading>NewMeeting</Heading>
 
-      <View h="50%">
+      <View h="50%" w="100%">
         {localStream && (
           <>
             <Text>Local Steam</Text>
-            <RTCViewer
-              streamUrl={localStream.toURL()}
-              objectFit={'cover'}
-              mirror={false}
-              zOrder={20}
-              style={styles.rtcviewer}
-            />
+
+            <View h="100%" w="100%" position="relative">
+              <RTCView
+                stream={localStream}
+                objectFit="fit"
+                mirror={true}
+                zOrder={100}
+                style={styles.rtcviewer}
+              />
+            </View>
           </>
         )}
       </View>
 
-      <Button
-        colorScheme="blue"
-        // bg="primary"
-        onPress={() => {
-          setLocalStreamLoading(true);
-          handleCall();
-        }}
-        isLoading={localStreamLoading}
-        //   _focus={{ opacity: 0.2 }}
-      >
-        Start Call
-      </Button>
-      <Button colorScheme="blue" bg="primary" onPress={hangUp}>
-        End Call
-      </Button>
+      {!localStream && (
+        <Button
+          colorScheme="blue"
+          // bg="primary"
+          onPress={() => {
+            setIsLoading(true);
+            handleCall();
+          }}
+          isLoading={loading}
+          //   _focus={{ opacity: 0.2 }}
+        >
+          Start Call
+        </Button>
+      )}
+      {localStream && (
+        <Button colorScheme="blue" bg="primary" onPress={hangUp}>
+          End Call
+        </Button>
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   rtcviewer: {
-    height: 300,
+    height: '100%',
     width: '100%',
+    position: 'absolute',
   },
 });
