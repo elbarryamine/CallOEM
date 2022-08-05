@@ -1,11 +1,10 @@
 import React, {ReactNode} from 'react';
 import {
-  extendTheme,
   NativeBaseProvider as Provider,
   // useColorMode,
   useTheme,
 } from 'native-base';
-import theme from '@shared/config/theme';
+import theme, {getDynamicTheme} from '@shared/config/theme';
 // import {Appearance} from 'react-native';
 
 export default function NativeBaseProvider({children}: {children: ReactNode}) {
@@ -22,17 +21,5 @@ function DynamicThemeNativeBaseProvider({children}: {children: ReactNode}) {
   // const isSystemDark = Appearance.getColorScheme() === 'dark';
   // const isAppDark = colorMode === 'dark';
   // const isDark = isAppDark || isSystemDark;
-  return (
-    <Provider
-      theme={extendTheme({
-        ...nativeBaseTheme,
-        colors: {
-          primary: '#0124FB',
-          subText: 'ACB1C1',
-          primaryBg: '#ffffff',
-        },
-      })}>
-      {children}
-    </Provider>
-  );
+  return <Provider theme={getDynamicTheme(nativeBaseTheme, false)}>{children}</Provider>;
 }

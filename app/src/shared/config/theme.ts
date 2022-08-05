@@ -1,4 +1,4 @@
-import {extendTheme} from 'native-base';
+import {extendTheme, ITheme} from 'native-base';
 
 const fontTextConfig = {
   fontSize: 18,
@@ -60,5 +60,24 @@ const theme = extendTheme({
     },
   },
 });
+
+export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
+  const colors = {
+    primary: '#0124FB',
+    secondary: '#ffffff',
+    text: isDark ? '#000000' : '#000000',
+    invert: '#ffffff',
+    subText: '#ACB1C1',
+    primaryBg: '#ffffff',
+    border: 'rgba(0,0,0,0.05)',
+  };
+  return extendTheme({
+    ...nativeBaseTheme,
+    components: {
+      ...nativeBaseTheme.components,
+    },
+    colors,
+  });
+}
 
 export default theme;

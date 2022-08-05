@@ -41,7 +41,7 @@ export default function LoginScreen({navigation}: AuthRootScreenProps & RootScre
           <Text alignSelf="flex-end" color="primary" fontSize="sub" onPress={() => navigation.navigate('auth:resetPassword')}>
             Forgot password ?
           </Text>
-          <Button bg="primary" onPress={() => navigation.navigate('room:root', {screen: 'room:call'})}>
+          <Button bg="primary" _text={{color: 'invert'}} onPress={() => navigation.navigate('room:root')}>
             Sign in
           </Button>
         </Stack>

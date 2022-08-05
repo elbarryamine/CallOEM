@@ -54,7 +54,9 @@ export default function SignupScreen({navigation}: AuthRootScreenProps) {
               }
             />
           </FormControl>
-          <Button bg="primary">Sign up</Button>
+          <Button bg="primary" _text={{color: 'invert'}}>
+            Sign up
+          </Button>
         </Stack>
         <Text textAlign="center" fontSize="sub">
           Already have an account?{' '}

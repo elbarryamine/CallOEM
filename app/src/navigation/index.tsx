@@ -19,10 +19,10 @@ export default function NavigationProvider() {
 }
 
 type RootStackParamList = {
-  'auth:root': {
+  'auth:root'?: {
     screen: keyof AuthRootStackParamList;
   };
-  'room:root': {
+  'room:root'?: {
     screen: keyof RoomRootStackParamList;
   };
 };

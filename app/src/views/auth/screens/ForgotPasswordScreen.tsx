@@ -22,7 +22,9 @@ export default function ForgotPasswordScreen({navigation}: AuthRootScreenProps) 
           <FormControl>
             <Input placeholder="Enter your username or email" borderBottomWidth="1" />
           </FormControl>
-          <Button bg="primary">Reset</Button>
+          <Button _text={{color: 'invert'}} bg="primary" color="invert">
+            Reset
+          </Button>
         </Stack>
         <Text textAlign="center" color="primary" onPress={() => navigation.navigate('auth:login')}>
           Login
