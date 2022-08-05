@@ -1,40 +1,49 @@
 import React from 'react';
-import {Avatar, Button, Divider, Flex, HStack, ScrollView, Stack, Tag, Text, View} from 'native-base';
+import {Avatar, Button, Divider, Flex, HStack, Stack, Text, View} from 'native-base';
 
 export default function RoomCard() {
   return (
     <View p="5px">
       <View shadow="1" borderRadius="10px">
         <View borderRadius="10px" bg="secondary" overflow="hidden">
-          <Stack alignItems="center" justifyContent="center" space={6} p="15px">
-            <Flex flexDir="row" justify="space-between" flexWrap="wrap" align="center">
-              <Stack flex="1" mr="24px">
-                <Text fontSize="subheader" color="text" fontWeight={900} noOfLines={1} textTransform="uppercase">
-                  I got dumped and i want to talk
-                </Text>
-                <Text color="text" fontWeight={100} noOfLines={2}>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatum rerum, labore illo, inventore ab veniam error voluptas sit
-                  reiciendis modi sunt dolores magni unde aliquam temporibus tempora fugit deserunt nam!
-                </Text>
-              </Stack>
-              <Avatar
-                bg="green.500"
-                size="xl"
-                source={{
-                  uri: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
-                }}
-              />
-            </Flex>
-            <ScrollView horizontal nestedScrollEnabled showsHorizontalScrollIndicator={false} w="100%">
+          <Stack alignItems="center" justifyContent="center" space={2} p="15px">
+            <Stack flex="1" mr="24px">
+              <Text fontSize="subheader" color="text" fontWeight={900} noOfLines={1} textTransform="uppercase">
+                I got dumped and i want to talk
+              </Text>
+              <Text color="text" fontWeight={100} noOfLines={2}>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatum rerum, labore illo, inventore ab veniam error voluptas sit
+                reiciendis modi sunt dolores magni unde aliquam temporibus tempora fugit deserunt nam!
+              </Text>
+            </Stack>
+            {/* <ScrollView horizontal nestedScrollEnabled showsHorizontalScrollIndicator={false} w="100%">
               <HStack space={2} w="100%" overflow="hidden">
-                <Tag borderRadius="10px">Family</Tag>
-                <Tag borderRadius="10px">Depression</Tag>
-                <Tag borderRadius="10px">Anxiety</Tag>
-                <Tag borderRadius="10px">Anxiety</Tag>
-                <Tag borderRadius="10px">Anxiety</Tag>
-                <Tag borderRadius="10px">Anxiety</Tag>
+                <Tag colorScheme="gray" borderRadius="10px">
+                  Family
+                </Tag>
+                <Tag colorScheme="gray" borderRadius="10px">
+                  Depression
+                </Tag>
+                <Tag colorScheme="gray" borderRadius="10px">
+                  Anxiety
+                </Tag>
+                <Tag colorScheme="gray" borderRadius="10px">
+                  Anxiety
+                </Tag>
+                <Tag colorScheme="gray" borderRadius="10px">
+                  Family
+                </Tag>
+                <Tag colorScheme="gray" borderRadius="10px">
+                  Family
+                </Tag>
+                <Tag colorScheme="gray" borderRadius="10px">
+                  Anxiety
+                </Tag>
+                <Tag colorScheme="gray" borderRadius="10px">
+                  Depression
+                </Tag>
               </HStack>
-            </ScrollView>
+            </ScrollView> */}
 
             <HStack alignSelf="flex-start" alignItems="center" justifyContent="space-between">
               <HStack alignItems="center" h="100%" flex="1" overflow="hidden" mr="5px">
@@ -50,12 +59,13 @@ export default function RoomCard() {
                   />
                 ))}
               </HStack>
-              <Button bg="primary" _text={{color: 'invert'}} px="30px" _pressed={{opacity: 0.8}}>
-                Join
+
+              <Button bg="ternary" _text={{color: 'invert'}} px="30px" _pressed={{opacity: 0.8}}>
+                View
               </Button>
             </HStack>
           </Stack>
-          <Flex p="15px" bg="ternary" w="100%" flexDir="row" alignItems="center" justifyContent="space-between">
+          <Flex p="15px" bg="primary" w="100%" flexDir="row" alignItems="center" justifyContent="space-between">
             <Text color="invert" fontSize="mono" fontWeight={500}>
               <Text>8 Members</Text>
             </Text>

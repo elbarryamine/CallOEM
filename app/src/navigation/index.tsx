@@ -2,7 +2,7 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AuthStack, {AuthRootStackParamList} from './AuthStack';
-import RoomStack, {RoomRootStackParamList} from './RoomStack';
+import RoomStack, {RoomRootTabParamList} from './RoomStack';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
@@ -23,7 +23,7 @@ type RootStackParamList = {
     screen: keyof AuthRootStackParamList;
   };
   'room:root'?: {
-    screen: keyof RoomRootStackParamList;
+    screen: keyof RoomRootTabParamList;
   };
 };
 

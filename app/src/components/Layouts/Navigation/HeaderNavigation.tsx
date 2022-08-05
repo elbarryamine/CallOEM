@@ -1,11 +1,11 @@
 import React from 'react';
 import {Avatar, Button, Flex, HStack, Icon, Stack, Text, View} from 'native-base';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import {IViewProps} from 'native-base/lib/typescript/components/basic/View/types';
 
 export default function HeaderNavigation(props: IViewProps) {
   return (
-    <View py="30px" shadow="md" bg="primaryBg" {...props}>
+    <View py="20px" shadow="md" {...props}>
       <Flex justify="space-between" flexDir="row">
         <HStack alignItems="center" space={'10px'}>
           <Avatar
@@ -22,7 +22,7 @@ export default function HeaderNavigation(props: IViewProps) {
           </Stack>
         </HStack>
         <Button borderRadius="25px" h="50px" w="50px" borderWidth="1px" borderColor="subText" _pressed={{opacity: 0.5}}>
-          <Icon name="bell-outline" as={MaterialCommunityIcons} color="subText" />
+          <Icon name="bells" as={AntDesign} color="subText" size="25px" />
         </Button>
       </Flex>
     </View>

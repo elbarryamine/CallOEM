@@ -3,7 +3,6 @@ import {extendTheme, ITheme} from 'native-base';
 const theme = extendTheme({
   config: {
     initialColorMode: 'light',
-    useSystemColorMode: false,
   },
 
   fontConfig: {
@@ -52,6 +51,11 @@ export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
   return extendTheme({
     ...nativeBaseTheme,
     components: {
+      Tag: {
+        defaultProps: {
+          _text: fontTextConfig,
+        },
+      },
       Text: {
         defaultProps: fontTextConfig,
       },
@@ -61,10 +65,12 @@ export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
           _focus: {
             bg: 'transparent',
           },
+          placeholderTextColor: colors.text,
         },
       },
       Heading: {
         defaultProps: {
+          ...fontTextConfig,
           fontFamily: 'heading',
           fontSize: 30,
         },

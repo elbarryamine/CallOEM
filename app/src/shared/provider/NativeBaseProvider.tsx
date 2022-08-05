@@ -1,6 +1,7 @@
 import React, {ReactNode} from 'react';
 import {
   NativeBaseProvider as Provider,
+  useColorMode,
   // useColorMode,
   useTheme,
 } from 'native-base';
@@ -17,7 +18,8 @@ export default function NativeBaseProvider({children}: {children: ReactNode}) {
 
 function DynamicThemeNativeBaseProvider({children}: {children: ReactNode}) {
   const nativeBaseTheme = useTheme();
-  // const {colorMode} = useColorMode();
+  const {setColorMode} = useColorMode();
+  setColorMode('light');
   // const isSystemDark = Appearance.getColorScheme() === 'dark';
   // const isAppDark = colorMode === 'dark';
   // const isDark = isAppDark || isSystemDark;
