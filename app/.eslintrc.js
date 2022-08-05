@@ -14,6 +14,7 @@ module.exports = {
         '@typescript-eslint/no-unused-vars': 'warn',
         'react-hooks/exhaustive-deps': 'off',
         curly: 'off',
+        'no-console': 'warn',
       },
     },
   ],
