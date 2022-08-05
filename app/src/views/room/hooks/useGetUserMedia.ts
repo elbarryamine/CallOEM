@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {mediaDevices, MediaStream} from 'react-native-webrtc';
 
 interface Device {
@@ -40,6 +40,11 @@ export default function useGetUserMedia(isFront: boolean) {
       console.log(err);
     }
   };
+  useEffect(() => {
+    return () => {
+      setLocalStream(null);
+    };
+  }, []);
 
   return {
     mutate: getMedia,
