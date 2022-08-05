@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {Button, Heading, Input, Stack, Text, FormControl, Icon} from 'native-base';
-import {AuthScreenProps} from '@navigation/NavigationStack';
 import SignupSvg from '@assets/images/signup.svg';
 import AuthImageContainer from '../layouts/AuthImageContainer';
 import Feather from 'react-native-vector-icons/Feather';
 import ScreenContainer from '@components/Containers/ScreenContainer';
+import {AuthRootScreenProps} from '@navigation/AuthStack';
 
-export default function SignupScreen({navigation}: AuthScreenProps) {
+export default function SignupScreen({navigation}: AuthRootScreenProps) {
   const [passShowing, setPassShowing] = useState<boolean>(false);
   const [passConfirmShowing, setPassConfirmShowing] = useState<boolean>(false);
   const onPassToggle = () => setPassShowing(!passShowing);
@@ -58,7 +58,7 @@ export default function SignupScreen({navigation}: AuthScreenProps) {
         </Stack>
         <Text textAlign="center" fontSize="sub">
           Already have an account?{' '}
-          <Text color="primary" onPress={() => navigation.navigate('login')}>
+          <Text color="primary" onPress={() => navigation.navigate('auth:login')}>
             Login
           </Text>
         </Text>

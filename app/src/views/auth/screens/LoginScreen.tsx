@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import {Button, Heading, Input, Stack, Text, FormControl, Icon} from 'native-base';
-import {AuthScreenProps} from '@navigation/NavigationStack';
 import LoginSvg from '@assets/images/login.svg';
 import AuthImageContainer from '../layouts/AuthImageContainer';
 import Feather from 'react-native-vector-icons/Feather';
 import ScreenContainer from '@components/Containers/ScreenContainer';
+import {AuthRootScreenProps} from '@navigation/AuthStack';
+import {RootScreenProps} from '@navigation/';
 
-export default function LoginScreen({navigation}: AuthScreenProps) {
+export default function LoginScreen({navigation}: AuthRootScreenProps & RootScreenProps) {
   const [passShowing, setPassShowing] = useState<boolean>(false);
   const onToggle = () => setPassShowing(!passShowing);
   return (
@@ -37,16 +38,16 @@ export default function LoginScreen({navigation}: AuthScreenProps) {
               }
             />
           </FormControl>
-          <Text alignSelf="flex-end" color="primary" fontSize="sub" onPress={() => navigation.navigate('reset-password')}>
+          <Text alignSelf="flex-end" color="primary" fontSize="sub" onPress={() => navigation.navigate('auth:resetPassword')}>
             Forgot password ?
           </Text>
-          <Button bg="primary" onPress={() => navigation.navigate('room')}>
+          <Button bg="primary" onPress={() => navigation.navigate('room:root', {screen: 'room:call'})}>
             Sign in
           </Button>
         </Stack>
         <Text textAlign="center" fontSize="sub">
           Don't have an account yet?{' '}
-          <Text color="primary" onPress={() => navigation.navigate('signup')}>
+          <Text color="primary" onPress={() => navigation.navigate('auth:signup')}>
             Register
           </Text>
         </Text>

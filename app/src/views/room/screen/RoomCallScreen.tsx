@@ -45,9 +45,6 @@ export default function RoomCallScreen() {
       channel.removeEventListener('message', () => {});
     };
   }, [channel]);
-  useEffect(() => {
-    handleCall();
-  }, []);
 
   useEffect(() => {
     if (isSpamming) {

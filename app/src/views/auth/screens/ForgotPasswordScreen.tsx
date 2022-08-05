@@ -2,10 +2,10 @@ import React from 'react';
 import {Button, Heading, Input, Stack, Text, FormControl} from 'native-base';
 import ResetPasswordSvg from '@assets/images/reset-password.svg';
 import AuthImageContainer from '../layouts/AuthImageContainer';
-import {AuthScreenProps} from '@navigation/NavigationStack';
 import ScreenContainer from '@components/Containers/ScreenContainer';
+import {AuthRootScreenProps} from '@navigation/AuthStack';
 
-export default function ForgotPasswordScreen({navigation}: AuthScreenProps) {
+export default function ForgotPasswordScreen({navigation}: AuthRootScreenProps) {
   return (
     <ScreenContainer>
       <Stack h="100%" justifyContent="space-between">
@@ -24,7 +24,7 @@ export default function ForgotPasswordScreen({navigation}: AuthScreenProps) {
           </FormControl>
           <Button bg="primary">Reset</Button>
         </Stack>
-        <Text textAlign="center" color="primary" onPress={() => navigation.navigate('signup')}>
+        <Text textAlign="center" color="primary" onPress={() => navigation.navigate('auth:login')}>
           Login
         </Text>
       </Stack>
