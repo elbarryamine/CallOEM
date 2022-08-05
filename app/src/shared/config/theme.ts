@@ -8,11 +8,9 @@ const fontTextConfig = {
 const theme = extendTheme({
   config: {
     initialColorMode: 'light',
+    useSystemColorMode: false,
   },
-  colors: {
-    primary: '#0124FB',
-    subText: 'ACB1C1',
-  },
+
   fontConfig: {
     Roboto: {
       100: {normal: 'Proxima', italic: 'Proxima'},

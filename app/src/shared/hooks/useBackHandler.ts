@@ -13,7 +13,6 @@ export default function useBackHandler() {
   useEffect(() => {
     const callBack = () => {
       setTries(prevTries => {
-        console.log(prevTries);
         if (prevTries > 3) {
           setIsSpamming(true);
           return prevTries;
@@ -38,7 +37,6 @@ export default function useBackHandler() {
       clearTimeout(timer);
     };
   }, [tries]);
-  console.log(isSpamming, tries);
   return {
     allowBack: () => setIsAllowedToGoBack(true),
     preventBack: () => setIsAllowedToGoBack(false),
