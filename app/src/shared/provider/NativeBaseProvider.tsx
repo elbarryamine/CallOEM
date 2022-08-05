@@ -5,7 +5,8 @@ import {
   // useColorMode,
   useTheme,
 } from 'native-base';
-import theme, {getDynamicTheme} from '@shared/config/theme';
+import theme from '@shared/config/theme';
+import {getDynamicTheme} from '@shared/config/dynamic';
 // import {Appearance} from 'react-native';
 
 export default function NativeBaseProvider({children}: {children: ReactNode}) {
