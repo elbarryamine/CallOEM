@@ -16,5 +16,7 @@ const QUERY = gql`
 `;
 
 export default function useSignIn() {
-  return useLazyQuery(QUERY);
+  return useLazyQuery(QUERY, {
+    fetchPolicy: 'no-cache',
+  });
 }

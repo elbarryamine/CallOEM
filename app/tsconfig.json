@@ -13,6 +13,7 @@
       "@navigation/*": ["src/navigation/*","src/navigation/"],
       "@shared/*": ["src/shared/*","src/shared/"],
       "@views/*": ["src/views/*","src/views/"],
+      "@redux/*": ["src/redux/*","src/redux/"],
 
     }
   }

@@ -47,6 +47,6 @@ type UserSign {
 }
 
 type UserSignin {
-  token: String!
+  token: String
   user: UserSign!
 }

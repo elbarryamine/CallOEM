@@ -31,7 +31,7 @@ export class UserSignin {
   @Field(() => UserSign)
   user: UserSignType;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   token: string;
 }
 

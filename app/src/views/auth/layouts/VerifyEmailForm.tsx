@@ -8,7 +8,6 @@ import {
 } from 'native-base';
 import {Formik} from 'formik';
 import FormErrorMessage from '@components/Elements/FormErrorMessage';
-import useResetPassword from '@shared/api/auth/useVerifyCode';
 import verifyEmailSchema from '@shared/constants/verifyEmailSchema ';
 import {NativeSyntheticEvent, TextInputChangeEventData} from 'react-native';
 import {useNavigation} from '@react-navigation/native';

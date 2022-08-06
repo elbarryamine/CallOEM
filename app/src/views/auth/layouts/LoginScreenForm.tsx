@@ -15,18 +15,22 @@ import LoginSchema from '@shared/constants/loginSchema';
 import useSignIn from '@shared/api/auth/useLogin';
 import {useNavigation} from '@react-navigation/native';
 import {LoginScreenProps} from '@navigation/AuthStack';
+import useSendVerifyCodeEmail from '@shared/api/auth/useSendVerifyCodeEmail';
 
 export default function LoginScreenForm() {
   const [passShowing, setPassShowing] = useState<boolean>(false);
   const onPassToggle = () => setPassShowing(!passShowing);
   const [signIn, {data, loading, error}] = useSignIn();
+  const [isloading, setLoading] = useState<boolean>(false);
   const navigation: LoginScreenProps['navigation'] = useNavigation();
+  const [sendCode] = useSendVerifyCodeEmail();
 
   const handleLogin = async (values: {
     Identifier: string;
     Password: string;
   }) => {
     try {
+      setLoading(true);
       await signIn({
         variables: {
           identifier: values.Identifier,
@@ -37,10 +41,24 @@ export default function LoginScreenForm() {
   };
 
   useEffect(() => {
-    if (data) {
-      console.log(data);
+    if (data && data.signIn && !loading) {
+      if (data.signIn.user.isEmailVerified) {
+        // set user
+      } else {
+        async function sendEmailCode() {
+          await sendCode({variables: {email: data.signIn.user.email}}).then(
+            () => {
+              navigation.navigate('auth:verify', {
+                email: data.signIn.user.email,
+              });
+            },
+          );
+        }
+        sendEmailCode();
+      }
+      setLoading(false);
     }
-  }, [data]);
+  }, [data, navigation]);
   return (
     <Formik
       initialValues={{
@@ -101,13 +119,14 @@ export default function LoginScreenForm() {
               </FormErrorMessage>
             </FormControl>
           </KeyboardAvoidingView>
+
           <Button
             onPress={() => navigation.navigate('auth:resetPassword')}
             alignSelf="flex-end">
             <Text color="primary">Forgot Password ?</Text>
           </Button>
           <Button
-            isLoading={loading}
+            isLoading={isloading && !error}
             bg="primary"
             _text={{color: 'invert'}}
             onPress={handleSubmit}>

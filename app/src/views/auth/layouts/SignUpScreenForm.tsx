@@ -159,11 +159,6 @@ export default function SignUpScreenForm() {
                 {errors['Password Confirm']}
               </FormErrorMessage>
             </FormControl>
-            <FormControl>
-              <FormErrorMessage isInvalid={!!error}>
-                {error?.graphQLErrors[0]?.message}
-              </FormErrorMessage>
-            </FormControl>
           </KeyboardAvoidingView>
 
           <Button

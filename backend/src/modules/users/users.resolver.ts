@@ -93,12 +93,8 @@ export class UsersResolver {
         );
       }
 
-      if (!user.isEmailVerified) {
-        return new HttpException({ message: 'email not verified' }, 400);
-      }
-
+      if (!user.isEmailVerified) return { user };
       // send user and token
-
       return {
         user,
         token: this.jwtService.sign({ id: user.id }),

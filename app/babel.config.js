@@ -13,6 +13,7 @@ module.exports = function (api) {
             '@navigation': './src/navigation',
             '@shared': './src/shared',
             '@views': './src/views',
+            '@redux': './src/redux',
           },
         },
       ],
