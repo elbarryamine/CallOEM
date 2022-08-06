@@ -6,17 +6,21 @@ import {
   FormControl,
   Icon,
   KeyboardAvoidingView,
+  Text,
 } from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 import {Formik} from 'formik';
 import FormErrorMessage from '@components/Elements/FormErrorMessage';
 import LoginSchema from '@shared/constants/loginSchema';
 import useSignIn from '@shared/api/auth/useLogin';
+import {useNavigation} from '@react-navigation/native';
+import {AuthRootScreenProps} from '@navigation/AuthStack';
 
 export default function LoginScreenForm() {
   const [passShowing, setPassShowing] = useState<boolean>(false);
   const onPassToggle = () => setPassShowing(!passShowing);
   const [signIn, {data, loading, error}] = useSignIn();
+  const navigation: AuthRootScreenProps['navigation'] = useNavigation();
 
   const handleLogin = async (values: {
     Identifier: string;
@@ -97,6 +101,11 @@ export default function LoginScreenForm() {
               </FormErrorMessage>
             </FormControl>
           </KeyboardAvoidingView>
+          <Button
+            onPress={() => navigation.navigate('auth:signup')}
+            alignSelf="flex-end">
+            <Text color="primary">Forgot Password ?</Text>
+          </Button>
           <Button
             isLoading={loading}
             bg="primary"

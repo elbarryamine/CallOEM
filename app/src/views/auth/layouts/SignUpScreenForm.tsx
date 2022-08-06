@@ -12,6 +12,8 @@ import {Formik} from 'formik';
 import FormErrorMessage from '@components/Elements/FormErrorMessage';
 import SignupSchema from '@shared/constants/signupSchema';
 import useSignup from '@shared/api/auth/useSignup';
+import {AuthRootScreenProps} from '@navigation/AuthStack';
+import {useNavigation} from '@react-navigation/native';
 
 export default function SignUpScreenForm() {
   const [passShowing, setPassShowing] = useState<boolean>(false);
@@ -19,6 +21,7 @@ export default function SignUpScreenForm() {
   const onPassToggle = () => setPassShowing(!passShowing);
   const onPassConfirmToggle = () => setPassConfirmShowing(!passConfirmShowing);
   const [signUp, {data, loading, error}] = useSignup();
+  const navigation: AuthRootScreenProps['navigation'] = useNavigation();
 
   const handleSignUp = async (values: {
     Username: string;
@@ -39,9 +42,10 @@ export default function SignUpScreenForm() {
   };
 
   useEffect(() => {
-    if (data) {
+    if (!loading && data && data.signUp) {
+      navigation.navigate('auth:verify');
     }
-  }, [data]);
+  }, [data, loading]);
   return (
     <Formik
       initialValues={{

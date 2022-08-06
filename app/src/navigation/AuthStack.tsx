@@ -6,11 +6,12 @@ import {
   createNativeStackNavigator,
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
+import VerifyEmailScreen from '@views/auth/screens/VerifyEmailScreen';
 const Stack = createNativeStackNavigator();
 
 export default function AuthStack() {
   return (
-    <Stack.Navigator initialRouteName="auth:login">
+    <Stack.Navigator initialRouteName="auth:verify">
       <Stack.Screen
         name="auth:login"
         component={LoginScreen}
@@ -26,6 +27,11 @@ export default function AuthStack() {
         component={ForgotPasswordScreen}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name="auth:verify"
+        component={VerifyEmailScreen}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 }
@@ -34,9 +40,10 @@ export type AuthRootStackParamList = {
   'auth:resetPassword': undefined;
   'auth:signup': undefined;
   'auth:login': undefined;
+  'auth:verify': undefined;
 };
 
 export type AuthRootScreenProps = NativeStackScreenProps<
   AuthRootStackParamList,
-  'auth:login'
+  'auth:verify'
 >;
