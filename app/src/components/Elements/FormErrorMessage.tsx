@@ -10,6 +10,7 @@ export default function FormErrorMessage({
       _text={{
         fontSize: 'mono',
         color: 'error',
+        textTransform: 'capitalize',
       }}
     />
   );

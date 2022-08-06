@@ -1,26 +1,18 @@
-import React, {useState} from 'react';
-import {
-  Button,
-  Heading,
-  Input,
-  Stack,
-  Text,
-  FormControl,
-  Icon,
-  View,
-} from 'native-base';
+import React from 'react';
+import {Button, Heading, Stack, Text, View} from 'native-base';
 import LoginSvg from '@assets/images/login.svg';
 import AuthImageContainer from '../layouts/AuthImageContainer';
-import Feather from 'react-native-vector-icons/Feather';
 import ScreenContainer from '@components/Containers/ScreenContainer';
 import {AuthRootScreenProps} from '@navigation/AuthStack';
 import {RootScreenProps} from '@navigation/';
+import useKeyboardShowing from '@shared/hooks/useKeyboardShowing';
+import LoginScreenForm from '../layouts/LoginScreenForm';
 
 export default function LoginScreen({
   navigation,
 }: AuthRootScreenProps & RootScreenProps) {
-  const [passShowing, setPassShowing] = useState<boolean>(false);
-  const onToggle = () => setPassShowing(!passShowing);
+  const {isKeyboardShowing} = useKeyboardShowing();
+
   return (
     <ScreenContainer>
       <Stack h="100%" justifyContent="space-between">
@@ -34,55 +26,17 @@ export default function LoginScreen({
               Welcome back, we missed you
             </Text>
           </Stack>
-          <FormControl>
-            <Input
-              placeholder="Enter your username or email"
-              borderBottomWidth="1"
-            />
-          </FormControl>
-          <FormControl>
-            <Input
-              type={passShowing ? 'text' : 'password'}
-              placeholder="Password"
-              borderBottomWidth="1"
-              InputRightElement={
-                <Button
-                  bg="primary"
-                  h="100%"
-                  borderRadius="0"
-                  onPress={onToggle}>
-                  <Icon
-                    color="white"
-                    as={Feather}
-                    name={passShowing ? 'eye-off' : 'eye'}
-                  />
-                </Button>
-              }
-            />
-          </FormControl>
-          <Text
-            alignSelf="flex-end"
-            color="primary"
-            fontSize="sub"
-            onPress={() => navigation.navigate('auth:resetPassword')}>
-            Forgot password ?
-          </Text>
-          <Button
-            bg="primary"
-            _text={{color: 'invert'}}
-            onPress={() => navigation.navigate('room:root')}>
-            Sign in
-          </Button>
+          <LoginScreenForm />
         </Stack>
         <View pb="20px">
-          <Text textAlign="center">
-            Don't have an account yet?{' '}
-            <Text
-              color="primary"
-              onPress={() => navigation.navigate('auth:signup')}>
-              Register
-            </Text>
-          </Text>
+          {!isKeyboardShowing && (
+            <>
+              <Text textAlign="center">Don't have an account yet ? </Text>
+              <Button onPress={() => navigation.navigate('auth:signup')}>
+                <Text color="primary">Register</Text>
+              </Button>
+            </>
+          )}
         </View>
       </Stack>
     </ScreenContainer>

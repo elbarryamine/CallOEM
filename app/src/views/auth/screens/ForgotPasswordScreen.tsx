@@ -12,10 +12,12 @@ import ResetPasswordSvg from '@assets/images/reset-password.svg';
 import AuthImageContainer from '../layouts/AuthImageContainer';
 import ScreenContainer from '@components/Containers/ScreenContainer';
 import {AuthRootScreenProps} from '@navigation/AuthStack';
+import useKeyboardShowing from '@shared/hooks/useKeyboardShowing';
 
 export default function ForgotPasswordScreen({
   navigation,
 }: AuthRootScreenProps) {
+  const {isKeyboardShowing} = useKeyboardShowing();
   return (
     <ScreenContainer>
       <Stack h="100%" justifyContent="space-between">
@@ -40,12 +42,13 @@ export default function ForgotPasswordScreen({
           </Button>
         </Stack>
         <View pb="20px">
-          <Text
-            textAlign="center"
-            color="primary"
-            onPress={() => navigation.navigate('auth:login')}>
-            Login
-          </Text>
+          {!isKeyboardShowing && (
+            <Button
+              textAlign="center"
+              onPress={() => navigation.navigate('auth:login')}>
+              <Text color="primary">Login</Text>
+            </Button>
+          )}
         </View>
       </Stack>
     </ScreenContainer>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Button,
   Input,
@@ -10,14 +10,38 @@ import {
 import Feather from 'react-native-vector-icons/Feather';
 import {Formik} from 'formik';
 import FormErrorMessage from '@components/Elements/FormErrorMessage';
-import {SignupSchema} from '@shared/constants/signupSchema';
+import SignupSchema from '@shared/constants/signupSchema';
+import useSignup from '@shared/api/auth/useSignup';
 
 export default function SignUpScreenForm() {
   const [passShowing, setPassShowing] = useState<boolean>(false);
   const [passConfirmShowing, setPassConfirmShowing] = useState<boolean>(false);
   const onPassToggle = () => setPassShowing(!passShowing);
   const onPassConfirmToggle = () => setPassConfirmShowing(!passConfirmShowing);
+  const [signUp, {data, loading, error}] = useSignup();
 
+  const handleSignUp = async (values: {
+    Username: string;
+    Email: string;
+    Password: string;
+    'Password Confirm': string;
+  }) => {
+    try {
+      await signUp({
+        variables: {
+          username: values.Username,
+          email: values.Email,
+          password: values.Password,
+          passwordConfirm: values['Password Confirm'],
+        },
+      });
+    } catch {}
+  };
+
+  useEffect(() => {
+    if (data) {
+    }
+  }, [data]);
   return (
     <Formik
       initialValues={{
@@ -27,9 +51,14 @@ export default function SignUpScreenForm() {
         'Password Confirm': '',
       }}
       validationSchema={SignupSchema}
-      onSubmit={values => console.log(values)}>
+      onSubmit={values => handleSignUp(values)}>
       {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
-        <Stack space={5}>
+        <Stack space={2}>
+          <FormControl>
+            <FormErrorMessage isInvalid={!!error}>
+              {error?.graphQLErrors[0]?.message}
+            </FormErrorMessage>
+          </FormControl>
           <KeyboardAvoidingView>
             <FormControl>
               <Input
@@ -119,9 +148,18 @@ export default function SignUpScreenForm() {
                 {errors['Password Confirm']}
               </FormErrorMessage>
             </FormControl>
+            <FormControl>
+              <FormErrorMessage isInvalid={!!error}>
+                {error?.graphQLErrors[0]?.message}
+              </FormErrorMessage>
+            </FormControl>
           </KeyboardAvoidingView>
 
-          <Button bg="primary" _text={{color: 'invert'}} onPress={handleSubmit}>
+          <Button
+            isLoading={loading}
+            bg="primary"
+            _text={{color: 'invert'}}
+            onPress={handleSubmit}>
             Sign up
           </Button>
         </Stack>
