@@ -14,7 +14,7 @@ export default function RoomListScreenHeader() {
         <Stack flex="1">
           <Heading color="text">Latest Public Rooms</Heading>
           <Text fontSize="sub" color="subText" flexWrap="wrap">
-            Join a room and start sharing your feelings with others
+            Join a room and start sharing your ideas
           </Text>
         </Stack>
         <Stack alignItems="center">

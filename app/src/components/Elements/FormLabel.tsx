@@ -7,7 +7,9 @@ export default function FormLabel({
 }: {children: ReactNode} & IFormControlLabelProps) {
   return (
     <FormControl.Label {...props}>
-      <Text fontWeight={500}>{children}</Text>
+      <Text fontWeight={100} color="primary">
+        {children}
+      </Text>
     </FormControl.Label>
   );
 }

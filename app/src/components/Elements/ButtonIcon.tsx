@@ -9,13 +9,6 @@ import {
   Text,
 } from 'native-base';
 
-interface IconButtonpRrops {
-  as: IIconProps['as'];
-  name: IIconProps['name'];
-  text?: string;
-  textProps?: ITextProps;
-  iconProps?: IIconProps;
-}
 export default function ButtonIcon({
   as,
   name,
@@ -36,4 +29,12 @@ export default function ButtonIcon({
       </Stack>
     </Button>
   );
+}
+
+interface IconButtonpRrops {
+  as: IIconProps['as'];
+  name: IIconProps['name'];
+  text?: string;
+  textProps?: ITextProps;
+  iconProps?: IIconProps;
 }

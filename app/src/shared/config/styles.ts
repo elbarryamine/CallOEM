@@ -43,7 +43,15 @@ export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
           textTransform: 'capitalize',
         },
       },
-      Button: {defaultProps: {borderRadius: '10px', _text: fontTextConfig}},
+      Button: {
+        defaultProps: {
+          borderRadius: '10px',
+          _text: {
+            ...fontTextConfig,
+            textTransform: 'capitalize',
+          },
+        },
+      },
     },
     colors,
   });

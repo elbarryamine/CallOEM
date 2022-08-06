@@ -13,6 +13,7 @@ import useNavigationChangeHandler from '@shared/hooks/useNavigationChangeHandler
 import {RoomRootScreenProps} from '@navigation/RoomStack';
 
 const peerConstraints = {iceServers: [{urls: 'stun:stun.l.google.com:19302'}]};
+
 export default function RoomCallScreen({}: RoomRootScreenProps) {
   const [channel, setChannel] = useState<RTCDataChannel | null>(null);
   const peerConnection = useRef(new RTCPeerConnection(peerConstraints));

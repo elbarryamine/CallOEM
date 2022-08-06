@@ -18,7 +18,8 @@ export default function RoomCard() {
                 fontWeight={900}
                 noOfLines={1}
                 textTransform="uppercase">
-                I got dumped and i want to talk
+                I have an issue : Lorem ipsum dolor sit amet consectetur
+                adipisicing elit.
               </Text>
               <Text color="text" fontSize="sub" fontWeight={100} noOfLines={2}>
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit.
