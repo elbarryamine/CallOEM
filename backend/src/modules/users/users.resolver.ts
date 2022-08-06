@@ -8,11 +8,18 @@ import { HttpException } from '@nestjs/common';
 import { SignUserInput } from './dto/signin-user.input';
 import { compare, hash } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import {
+  UsersCodesDocument,
+  UsersCodesSchemaType,
+} from './entities/usersCodes.schema';
+import sendVerifyCodeEmail from 'src/services/email/sendVerifyCodeEmail';
 
 @Resolver(() => User)
 export class UsersResolver {
   constructor(
     @InjectModel(UserSchemaType.name) private UserModule: Model<UserDocument>,
+    @InjectModel(UsersCodesSchemaType.name)
+    private UsersCodesModule: Model<UsersCodesDocument>,
     private jwtService: JwtService,
   ) {}
 
@@ -56,7 +63,7 @@ export class UsersResolver {
         password: hashedPass,
         username,
       });
-    } catch (error) {
+    } catch {
       throw new HttpException({ message: 'something went wrong' }, 400);
     }
   }
@@ -96,8 +103,39 @@ export class UsersResolver {
         user,
         token: this.jwtService.sign({ id: user.id }),
       };
-    } catch (error) {
+    } catch {
       throw new HttpException({ message: 'something went wrong' }, 400);
     }
+  }
+
+  @Mutation(() => Boolean)
+  async sendVerifyEmailCode(@Args('email') email: string) {
+    // generate code
+    try {
+      const code = Math.floor(Math.random() * 999999)
+        .toString()
+        .padStart(6, '0');
+
+      // save code to codes collection with email and code
+      const isFound = await this.UsersCodesModule.findOneAndUpdate(
+        { email },
+        { code },
+      );
+      if (!isFound) {
+        await this.UsersCodesModule.create({ email, code });
+      }
+      // send Code to email adresss
+      console.log(process.env.MobileAppName);
+      return await sendVerifyCodeEmail({ code, email });
+    } catch {
+      throw new HttpException({ message: 'something went wrong' }, 400);
+    }
+  }
+  @Mutation(() => Boolean)
+  async verifyEmailCode() {
+    // @Args('email') email: string, // @Args('code') Code: string,
+    // Query codes database by given email
+    // check if code is matched
+    // find user by email and update isVerified to true
   }
 }
