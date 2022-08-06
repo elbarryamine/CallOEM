@@ -7,6 +7,7 @@ type User = {
     email: string;
     isEmailVerified: boolean;
     joinedAt: Date;
+    avatar: string;
   };
   token: string;
 };

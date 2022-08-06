@@ -13,6 +13,8 @@ import {
   UsersCodesSchemaType,
 } from './entities/usersCodes.schema';
 import sendVerifyCodeEmail from 'src/services/email/sendVerifyCodeEmail';
+import { promises } from 'fs';
+import { join } from 'path';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -58,10 +60,15 @@ export class UsersResolver {
       // should hash password
       const hashedPass = await hash(password, 10);
 
+      const pathToImages = join(process.cwd(), 'src/assets/upload/avatar');
+      const files = await promises.readdir(pathToImages);
+      const avatar: string = files[Math.floor(Math.random() * files.length)];
+
       return await this.UserModule.create({
         email,
         password: hashedPass,
         username,
+        avatar,
       });
     } catch {
       throw new HttpException({ message: 'something went wrong' }, 400);

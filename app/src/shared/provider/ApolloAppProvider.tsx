@@ -1,9 +1,10 @@
 import React, {ReactNode} from 'react';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
+import {BASE_URL} from '@shared/constants/configs';
 
 const client = new ApolloClient({
   // Todo : Setup enviromet variables
-  uri: 'http://192.168.1.107:4000/graphql',
+  uri: `${BASE_URL}/graphql`,
   cache: new InMemoryCache(),
 });
 

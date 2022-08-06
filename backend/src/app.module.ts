@@ -8,11 +8,13 @@ import { JwtModuleService } from './modules/shared/jwt.module';
 import { ConfigModule } from './modules/shared/env.module';
 import { UsersModule } from './modules/users/users.module';
 import { TalkModule } from './modules/talk/talk.module';
+import { FileModule } from './modules/stream/stream.module';
 
 const MONOGO_CONNECT_STRING = `mongodb+srv://${process.env.dbUserName}:${process.env.dbUserPassword}@cluster0.iig7z.mongodb.net/${process.env.dbName}?retryWrites=true&w=majority`;
 
 @Module({
   imports: [
+    FileModule,
     UsersModule,
     TalkModule,
     ConfigModule,

@@ -4,23 +4,29 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AuthStack, {AuthRootStackParamList} from './AuthStack';
 import RoomStack, {RoomRootTabParamList} from './RoomStack';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {useSelector} from 'react-redux';
+import {StateType} from '@redux/store';
 
 const Stack = createNativeStackNavigator();
 
 export default function NavigationProvider() {
+  const user = useSelector((state: StateType) => state.auth.user);
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="auth:root">
-        <Stack.Screen
-          name="auth:root"
-          component={AuthStack}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="room:root"
-          component={RoomStack}
-          options={{headerShown: false}}
-        />
+        {!user ? (
+          <Stack.Screen
+            name="auth:root"
+            component={AuthStack}
+            options={{headerShown: false}}
+          />
+        ) : (
+          <Stack.Screen
+            name="room:root"
+            component={RoomStack}
+            options={{headerShown: false}}
+          />
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -35,7 +41,11 @@ type RootStackParamList = {
   };
 };
 
-export type RootScreenProps = NativeStackScreenProps<
+export type AuthRootScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'auth:root'
+>;
+export type RoomRootScreenProps = NativeStackScreenProps<
   RootStackParamList,
   'auth:root'
 >;

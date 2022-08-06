@@ -9,6 +9,7 @@ const QUERY = gql`
         email
         joinedAt
         isEmailVerified
+        avatar
       }
       token
     }

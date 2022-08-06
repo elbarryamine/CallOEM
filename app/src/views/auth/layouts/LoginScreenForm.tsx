@@ -16,6 +16,8 @@ import useSignIn from '@shared/api/auth/useLogin';
 import {useNavigation} from '@react-navigation/native';
 import {LoginScreenProps} from '@navigation/AuthStack';
 import useSendVerifyCodeEmail from '@shared/api/auth/useSendVerifyCodeEmail';
+import {useDispatch} from 'react-redux';
+import {setUser} from '@redux/slices/user';
 
 export default function LoginScreenForm() {
   const [passShowing, setPassShowing] = useState<boolean>(false);
@@ -24,6 +26,7 @@ export default function LoginScreenForm() {
   const [isloading, setLoading] = useState<boolean>(false);
   const navigation: LoginScreenProps['navigation'] = useNavigation();
   const [sendCode] = useSendVerifyCodeEmail();
+  const dispatch = useDispatch();
 
   const handleLogin = async (values: {
     Identifier: string;
@@ -43,7 +46,7 @@ export default function LoginScreenForm() {
   useEffect(() => {
     if (data && data.signIn && !loading) {
       if (data.signIn.user.isEmailVerified) {
-        // set user
+        dispatch(setUser(data.signIn));
       } else {
         async function sendEmailCode() {
           await sendCode({variables: {email: data.signIn.user.email}}).then(

@@ -8,7 +8,7 @@ export default function RoomCard() {
       <View shadow="1" borderRadius="10px" bg="white">
         <View
           borderRadius="10px"
-          bg={colors[Math.floor(Math.random() * (colors.length - 1))] + '30'}
+          bg={colors[Math.floor(Math.random() * colors.length)] + '30'}
           overflow="hidden">
           <Stack alignItems="center" justifyContent="center" space={2} p="12px">
             <Stack flex="1" mr="24px">
@@ -39,7 +39,7 @@ export default function RoomCard() {
                 overflow="hidden"
                 mr="5px">
                 {data
-                  .slice(0, Math.floor(Math.random() * (data.length - 2)) + 2)
+                  .slice(0, Math.floor(Math.random() * (data.length - 1)) + 2)
                   .map((el, index) => (
                     <Avatar
                       size="sm"

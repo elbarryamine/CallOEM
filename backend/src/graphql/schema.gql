@@ -30,6 +30,7 @@ input SignUserInput {
 }
 
 type User {
+  avatar: String!
   email: String!
   id: String!
   isEmailVerified: Boolean!
@@ -39,6 +40,7 @@ type User {
 }
 
 type UserSign {
+  avatar: String!
   email: String!
   id: String!
   isEmailVerified: Boolean!
