@@ -3,11 +3,11 @@ import {Heading, Stack, Text, ScrollView, View, Button} from 'native-base';
 import SignupSvg from '@assets/images/signup.svg';
 import AuthImageContainer from '../layouts/AuthImageContainer';
 import ScreenContainer from '@components/Containers/ScreenContainer';
-import {AuthRootScreenProps} from '@navigation/AuthStack';
+import {SignupScreenProps} from '@navigation/AuthStack';
 import SignUpScreenForm from '../layouts/SignUpScreenForm';
 import useKeyboardShowing from '@shared/hooks/useKeyboardShowing';
 
-export default function SignupScreen({navigation}: AuthRootScreenProps) {
+export default function SignupScreen({navigation}: SignupScreenProps) {
   const {isKeyboardShowing} = useKeyboardShowing();
   return (
     <ScreenContainer>

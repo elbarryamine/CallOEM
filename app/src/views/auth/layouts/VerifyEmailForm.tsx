@@ -8,19 +8,25 @@ import {
 } from 'native-base';
 import {Formik} from 'formik';
 import FormErrorMessage from '@components/Elements/FormErrorMessage';
-import useResetPassword from '@shared/api/auth/useResetPassword';
+import useResetPassword from '@shared/api/auth/useVerifyCode';
 import verifyEmailSchema from '@shared/constants/verifyEmailSchema ';
 import {NativeSyntheticEvent, TextInputChangeEventData} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {VerifyScreenProps} from '@navigation/AuthStack';
+import useVerifyCode from '@shared/api/auth/useVerifyCode';
 
-export default function VerifyEmailScreenForm() {
-  const [resetPassword, {data, loading, error}] = useResetPassword();
+export default function VerifyEmailScreenForm({
+  userEmail,
+}: {
+  userEmail: string;
+}) {
+  const [verifyCode, {data, loading, error}] = useVerifyCode();
+  const navigation: VerifyScreenProps['navigation'] = useNavigation();
 
   const handleVerifyEmail = async (values: {Code: string}) => {
-    let notYet = true;
     try {
-      if (notYet) return;
-      await resetPassword({
-        variables: {Email: values.Code},
+      await verifyCode({
+        variables: {code: values.Code, email: userEmail},
       });
     } catch {}
   };
@@ -36,7 +42,8 @@ export default function VerifyEmailScreenForm() {
   }
 
   useEffect(() => {
-    if (data) {
+    if (data && data.verifyEmailCode) {
+      navigation.navigate('auth:login');
     }
   }, [data]);
   return (

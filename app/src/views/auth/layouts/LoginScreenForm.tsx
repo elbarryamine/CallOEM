@@ -14,13 +14,13 @@ import FormErrorMessage from '@components/Elements/FormErrorMessage';
 import LoginSchema from '@shared/constants/loginSchema';
 import useSignIn from '@shared/api/auth/useLogin';
 import {useNavigation} from '@react-navigation/native';
-import {AuthRootScreenProps} from '@navigation/AuthStack';
+import {LoginScreenProps} from '@navigation/AuthStack';
 
 export default function LoginScreenForm() {
   const [passShowing, setPassShowing] = useState<boolean>(false);
   const onPassToggle = () => setPassShowing(!passShowing);
   const [signIn, {data, loading, error}] = useSignIn();
-  const navigation: AuthRootScreenProps['navigation'] = useNavigation();
+  const navigation: LoginScreenProps['navigation'] = useNavigation();
 
   const handleLogin = async (values: {
     Identifier: string;
@@ -102,7 +102,7 @@ export default function LoginScreenForm() {
             </FormControl>
           </KeyboardAvoidingView>
           <Button
-            onPress={() => navigation.navigate('auth:signup')}
+            onPress={() => navigation.navigate('auth:resetPassword')}
             alignSelf="flex-end">
             <Text color="primary">Forgot Password ?</Text>
           </Button>

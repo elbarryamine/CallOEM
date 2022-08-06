@@ -11,12 +11,12 @@ import {
 import ResetPasswordSvg from '@assets/images/reset-password.svg';
 import AuthImageContainer from '../layouts/AuthImageContainer';
 import ScreenContainer from '@components/Containers/ScreenContainer';
-import {AuthRootScreenProps} from '@navigation/AuthStack';
+import {ForgotPasswordScreenProps} from '@navigation/AuthStack';
 import useKeyboardShowing from '@shared/hooks/useKeyboardShowing';
 
 export default function ForgotPasswordScreen({
   navigation,
-}: AuthRootScreenProps) {
+}: ForgotPasswordScreenProps) {
   const {isKeyboardShowing} = useKeyboardShowing();
   return (
     <ScreenContainer>

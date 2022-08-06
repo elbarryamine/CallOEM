@@ -8,11 +8,11 @@ import {
 } from 'native-base';
 import {Formik} from 'formik';
 import FormErrorMessage from '@components/Elements/FormErrorMessage';
-import useResetPassword from '@shared/api/auth/useResetPassword';
 import forgotPasswordSchema from '@shared/constants/forgotPasswordSchema';
+import useSendResetPasswordEmail from '@shared/api/auth/useSendResetPasswordEmail';
 
 export default function ForgotPasswordScreenForm() {
-  const [resetPassword, {data, loading, error}] = useResetPassword();
+  const [resetPassword, {data, loading, error}] = useSendResetPasswordEmail();
 
   const handleResetPassword = async (values: {Email: string}) => {
     try {

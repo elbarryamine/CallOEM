@@ -3,14 +3,11 @@ import {Button, Heading, Stack, Text, View} from 'native-base';
 import LoginSvg from '@assets/images/login.svg';
 import AuthImageContainer from '../layouts/AuthImageContainer';
 import ScreenContainer from '@components/Containers/ScreenContainer';
-import {AuthRootScreenProps} from '@navigation/AuthStack';
-import {RootScreenProps} from '@navigation/';
+import {LoginScreenProps} from '@navigation/AuthStack';
 import useKeyboardShowing from '@shared/hooks/useKeyboardShowing';
 import LoginScreenForm from '../layouts/LoginScreenForm';
 
-export default function LoginScreen({
-  navigation,
-}: AuthRootScreenProps & RootScreenProps) {
+export default function LoginScreen({navigation}: LoginScreenProps) {
   const {isKeyboardShowing} = useKeyboardShowing();
 
   return (

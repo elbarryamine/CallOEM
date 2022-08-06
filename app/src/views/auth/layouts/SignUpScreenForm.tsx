@@ -12,16 +12,19 @@ import {Formik} from 'formik';
 import FormErrorMessage from '@components/Elements/FormErrorMessage';
 import SignupSchema from '@shared/constants/signupSchema';
 import useSignup from '@shared/api/auth/useSignup';
-import {AuthRootScreenProps} from '@navigation/AuthStack';
+import {SignupScreenProps} from '@navigation/AuthStack';
 import {useNavigation} from '@react-navigation/native';
+import useSendVerifyCodeEmail from '@shared/api/auth/useSendVerifyCodeEmail';
 
 export default function SignUpScreenForm() {
+  const [userEmail, setUserEmail] = useState<string | null>();
   const [passShowing, setPassShowing] = useState<boolean>(false);
   const [passConfirmShowing, setPassConfirmShowing] = useState<boolean>(false);
   const onPassToggle = () => setPassShowing(!passShowing);
   const onPassConfirmToggle = () => setPassConfirmShowing(!passConfirmShowing);
   const [signUp, {data, loading, error}] = useSignup();
-  const navigation: AuthRootScreenProps['navigation'] = useNavigation();
+  const [sendCode] = useSendVerifyCodeEmail();
+  const navigation: SignupScreenProps['navigation'] = useNavigation();
 
   const handleSignUp = async (values: {
     Username: string;
@@ -37,15 +40,19 @@ export default function SignUpScreenForm() {
           password: values.Password,
           passwordConfirm: values['Password Confirm'],
         },
+      }).then(async () => {
+        await sendCode({variables: {email: values.Email}}).then(() => {
+          setUserEmail(values.Email);
+        });
       });
     } catch {}
   };
 
   useEffect(() => {
-    if (!loading && data && data.signUp) {
-      navigation.navigate('auth:verify');
+    if (data && data.signUp && userEmail) {
+      navigation.navigate('auth:verify', {email: userEmail});
     }
-  }, [data, loading]);
+  }, [data, userEmail]);
   return (
     <Formik
       initialValues={{

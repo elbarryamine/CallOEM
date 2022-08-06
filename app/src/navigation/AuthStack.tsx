@@ -7,11 +7,11 @@ import {
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 import VerifyEmailScreen from '@views/auth/screens/VerifyEmailScreen';
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<AuthRootStackParamList>();
 
 export default function AuthStack() {
   return (
-    <Stack.Navigator initialRouteName="auth:verify">
+    <Stack.Navigator initialRouteName="auth:login">
       <Stack.Screen
         name="auth:login"
         component={LoginScreen}
@@ -37,13 +37,25 @@ export default function AuthStack() {
 }
 
 export type AuthRootStackParamList = {
-  'auth:resetPassword': undefined;
-  'auth:signup': undefined;
   'auth:login': undefined;
-  'auth:verify': undefined;
+  'auth:signup': undefined;
+  'auth:resetPassword': undefined;
+  'auth:verify': {email: string};
 };
 
-export type AuthRootScreenProps = NativeStackScreenProps<
+export type LoginScreenProps = NativeStackScreenProps<
+  AuthRootStackParamList,
+  'auth:login'
+>;
+export type ForgotPasswordScreenProps = NativeStackScreenProps<
+  AuthRootStackParamList,
+  'auth:resetPassword'
+>;
+export type SignupScreenProps = NativeStackScreenProps<
+  AuthRootStackParamList,
+  'auth:signup'
+>;
+export type VerifyScreenProps = NativeStackScreenProps<
   AuthRootStackParamList,
   'auth:verify'
 >;
