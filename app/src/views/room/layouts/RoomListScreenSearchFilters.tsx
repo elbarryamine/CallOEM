@@ -16,7 +16,6 @@ export default function RoomListScreenSearchFilters() {
         fontSize="sub"
         numberOfLines={1}
       />
-
       <ButtonIcon as={Ionicons} name="options-outline" />
     </Flex>
   );

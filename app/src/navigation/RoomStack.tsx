@@ -51,8 +51,11 @@ export default function RoomStack() {
 }
 
 export type RoomRootTabParamList = {
-  'room:call': undefined;
   'room:list': undefined;
+  'room:history': undefined;
+  'room:account': undefined;
+  'room:settings': undefined;
+  'room:call': undefined;
 };
 
 export type RoomRootScreenProps = BottomTabScreenProps<

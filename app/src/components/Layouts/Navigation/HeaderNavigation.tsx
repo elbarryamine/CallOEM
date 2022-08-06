@@ -8,7 +8,7 @@ export default function HeaderNavigation(props: IViewProps) {
   return (
     <View py="20px" shadow="md" {...props}>
       <Flex justify="space-between" flexDir="row">
-        <HStack alignItems="center" space={'10px'}>
+        <HStack alignItems="center" space={5}>
           <Avatar
             size="md"
             source={{

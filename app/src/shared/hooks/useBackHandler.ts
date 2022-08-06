@@ -10,18 +10,18 @@ export default function useBackHandler() {
   function goBack() {
     navigation.goBack();
   }
-  useEffect(() => {
-    const callBack = () => {
-      setTries(prevTries => {
-        if (prevTries > 3) {
-          setIsSpamming(true);
-          return prevTries;
-        }
-        return prevTries + 1;
-      });
+  const callBack = () => {
+    setTries(prevTries => {
+      if (prevTries > 3) {
+        setIsSpamming(true);
+        return prevTries;
+      }
+      return prevTries + 1;
+    });
 
-      return !isAllowedToGoBack;
-    };
+    return !isAllowedToGoBack;
+  };
+  useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', callBack);
 
     return () => {

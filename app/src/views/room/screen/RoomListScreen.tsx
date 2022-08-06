@@ -16,7 +16,7 @@ export default function RoomsListScreen() {
           <RoomListScreenHeader />
         </Stack>
         <ScrollView showsVerticalScrollIndicator={false} flex="1" mt="8px">
-          <Stack space={10} py="10px">
+          <Stack space={5} py="10px">
             {Array.from({length: 8}).map((_, i: number) => (
               <RoomCard key={i} />
             ))}

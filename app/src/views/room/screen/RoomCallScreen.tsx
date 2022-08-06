@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Button, Heading, View, useToast, Flex} from 'native-base';
+import {Button, Heading, View, useToast, Flex, Text} from 'native-base';
 import {RTCView} from 'react-native-webrtc-web-shim';
 
 import RTCDataChannel from 'react-native-webrtc/lib/typescript/RTCDataChannel';
@@ -9,14 +9,21 @@ import {RTCPeerConnection} from 'react-native-webrtc';
 import useGetUserMedia from '../hooks/useGetUserMedia';
 import useBackHandler from '@shared/hooks/useBackHandler';
 import ScreenContainer from '@components/Containers/ScreenContainer';
+import useNavigationChangeHandler from '@shared/hooks/useNavigationChangeHandler';
+import {RoomRootScreenProps} from '@navigation/RoomStack';
 
 const peerConstraints = {iceServers: [{urls: 'stun:stun.l.google.com:19302'}]};
-export default function RoomCallScreen() {
+export default function RoomCallScreen({}: RoomRootScreenProps) {
   const [channel, setChannel] = useState<RTCDataChannel | null>(null);
   const peerConnection = useRef(new RTCPeerConnection(peerConstraints));
   const {localStream, setLocalStream, loading, setIsLoading, mutate} =
     useGetUserMedia(true);
   const {allowBack, preventBack, isSpamming} = useBackHandler();
+  const {
+    allowNavigate,
+    preventNavigate,
+    isSpamming: isSpammingNavigate,
+  } = useNavigationChangeHandler(false);
   const toast = useToast();
 
   const hangUp = async () => {
@@ -25,6 +32,7 @@ export default function RoomCallScreen() {
       localStream.getTracks().map(track => track.stop());
       setLocalStream(null);
       allowBack();
+      allowNavigate();
     } catch (err) {}
   };
 
@@ -32,6 +40,7 @@ export default function RoomCallScreen() {
     try {
       const stream = await mutate();
       preventBack();
+      preventNavigate();
       if (!stream) return;
       peerConnection.current.addStream(stream);
       const dataChannel =
@@ -49,13 +58,13 @@ export default function RoomCallScreen() {
   }, [channel]);
 
   useEffect(() => {
-    if (isSpamming) {
+    if (isSpamming || isSpammingNavigate) {
       toast.show({
         description: 'Please end call before going back',
         placement: 'top',
       });
     }
-  }, [isSpamming]);
+  }, [isSpamming, isSpammingNavigate]);
   return (
     <View h="100%" w="100%" position="relative">
       <View position="absolute" top="0" left="0" h="100%" w="100%">
@@ -83,7 +92,7 @@ export default function RoomCallScreen() {
             align="center">
             {!localStream && (
               <Button
-                colorScheme="blue"
+                bg="primary"
                 position="absolute"
                 bottom="50px"
                 onPress={() => {
@@ -91,7 +100,7 @@ export default function RoomCallScreen() {
                   handleCall();
                 }}
                 isLoading={loading}>
-                Start Call
+                <Text color="invert">Start Call</Text>
               </Button>
             )}
             {localStream && (
@@ -99,10 +108,9 @@ export default function RoomCallScreen() {
                 mx="20px"
                 position="absolute"
                 bottom="50px"
-                colorScheme="blue"
                 bg="primary"
                 onPress={hangUp}>
-                End Call
+                <Text color="invert">End Call</Text>
               </Button>
             )}
           </Flex>
