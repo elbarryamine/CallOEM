@@ -4,7 +4,7 @@ import { CreateUserInput } from './dto/create-user.input';
 import { InjectModel } from '@nestjs/mongoose';
 import { UserDocument, UserSchemaType } from './entities/user.schema';
 import { Model } from 'mongoose';
-import { HttpException } from '@nestjs/common';
+import { HttpException, HttpStatus } from '@nestjs/common';
 import { SignUserInput } from './dto/signin-user.input';
 import { compare, hash } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
@@ -15,6 +15,7 @@ import {
 import sendVerifyCodeEmail from 'src/services/email/sendVerifyCodeEmail';
 import { promises } from 'fs';
 import { join } from 'path';
+import signUpValidate from 'src/services/validation/signup';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -28,6 +29,10 @@ export class UsersResolver {
   @Mutation(() => User)
   async signUp(@Args('createUserInput') createUserInput: CreateUserInput) {
     try {
+      const isValid = await signUpValidate(createUserInput);
+      if (!isValid) {
+        return new HttpException({ message: 'sign up fields not valid' }, 401);
+      }
       const { password, passwordConfirm, email, username } = createUserInput;
 
       // check if password & passconfirm match
@@ -43,7 +48,7 @@ export class UsersResolver {
       const userHasSameEmail = await this.UserModule.findOne({ email });
       if (userHasSameEmail) {
         return new HttpException(
-          { message: 'email is assigned with another accound' },
+          { message: 'email is assigned with another account' },
           400,
         );
       }
@@ -52,7 +57,7 @@ export class UsersResolver {
       const userHasSameUsername = await this.UserModule.findOne({ username });
       if (userHasSameUsername) {
         return new HttpException(
-          { message: 'username is assigned with another accound' },
+          { message: 'username is assigned with another account' },
           400,
         );
       }
@@ -71,7 +76,7 @@ export class UsersResolver {
         avatar,
       });
     } catch {
-      throw new HttpException({ message: 'something went wrong' }, 400);
+      return new HttpException({ message: 'something went wrong' }, 400);
     }
   }
 
@@ -107,7 +112,7 @@ export class UsersResolver {
         token: this.jwtService.sign({ id: user.id }),
       };
     } catch {
-      throw new HttpException({ message: 'something went wrong' }, 400);
+      return new HttpException({ message: 'something went wrong' }, 400);
     }
   }
 
@@ -115,22 +120,30 @@ export class UsersResolver {
   async sendVerifyEmailCode(@Args('email') email: string) {
     // generate code
     try {
+      // check if user not already verified
+      const user = await this.UserModule.findOne({ email }).lean();
+      if (user.isEmailVerified) {
+        return new HttpException(
+          { message: 'user already verified' },
+          HttpStatus.NOT_ACCEPTABLE,
+        );
+      }
       const code = Math.floor(Math.random() * 999999)
         .toString()
         .padStart(6, '0');
 
       // save code to codes collection with email and code
-      const isFound = await this.UsersCodesModule.findOneAndUpdate(
+      const userCode = await this.UsersCodesModule.findOneAndUpdate(
         { email },
         { code },
-      );
-      if (!isFound) {
+      ).lean();
+      if (!userCode) {
         await this.UsersCodesModule.create({ email, code });
       }
       // send Code to email adresss
       return await sendVerifyCodeEmail({ code, email });
     } catch {
-      throw new HttpException({ message: 'something went wrong' }, 400);
+      return new HttpException({ message: 'something went wrong' }, 400);
     }
   }
   @Mutation(() => Boolean)
