@@ -5,7 +5,9 @@ import AuthImageContainer from '../layouts/AuthImageContainer';
 import ScreenContainer from '@components/Containers/ScreenContainer';
 import {AuthRootScreenProps} from '@navigation/AuthStack';
 
-export default function ForgotPasswordScreen({navigation}: AuthRootScreenProps) {
+export default function ForgotPasswordScreen({
+  navigation,
+}: AuthRootScreenProps) {
   return (
     <ScreenContainer>
       <Stack h="100%" justifyContent="space-between">
@@ -20,13 +22,19 @@ export default function ForgotPasswordScreen({navigation}: AuthRootScreenProps) 
             </Text>
           </Stack>
           <FormControl>
-            <Input placeholder="Enter your username or email" borderBottomWidth="1" />
+            <Input
+              placeholder="Enter your username or email"
+              borderBottomWidth="1"
+            />
           </FormControl>
           <Button _text={{color: 'invert'}} bg="primary" color="invert">
             Reset
           </Button>
         </Stack>
-        <Text textAlign="center" color="primary" onPress={() => navigation.navigate('auth:login')}>
+        <Text
+          textAlign="center"
+          color="primary"
+          onPress={() => navigation.navigate('auth:login')}>
           Login
         </Text>
       </Stack>

@@ -1,5 +1,15 @@
 import React from 'react';
-import {Button, FormControl, Heading, Input, Modal, ScrollView, Stack, Text, TextArea} from 'native-base';
+import {
+  Button,
+  FormControl,
+  Heading,
+  Input,
+  Modal,
+  ScrollView,
+  Stack,
+  Text,
+  TextArea,
+} from 'native-base';
 import FormLabel from '@components/Elements/FormLabel';
 
 interface RoomCreatingModalProps {
@@ -7,7 +17,10 @@ interface RoomCreatingModalProps {
   onClose: () => void;
 }
 
-export default function RoomCreatingModal({isOpen, onClose}: RoomCreatingModalProps) {
+export default function RoomCreatingModal({
+  isOpen,
+  onClose,
+}: RoomCreatingModalProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="full">
       <Modal.Content h="80%" w="95%">
@@ -24,7 +37,11 @@ export default function RoomCreatingModal({isOpen, onClose}: RoomCreatingModalPr
               </FormControl>
               <FormControl>
                 <FormLabel>Room Description</FormLabel>
-                <TextArea autoCompleteType={false} placeholder="Enter Room Description" borderBottomWidth="1" />
+                <TextArea
+                  autoCompleteType={false}
+                  placeholder="Enter Room Description"
+                  borderBottomWidth="1"
+                />
               </FormControl>
             </Stack>
           </ScrollView>

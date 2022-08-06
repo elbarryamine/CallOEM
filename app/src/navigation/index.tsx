@@ -11,8 +11,16 @@ export default function NavigationProvider() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="auth:root">
-        <Stack.Screen name="auth:root" component={AuthStack} options={{headerShown: false}} />
-        <Stack.Screen name="room:root" component={RoomStack} options={{headerShown: false}} />
+        <Stack.Screen
+          name="auth:root"
+          component={AuthStack}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="room:root"
+          component={RoomStack}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -27,4 +35,7 @@ type RootStackParamList = {
   };
 };
 
-export type RootScreenProps = NativeStackScreenProps<RootStackParamList, 'auth:root'>;
+export type RootScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'auth:root'
+>;

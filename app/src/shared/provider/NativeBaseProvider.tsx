@@ -12,7 +12,9 @@ import {getDynamicTheme} from '@shared/config/styles';
 export default function NativeBaseProvider({children}: {children: ReactNode}) {
   return (
     <Provider theme={theme}>
-      <DynamicThemeNativeBaseProvider>{children}</DynamicThemeNativeBaseProvider>
+      <DynamicThemeNativeBaseProvider>
+        {children}
+      </DynamicThemeNativeBaseProvider>
     </Provider>
   );
 }
@@ -24,5 +26,9 @@ function DynamicThemeNativeBaseProvider({children}: {children: ReactNode}) {
   // const isSystemDark = Appearance.getColorScheme() === 'dark';
   // const isAppDark = colorMode === 'dark';
   // const isDark = isAppDark || isSystemDark;
-  return <Provider theme={getDynamicTheme(nativeBaseTheme, false)}>{children}</Provider>;
+  return (
+    <Provider theme={getDynamicTheme(nativeBaseTheme, false)}>
+      {children}
+    </Provider>
+  );
 }

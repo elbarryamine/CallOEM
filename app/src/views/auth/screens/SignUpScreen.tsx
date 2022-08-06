@@ -1,5 +1,13 @@
 import React, {useState} from 'react';
-import {Button, Heading, Input, Stack, Text, FormControl, Icon} from 'native-base';
+import {
+  Button,
+  Heading,
+  Input,
+  Stack,
+  Text,
+  FormControl,
+  Icon,
+} from 'native-base';
 import SignupSvg from '@assets/images/signup.svg';
 import AuthImageContainer from '../layouts/AuthImageContainer';
 import Feather from 'react-native-vector-icons/Feather';
@@ -19,7 +27,9 @@ export default function SignupScreen({navigation}: AuthRootScreenProps) {
         </AuthImageContainer>
         <Stack space={5}>
           <Stack>
-            <Heading textTransform="capitalize">Lets register your account</Heading>
+            <Heading textTransform="capitalize">
+              Lets register your account
+            </Heading>
             <Text fontSize="sub" color="gray.500">
               Hi there, let's start a new journey together
             </Text>
@@ -37,7 +47,12 @@ export default function SignupScreen({navigation}: AuthRootScreenProps) {
               borderBottomWidth="1"
               InputRightElement={
                 <Button bg="primary" h="100%" borderRadius="0">
-                  <Icon color="white" as={Feather} name={passShowing ? 'eye-off' : 'eye'} onPress={onPassToggle} />
+                  <Icon
+                    color="white"
+                    as={Feather}
+                    name={passShowing ? 'eye-off' : 'eye'}
+                    onPress={onPassToggle}
+                  />
                 </Button>
               }
             />
@@ -49,7 +64,12 @@ export default function SignupScreen({navigation}: AuthRootScreenProps) {
               borderBottomWidth="1"
               InputRightElement={
                 <Button bg="primary" h="100%" borderRadius="0">
-                  <Icon color="white" as={Feather} name={passConfirmShowing ? 'eye-off' : 'eye'} onPress={onPassConfirmToggle} />
+                  <Icon
+                    color="white"
+                    as={Feather}
+                    name={passConfirmShowing ? 'eye-off' : 'eye'}
+                    onPress={onPassConfirmToggle}
+                  />
                 </Button>
               }
             />
@@ -60,7 +80,9 @@ export default function SignupScreen({navigation}: AuthRootScreenProps) {
         </Stack>
         <Text textAlign="center" fontSize="sub">
           Already have an account?{' '}
-          <Text color="primary" onPress={() => navigation.navigate('auth:login')}>
+          <Text
+            color="primary"
+            onPress={() => navigation.navigate('auth:login')}>
             Login
           </Text>
         </Text>

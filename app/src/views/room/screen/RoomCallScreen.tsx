@@ -14,7 +14,8 @@ const peerConstraints = {iceServers: [{urls: 'stun:stun.l.google.com:19302'}]};
 export default function RoomCallScreen() {
   const [channel, setChannel] = useState<RTCDataChannel | null>(null);
   const peerConnection = useRef(new RTCPeerConnection(peerConstraints));
-  const {localStream, setLocalStream, loading, setIsLoading, mutate} = useGetUserMedia(true);
+  const {localStream, setLocalStream, loading, setIsLoading, mutate} =
+    useGetUserMedia(true);
   const {allowBack, preventBack, isSpamming} = useBackHandler();
   const toast = useToast();
 
@@ -33,7 +34,8 @@ export default function RoomCallScreen() {
       preventBack();
       if (!stream) return;
       peerConnection.current.addStream(stream);
-      const dataChannel = peerConnection.current.createDataChannel('my_channel');
+      const dataChannel =
+        peerConnection.current.createDataChannel('my_channel');
       setChannel(dataChannel);
     } catch (err) {}
   };
@@ -57,10 +59,28 @@ export default function RoomCallScreen() {
   return (
     <View h="100%" w="100%" position="relative">
       <View position="absolute" top="0" left="0" h="100%" w="100%">
-        {localStream && <RTCView stream={localStream} objectFit="cover" mirror={true} style={styles.rtcviewer} />}
-        <ScreenContainer position="absolute" top={0} left={0} h="100%" w="100%" bg="transparent">
+        {localStream && (
+          <RTCView
+            stream={localStream}
+            objectFit="cover"
+            mirror={true}
+            style={styles.rtcviewer}
+          />
+        )}
+        <ScreenContainer
+          position="absolute"
+          top={0}
+          left={0}
+          h="100%"
+          w="100%"
+          bg="transparent">
           <Heading color="white">NewMeeting</Heading>
-          <Flex h="100%" w="100%" position="relative" justify="center" align="center">
+          <Flex
+            h="100%"
+            w="100%"
+            position="relative"
+            justify="center"
+            align="center">
             {!localStream && (
               <Button
                 colorScheme="blue"
@@ -75,7 +95,13 @@ export default function RoomCallScreen() {
               </Button>
             )}
             {localStream && (
-              <Button mx="20px" position="absolute" bottom="50px" colorScheme="blue" bg="primary" onPress={hangUp}>
+              <Button
+                mx="20px"
+                position="absolute"
+                bottom="50px"
+                colorScheme="blue"
+                bg="primary"
+                onPress={hangUp}>
                 End Call
               </Button>
             )}

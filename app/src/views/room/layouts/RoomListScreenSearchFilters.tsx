@@ -8,7 +8,9 @@ export default function RoomListScreenSearchFilters() {
     <Flex flexDir="row">
       <Input
         flex="1"
-        leftElement={<Icon ml="10px" size="25px" as={Ionicons} name="md-search-outline" />}
+        leftElement={
+          <Icon ml="10px" size="25px" as={Ionicons} name="md-search-outline" />
+        }
         placeholder="Search for a room with similar issue ..."
         bg="secondary"
         fontSize="sub"

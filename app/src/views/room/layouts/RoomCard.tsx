@@ -6,33 +6,57 @@ export default function RoomCard() {
   return (
     <View p="2px">
       <View shadow="1" borderRadius="10px" bg="white">
-        <View borderRadius="10px" bg={colors[Math.floor(Math.random() * (colors.length - 1))] + '30'} overflow="hidden">
+        <View
+          borderRadius="10px"
+          bg={colors[Math.floor(Math.random() * (colors.length - 1))] + '30'}
+          overflow="hidden">
           <Stack alignItems="center" justifyContent="center" space={2} p="12px">
             <Stack flex="1" mr="24px">
-              <Text fontSize="subheader" color="text" fontWeight={900} noOfLines={1} textTransform="uppercase">
+              <Text
+                fontSize="subheader"
+                color="text"
+                fontWeight={900}
+                noOfLines={1}
+                textTransform="uppercase">
                 I got dumped and i want to talk
               </Text>
               <Text color="text" fontSize="sub" fontWeight={100} noOfLines={2}>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatum rerum, labore illo, inventore ab veniam error voluptas sit
-                reiciendis modi sunt dolores magni unde aliquam temporibus tempora fugit deserunt nam!
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Voluptatum rerum, labore illo, inventore ab veniam error
+                voluptas sit reiciendis modi sunt dolores magni unde aliquam
+                temporibus tempora fugit deserunt nam!
               </Text>
             </Stack>
-            <HStack alignSelf="flex-start" alignItems="center" justifyContent="space-between">
-              <HStack alignItems="center" h="100%" flex="1" overflow="hidden" mr="5px">
-                {data.slice(0, Math.floor(Math.random() * (data.length - 2)) + 2).map((el, index) => (
-                  <Avatar
-                    size="sm"
-                    key={index}
-                    mr={index === data.length - 1 ? '0px' : '-10px'}
-                    bg="green.500"
-                    source={{
-                      uri: el,
-                    }}
-                  />
-                ))}
+            <HStack
+              alignSelf="flex-start"
+              alignItems="center"
+              justifyContent="space-between">
+              <HStack
+                alignItems="center"
+                h="100%"
+                flex="1"
+                overflow="hidden"
+                mr="5px">
+                {data
+                  .slice(0, Math.floor(Math.random() * (data.length - 2)) + 2)
+                  .map((el, index) => (
+                    <Avatar
+                      size="sm"
+                      key={index}
+                      mr={index === data.length - 1 ? '0px' : '-10px'}
+                      bg="green.500"
+                      source={{
+                        uri: el,
+                      }}
+                    />
+                  ))}
               </HStack>
 
-              <Button bg="primary" _text={{color: 'invert'}} px="30px" _pressed={{opacity: 0.8}}>
+              <Button
+                bg="primary"
+                _text={{color: 'invert'}}
+                px="30px"
+                _pressed={{opacity: 0.8}}>
                 View
               </Button>
             </HStack>

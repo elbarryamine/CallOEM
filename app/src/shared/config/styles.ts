@@ -21,9 +21,28 @@ export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
     components: {
       Tag: {defaultProps: {_text: fontTextConfig}},
       Text: {defaultProps: fontTextConfig},
-      Input: {defaultProps: {...fontTextConfig, _focus: {bg: 'transparent'}, placeholderTextColor: colors.text}},
-      TextArea: {defaultProps: {...fontTextConfig, _focus: {bg: 'transparent'}, placeholderTextColor: colors.text}},
-      Heading: {defaultProps: {...fontTextConfig, fontFamily: 'heading', fontSize: 20, textTransform: 'capitalize'}},
+      Input: {
+        defaultProps: {
+          ...fontTextConfig,
+          _focus: {bg: 'transparent'},
+          placeholderTextColor: colors.text,
+        },
+      },
+      TextArea: {
+        defaultProps: {
+          ...fontTextConfig,
+          _focus: {bg: 'transparent'},
+          placeholderTextColor: colors.text,
+        },
+      },
+      Heading: {
+        defaultProps: {
+          ...fontTextConfig,
+          fontFamily: 'heading',
+          fontSize: 20,
+          textTransform: 'capitalize',
+        },
+      },
       Button: {defaultProps: {borderRadius: '10px', _text: fontTextConfig}},
     },
     colors,
