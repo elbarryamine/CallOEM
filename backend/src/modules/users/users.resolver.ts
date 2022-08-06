@@ -125,17 +125,36 @@ export class UsersResolver {
         await this.UsersCodesModule.create({ email, code });
       }
       // send Code to email adresss
-      console.log(process.env.MobileAppName);
       return await sendVerifyCodeEmail({ code, email });
     } catch {
       throw new HttpException({ message: 'something went wrong' }, 400);
     }
   }
   @Mutation(() => Boolean)
-  async verifyEmailCode() {
-    // @Args('email') email: string, // @Args('code') Code: string,
-    // Query codes database by given email
-    // check if code is matched
-    // find user by email and update isVerified to true
+  async verifyEmailCode(
+    @Args('email') email: string,
+    @Args('code') code: string,
+  ) {
+    try {
+      // Query codes database by given email
+      const userCodeDoc = await this.UsersCodesModule.findOne({ email }).lean();
+
+      // check if code is matched and isNotExpired
+      const dateDiff =
+        new Date(Date.now()).getTime() - userCodeDoc.createdAt.getTime();
+      const expired = dateDiff / 1000 / 60 / 60 >= 1;
+
+      if (userCodeDoc.code === code && !expired) {
+        // find user by email and update isVerified to true
+        await this.UserModule.findOneAndUpdate(
+          { email },
+          { isEmailVerified: true },
+        );
+        return true;
+      }
+      {
+        return false;
+      }
+    } catch (err) {}
   }
 }

@@ -8,6 +8,9 @@ export class UsersCodesSchemaType {
 
   @Prop({ required: true })
   code: string;
+
+  @Prop({ default: Date.now })
+  createdAt: Date;
 }
 
 export const UsersCodesSchema =

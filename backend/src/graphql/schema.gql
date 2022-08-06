@@ -17,7 +17,7 @@ scalar DateTime
 type Mutation {
   sendVerifyEmailCode(email: String!): Boolean!
   signUp(createUserInput: CreateUserInput!): User!
-  verifyEmailCode: Boolean!
+  verifyEmailCode(code: String!, email: String!): Boolean!
 }
 
 type Query {
