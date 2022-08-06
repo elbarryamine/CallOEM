@@ -16,7 +16,9 @@ export default function VerifyEmailScreenForm() {
   const [resetPassword, {data, loading, error}] = useResetPassword();
 
   const handleVerifyEmail = async (values: {Code: string}) => {
+    let notYet = true;
     try {
+      if (notYet) return;
       await resetPassword({
         variables: {Email: values.Code},
       });
@@ -30,7 +32,7 @@ export default function VerifyEmailScreenForm() {
     e: NativeSyntheticEvent<TextInputChangeEventData>,
   ) {
     if (isNaN(Number(e.nativeEvent.text))) return;
-    setValues({Code: e.nativeEvent.text});
+    setValues({Code: `${e.nativeEvent.text}`});
   }
 
   useEffect(() => {
@@ -43,7 +45,7 @@ export default function VerifyEmailScreenForm() {
         Code: '',
       }}
       validationSchema={verifyEmailSchema}
-      onSubmit={values => handleVerifyEmail(values)}>
+      onSubmit={handleVerifyEmail}>
       {({handleBlur, handleSubmit, values, errors, touched, setValues}) => (
         <Stack space={2}>
           <FormControl>
