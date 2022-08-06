@@ -7,7 +7,7 @@ export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
     secondary: '#ffffff',
     text: isDark ? '#292C38' : '#292C38',
     invert: '#ffffff',
-    subText: '#ACB1C1',
+    subText: '#818589',
     primaryBg: '#ffffff',
     border: 'rgba(0,0,0,0.05)',
   };
@@ -22,7 +22,8 @@ export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
       Tag: {defaultProps: {_text: fontTextConfig}},
       Text: {defaultProps: fontTextConfig},
       Input: {defaultProps: {...fontTextConfig, _focus: {bg: 'transparent'}, placeholderTextColor: colors.text}},
-      Heading: {defaultProps: {...fontTextConfig, fontFamily: 'heading', fontSize: 20}},
+      TextArea: {defaultProps: {...fontTextConfig, _focus: {bg: 'transparent'}, placeholderTextColor: colors.text}},
+      Heading: {defaultProps: {...fontTextConfig, fontFamily: 'heading', fontSize: 20, textTransform: 'capitalize'}},
       Button: {defaultProps: {borderRadius: '10px', _text: fontTextConfig}},
     },
     colors,

@@ -18,8 +18,8 @@ export default function TabNavigation({state, navigation}: BottomTabBarProps) {
         {icons.map((ico, idx) => (
           <Button key={idx} onPress={() => navigation.navigate(state.routes[idx].name)}>
             <Stack alignItems="center">
-              <Icon as={ico.iconProvider} name={ico.name} size="25px" color={state.index === idx ? 'primary' : 'text'} />
-              <Text fontSize="mono" color={state.index === idx ? 'primary' : 'text'}>
+              <Icon as={ico.iconProvider} name={ico.name} size="25px" color={state.index === idx ? 'ternary' : 'text'} />
+              <Text fontSize="mono" color={state.index === idx ? 'ternary' : 'text'}>
                 {ico.title}
               </Text>
             </Stack>
