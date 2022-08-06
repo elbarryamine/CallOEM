@@ -15,6 +15,7 @@
     "@react-navigation/bottom-tabs": "^6.3.2",
     "@react-navigation/native": "^6.0.11",
     "@react-navigation/native-stack": "^6.7.0",
+    "formik": "^2.2.9",
     "native-base": "^3.4.9",
     "react": "18.0.0",
     "react-native": "0.69.3",
@@ -24,7 +25,8 @@
     "react-native-svg-transformer": "^1.0.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-webrtc": "^1.100.1",
-    "react-native-webrtc-web-shim": "^1.0.3"
+    "react-native-webrtc-web-shim": "^1.0.3",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

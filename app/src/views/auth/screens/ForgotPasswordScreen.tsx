@@ -1,5 +1,13 @@
 import React from 'react';
-import {Button, Heading, Input, Stack, Text, FormControl} from 'native-base';
+import {
+  Button,
+  Heading,
+  Input,
+  Stack,
+  Text,
+  FormControl,
+  View,
+} from 'native-base';
 import ResetPasswordSvg from '@assets/images/reset-password.svg';
 import AuthImageContainer from '../layouts/AuthImageContainer';
 import ScreenContainer from '@components/Containers/ScreenContainer';
@@ -31,12 +39,14 @@ export default function ForgotPasswordScreen({
             Reset
           </Button>
         </Stack>
-        <Text
-          textAlign="center"
-          color="primary"
-          onPress={() => navigation.navigate('auth:login')}>
-          Login
-        </Text>
+        <View pb="20px">
+          <Text
+            textAlign="center"
+            color="primary"
+            onPress={() => navigation.navigate('auth:login')}>
+            Login
+          </Text>
+        </View>
       </Stack>
     </ScreenContainer>
   );

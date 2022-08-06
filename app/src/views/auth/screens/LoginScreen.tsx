@@ -7,6 +7,7 @@ import {
   Text,
   FormControl,
   Icon,
+  View,
 } from 'native-base';
 import LoginSvg from '@assets/images/login.svg';
 import AuthImageContainer from '../layouts/AuthImageContainer';
@@ -45,12 +46,15 @@ export default function LoginScreen({
               placeholder="Password"
               borderBottomWidth="1"
               InputRightElement={
-                <Button bg="primary" h="100%" borderRadius="0">
+                <Button
+                  bg="primary"
+                  h="100%"
+                  borderRadius="0"
+                  onPress={onToggle}>
                   <Icon
                     color="white"
                     as={Feather}
                     name={passShowing ? 'eye-off' : 'eye'}
-                    onPress={onToggle}
                   />
                 </Button>
               }
@@ -70,14 +74,16 @@ export default function LoginScreen({
             Sign in
           </Button>
         </Stack>
-        <Text textAlign="center" fontSize="sub">
-          Don't have an account yet?{' '}
-          <Text
-            color="primary"
-            onPress={() => navigation.navigate('auth:signup')}>
-            Register
+        <View pb="20px">
+          <Text textAlign="center">
+            Don't have an account yet?{' '}
+            <Text
+              color="primary"
+              onPress={() => navigation.navigate('auth:signup')}>
+              Register
+            </Text>
           </Text>
-        </Text>
+        </View>
       </Stack>
     </ScreenContainer>
   );
