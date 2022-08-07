@@ -3,7 +3,7 @@ import {Text, Flex} from 'native-base';
 import ButtonIcon from '@components/Elements/ButtonIcon';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-export default function RoomCreatingTagsDisplay({tags, setTags}: TagsProps) {
+export default function ModalTagsDisplay({tags, setTags}: TagsProps) {
   return (
     <Flex flexDir="row" flexWrap="wrap">
       {tags.map((tag, idx) => (

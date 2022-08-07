@@ -1,11 +1,7 @@
 import React from 'react';
 import {Button, Modal, Text} from 'native-base';
 
-export default function RoomCreatingModalFooter({
-  onClose,
-}: {
-  onClose: () => void;
-}) {
+export default function ModalFooter({onClose}: {onClose: () => void}) {
   return (
     <Modal.Footer>
       <Button.Group space={2}>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Heading, Modal} from 'native-base';
 
-export default function RoomCreatingModalHeader() {
+export default function ModalHeader() {
   return (
     <>
       <Modal.CloseButton />

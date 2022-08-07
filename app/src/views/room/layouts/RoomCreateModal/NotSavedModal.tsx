@@ -1,11 +1,11 @@
 import React from 'react';
 import {Button, Heading, Modal, Text} from 'native-base';
 
-export default function RoomCreatingNotSavedModal({
+export default function ModalNotSaved({
   isOpen,
   onClose,
   onSure,
-}: RoomCreatingNotSavedModalProps) {
+}: ModalNotSavedProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="full">
       <Modal.Content w="95%">
@@ -33,7 +33,7 @@ export default function RoomCreatingNotSavedModal({
   );
 }
 
-interface RoomCreatingNotSavedModalProps {
+interface ModalNotSavedProps {
   isOpen: boolean;
   onClose: () => void;
   onSure: () => void;
