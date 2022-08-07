@@ -12,10 +12,12 @@ const SignupSchema = Yup.object().shape({
     .max(50, 'Password is too long!')
     .required('Password is required'),
   passwordConfirm: Yup.string().oneOf(
-    [Yup.ref('Password'), null],
+    [Yup.ref('password')],
     'Passwords must match',
   ),
 });
-export default function signUpValidate(user: CreateUserInput) {
-  return SignupSchema.isValid(user);
+export default function signUpValidate(
+  user: CreateUserInput,
+): Promise<unknown> {
+  return SignupSchema.validate(user);
 }

@@ -1,29 +1,53 @@
-import {
-  Resolver,
-  // Query, Mutation, Args, Int
-} from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { Room } from './entities/room.entity';
-// import { CreateRoomInput } from './dto/create-room.input';
-// import { UpdateRoomInput } from './dto/update-room.input';
+import { CreateRoomInput } from './dto/create-room.input';
+import { InjectModel } from '@nestjs/mongoose';
+import { RoomDocument, RoomSchemaType } from './entities/room.schema';
+import { Model } from 'mongoose';
+import { UpdateRoomInput } from './dto/update-room.input';
+import { UserDocument, UserSchemaType } from '../users/entities/user.schema';
 
 @Resolver(() => Room)
 export class RoomsResolver {
-  // @Mutation(() => Room)
-  // createRoom(@Args('createRoomInput') createRoomInput: CreateRoomInput) {
-  //   return '';
-  // }
-  // @Query(() => [Room], { name: 'rooms' })
-  // findAll() {
-  //   return '';
-  // }
-  // @Query(() => Room, { name: 'room' })
-  // findOne(@Args('id', { type: () => Int }) id: number) {
-  //   return '';
-  // }
-  // @Mutation(() => Room)
-  // updateRoom(@Args('updateRoomInput') updateRoomInput: UpdateRoomInput) {
-  //   return '';
-  // }
+  wantedUserFields: string[];
+  constructor(
+    @InjectModel(RoomSchemaType.name) private roomModule: Model<RoomDocument>,
+    @InjectModel(UserSchemaType.name) private userModel: Model<UserDocument>,
+  ) {
+    this.wantedUserFields = ['id', 'avatar', 'email', 'joinedAt', 'username'];
+  }
+
+  @Mutation(() => Room, { name: 'CreateRoom' })
+  async createRoom(@Args('createRoomInput') createRoomInput: CreateRoomInput) {
+    // validate room
+    return await this.roomModule.create(createRoomInput);
+  }
+  @Query(() => [Room], { name: 'GetRooms' })
+  async findAll() {
+    const rooms = await this.roomModule
+      .find()
+      .populate('memebers', this.wantedUserFields, this.userModel)
+      .populate('ownerMember', this.wantedUserFields, this.userModel)
+      .exec();
+    return rooms;
+  }
+  @Query(() => Room, { name: 'GetRoom' })
+  async findOne(@Args('id', { type: () => String }) id: string) {
+    const room = await this.roomModule
+      .findById(id)
+      .populate('memebers', this.wantedUserFields, this.userModel)
+      .populate('ownerMember', this.wantedUserFields, this.userModel)
+      .exec();
+    console.log(room);
+    return room;
+  }
+  @Mutation(() => Room)
+  async updateRoom(@Args('updateRoomInput') updateRoomInput: UpdateRoomInput) {
+    return await this.roomModule.findByIdAndUpdate(
+      updateRoomInput.id,
+      updateRoomInput,
+    );
+  }
   // @Mutation(() => Room)
   // removeRoom(@Args('id', { type: () => Int }) id: number) {
   //   return '';
