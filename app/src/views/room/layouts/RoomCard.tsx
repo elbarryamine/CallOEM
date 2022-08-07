@@ -1,8 +1,11 @@
 import React from 'react';
-import {Avatar, Button, HStack, Stack, Text, View} from 'native-base';
+import {Button, HStack, Stack, Text, View} from 'native-base';
 import colors from '@shared/constants/colors';
+import {Room} from '@shared/types/Room';
+import {getAvatar} from '@shared/constants/getAvatar';
+import ImageAvatar from '@components/Elements/ImageAvatar';
 
-export default function RoomCard() {
+export default function RoomCard({room}: {room: Room}) {
   return (
     <View p="2px">
       <View shadow="1" borderRadius="10px" bg="white">
@@ -10,7 +13,7 @@ export default function RoomCard() {
           borderRadius="10px"
           bg={colors[Math.floor(Math.random() * colors.length)] + '30'}
           overflow="hidden">
-          <Stack alignItems="center" justifyContent="center" space={2} p="12px">
+          <Stack justifyContent="center" space={2} p="12px">
             <Stack flex="1" mr="24px">
               <Text
                 fontSize="subheader"
@@ -18,14 +21,10 @@ export default function RoomCard() {
                 fontWeight={900}
                 noOfLines={1}
                 textTransform="uppercase">
-                I have an issue : Lorem ipsum dolor sit amet consectetur
-                adipisicing elit.
+                {room.title}
               </Text>
               <Text color="text" fontSize="sub" fontWeight={100} noOfLines={2}>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Voluptatum rerum, labore illo, inventore ab veniam error
-                voluptas sit reiciendis modi sunt dolores magni unde aliquam
-                temporibus tempora fugit deserunt nam!
+                {room.description}
               </Text>
             </Stack>
             <HStack
@@ -38,19 +37,14 @@ export default function RoomCard() {
                 flex="1"
                 overflow="hidden"
                 mr="5px">
-                {data
-                  .slice(0, Math.floor(Math.random() * (data.length - 1)) + 2)
-                  .map((el, index) => (
-                    <Avatar
-                      size="sm"
-                      key={index}
-                      mr={index === data.length - 1 ? '0px' : '-10px'}
-                      bg="green.500"
-                      source={{
-                        uri: el,
-                      }}
-                    />
-                  ))}
+                {[room.ownerMember, ...room.memebers].map((member, index) => (
+                  <ImageAvatar
+                    size="50px"
+                    key={index}
+                    mr="-20px"
+                    uri={getAvatar(member.avatar)}
+                  />
+                ))}
               </HStack>
 
               <Button
@@ -67,18 +61,3 @@ export default function RoomCard() {
     </View>
   );
 }
-
-const data = [
-  'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyEaZqT3fHeNrPGcnjLLX1v_W4mvBlgpwxnA&usqp=CAU',
-  'https://miro.medium.com/max/1400/0*0fClPmIScV5pTLoE.jpg',
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr01zI37DYuR8bMV5exWQBSw28C1v_71CAh8d7GP1mplcmTgQA6Q66Oo--QedAN1B4E1k&usqp=CAU',
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBwgu1A5zgPSvfE83nurkuzNEoXs9DMNr8Ww&usqp=CAU',
-  'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyEaZqT3fHeNrPGcnjLLX1v_W4mvBlgpwxnA&usqp=CAU',
-  'https://miro.medium.com/max/1400/0*0fClPmIScV5pTLoE.jpg',
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr01zI37DYuR8bMV5exWQBSw28C1v_71CAh8d7GP1mplcmTgQA6Q66Oo--QedAN1B4E1k&usqp=CAU',
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBwgu1A5zgPSvfE83nurkuzNEoXs9DMNr8Ww&usqp=CAU',
-  'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyEaZqT3fHeNrPGcnjLLX1v_W4mvBlgpwxnA&usqp=CAU',
-];

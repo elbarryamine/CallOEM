@@ -3,15 +3,27 @@ import {gql, useQuery} from '@apollo/client';
 const QUERY = gql`
   query GetRooms {
     GetRooms {
+      title
       createdAt
       description
-      ownerMember {
-        id
+      id
+      limit
+      memebers {
         avatar
         email
+        id
         joinedAt
         username
       }
+      ownerMember {
+        avatar
+        email
+        id
+        joinedAt
+        username
+      }
+      roomType
+      tags
     }
   }
 `;

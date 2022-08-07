@@ -6,8 +6,8 @@ import ButtonIcon from '@components/Elements/ButtonIcon';
 import {useSelector} from 'react-redux';
 import {StateType} from '@redux/store';
 import moment from 'moment';
-import {AVATAR_URL} from '@shared/constants/configs';
 import {SvgCssUri} from 'react-native-svg';
+import {getAvatar} from '@shared/constants/getAvatar';
 
 export default function HeaderNavigation(props: IViewProps) {
   const user = useSelector((state: StateType) => state.auth.user);
@@ -42,7 +42,7 @@ export default function HeaderNavigation(props: IViewProps) {
               <SvgCssUri
                 width="100%"
                 height="100%"
-                uri={`${AVATAR_URL}/${user.user.avatar}`}
+                uri={getAvatar(user.user.avatar)}
               />
             </Flex>
           </Flex>
