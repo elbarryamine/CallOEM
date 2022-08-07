@@ -31,17 +31,17 @@ type Mutation {
   CreateRoom(createRoomInput: CreateRoomInput!): Room!
   CreateTag(tag: String!): Tag!
   CreateTags(tags: [CreateTagInput!]!): [Tag!]!
-  sendVerifyEmailCode(email: String!): Boolean!
-  signUp(createUserInput: CreateUserInput!): User!
+  SendEmailVerificationCode(email: String!): Boolean!
+  SignUp(createUserInput: CreateUserInput!): User!
+  VerifyEmailCode(code: String!, email: String!): Boolean!
   updateRoom(updateRoomInput: UpdateRoomInput!): Room!
-  verifyEmailCode(code: String!, email: String!): Boolean!
 }
 
 type Query {
   GetRoom(id: String!): Room!
   GetRooms: [Room!]!
   GetTags: [Tag!]!
-  signIn(signUserInput: SignUserInput!): UserSignin!
+  SignIn(signUserInput: SignUserInput!): UserSignin!
 }
 
 type Room {

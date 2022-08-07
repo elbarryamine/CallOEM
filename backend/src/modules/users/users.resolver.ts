@@ -26,7 +26,7 @@ export class UsersResolver {
     private jwtService: JwtService,
   ) {}
 
-  @Mutation(() => User)
+  @Mutation(() => User, { name: 'SignUp' })
   async signUp(@Args('createUserInput') createUserInput: CreateUserInput) {
     await signUpValidate(createUserInput);
 
@@ -67,7 +67,7 @@ export class UsersResolver {
     });
   }
 
-  @Query(() => UserSignin)
+  @Query(() => UserSignin, { name: 'SignIn' })
   async signIn(@Args('signUserInput') signUserInput: SignUserInput) {
     const { identifier, password } = signUserInput;
     // get user by email or username
@@ -95,7 +95,7 @@ export class UsersResolver {
       token: this.jwtService.sign({ id: user.id }),
     };
   }
-  @Mutation(() => Boolean)
+  @Mutation(() => Boolean, { name: 'SendEmailVerificationCode' })
   async sendVerifyEmailCode(@Args('email') email: string) {
     // generate code
     // check if user not already verified
@@ -120,7 +120,7 @@ export class UsersResolver {
     // send Code to email adresss
     return await sendVerifyCodeEmail({ code, email });
   }
-  @Mutation(() => Boolean)
+  @Mutation(() => Boolean, { name: 'VerifyEmailCode' })
   async verifyEmailCode(
     @Args('email') email: string,
     @Args('code') code: string,

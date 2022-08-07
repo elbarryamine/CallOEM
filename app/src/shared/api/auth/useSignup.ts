@@ -7,7 +7,7 @@ const QUERY = gql`
     $passwordConfirm: String!
     $username: String!
   ) {
-    signUp(
+    SignUp(
       createUserInput: {
         username: $username
         password: $password

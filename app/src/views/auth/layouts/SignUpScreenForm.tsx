@@ -49,7 +49,7 @@ export default function SignUpScreenForm() {
   };
 
   useEffect(() => {
-    if (data && data.signUp && userEmail) {
+    if (data && data.SignUp && userEmail) {
       navigation.navigate('auth:verify', {email: userEmail});
     }
   }, [data, userEmail]);

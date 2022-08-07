@@ -4,7 +4,7 @@ import {useMutation, gql} from '@apollo/client';
 
 const QUERY = gql`
   mutation sendResetPasswordEmailMutation($email: String!) {
-    sendResetPasswordEmail(email: $email)
+    SendResetPasswordEmail(email: $email)
   }
 `;
 

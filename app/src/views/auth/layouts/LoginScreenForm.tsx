@@ -44,15 +44,15 @@ export default function LoginScreenForm() {
   };
 
   useEffect(() => {
-    if (data && data.signIn && !loading) {
-      if (data.signIn.user.isEmailVerified) {
-        dispatch(setUser(data.signIn));
+    if (data && data.SignIn && !loading) {
+      if (data.SignIn.user.isEmailVerified) {
+        dispatch(setUser(data.SignIn));
       } else {
         async function sendEmailCode() {
-          await sendCode({variables: {email: data.signIn.user.email}}).then(
+          await sendCode({variables: {email: data.SignIn.user.email}}).then(
             () => {
               navigation.navigate('auth:verify', {
-                email: data.signIn.user.email,
+                email: data.SignIn.user.email,
               });
             },
           );

@@ -4,7 +4,7 @@ import {useMutation, gql} from '@apollo/client';
 
 const QUERY = gql`
   mutation sendVerifyEmailCodeMutation($email: String!) {
-    sendVerifyEmailCode(email: $email)
+    SendEmailVerificationCode(email: $email)
   }
 `;
 

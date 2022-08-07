@@ -41,7 +41,7 @@ export default function VerifyEmailScreenForm({
   }
 
   useEffect(() => {
-    if (data && data.verifyEmailCode) {
+    if (data && data.VerifyEmailCode) {
       navigation.navigate('auth:login');
     }
   }, [data]);
