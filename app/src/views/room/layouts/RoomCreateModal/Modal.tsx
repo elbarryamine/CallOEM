@@ -1,21 +1,24 @@
 import React, {useEffect} from 'react';
 import {Modal, ScrollView, Input, Select, Stack, TextArea} from 'native-base';
 import {Formik} from 'formik';
-import CreateRoomSchema from '@shared/constants/schema/CreateRoomSchema';
+import CreateRoomSchema, {
+  limits,
+} from '@shared/constants/schema/CreateRoomSchema';
 import FormGrpahqlErrorHandler from '@components/Elements/FormGrpahqlErrorHandler';
 import FormikFormContollerErrorHandler from '@components/Elements/FormikFormContollerErrorHandler';
 import ModalFooter from './ModalFooter';
 import ModalHeader from './ModalHeader';
 import ModalTagsSelect from './ModalTagsSelect';
 import {useFormik} from 'formik';
+import useCreateRoom from '@shared/api/room/useCreateRoom';
+import {useGetUser} from '@redux/slices/user';
 
-const limits = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'No Limit'];
-const initialValues = {
+const initialValues: RoomCreateValues = {
   Title: '',
   Description: '',
-  'Room Type': '',
-  Tags: '',
-  Limit: '',
+  'Room Type': 'public',
+  Tags: [],
+  Limit: null,
 };
 
 export default function ModalRoomCreate({
@@ -24,14 +27,42 @@ export default function ModalRoomCreate({
   onCreateRoomModalClose,
   onChangesNotSaved,
 }: ModalRoomCreate) {
-  const formikProps = useFormik({
+  const formikProps = useFormik<RoomCreateValues>({
     onSubmit: handleCreateRoom,
     initialValues,
     validationSchema: CreateRoomSchema,
   });
-  const {handleChange, handleBlur, values, errors, touched} = formikProps;
+  const {handleChange, handleBlur, values, errors, touched, setFieldTouched} =
+    formikProps;
+  const [createRomm, {data, loading}] = useCreateRoom();
+  const user = useGetUser();
 
-  function handleCreateRoom() {}
+  async function handleCreateRoom() {
+    // user is never null since we have a check on the top tree of this component
+    if (!user) return;
+    console.log({
+      variables: {
+        title: values.Title,
+        description: values.Description,
+        limit: values.Limit,
+        roomType: values['Room Type'],
+        tags: values.Tags,
+        ownerMember: user.user.id,
+      },
+    });
+    try {
+      await createRomm({
+        variables: {
+          title: values.Title,
+          description: values.Description,
+          limit: values.Limit,
+          roomType: values['Room Type'],
+          tags: values.Tags,
+          ownerMember: user.user.id,
+        },
+      });
+    } catch {}
+  }
 
   useEffect(() => {
     if (
@@ -99,7 +130,7 @@ export default function ModalRoomCreate({
                     placeholder="Select Access Type"
                     onValueChange={handleChange('Room Type')}
                     selectedValue={values['Room Type']}
-                    defaultValue="public">
+                    onClose={() => setFieldTouched('Room Type', true)}>
                     <Select.Item value="private" label="Private" />
                     <Select.Item value="public" label="Public" />
                   </Select>
@@ -112,10 +143,15 @@ export default function ModalRoomCreate({
                   isRequired>
                   <Select
                     placeholder="Select Members Limit"
-                    selectedValue={values.Tags}
-                    onValueChange={handleChange('Limit')}>
-                    {limits.map((lm, idx: number) => (
-                      <Select.Item key={idx} value={lm} label={lm} />
+                    onValueChange={handleChange('Limit')}
+                    selectedValue={values.Limit?.toString()}
+                    onClose={() => setFieldTouched('Limit', true)}>
+                    {limits.map((limit, idx: number) => (
+                      <Select.Item
+                        key={idx}
+                        value={limit ? limit.toString() : ''}
+                        label={limit ? limit.toString() : 'No limit'}
+                      />
                     ))}
                   </Select>
                 </FormikFormContollerErrorHandler>
@@ -123,7 +159,10 @@ export default function ModalRoomCreate({
               </Stack>
             </ScrollView>
           </Modal.Body>
-          <ModalFooter onClose={onCreateRoomModalClose} />
+          <ModalFooter
+            onClose={onCreateRoomModalClose}
+            onSave={handleCreateRoom}
+          />
         </Modal.Content>
       </Formik>
     </Modal>
@@ -136,3 +175,11 @@ interface ModalRoomCreate {
   onCreateRoomModalClose: () => void;
   onChangesNotSaved: () => void;
 }
+
+export type RoomCreateValues = {
+  Title: string;
+  Description: string;
+  'Room Type': 'public' | 'private';
+  Tags: string[];
+  Limit: number | null;
+};

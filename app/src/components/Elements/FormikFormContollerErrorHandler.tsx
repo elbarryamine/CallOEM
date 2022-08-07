@@ -18,6 +18,7 @@ export default function FormikFormContollerErrorHandler({
   touched: FormikTouched<Item>;
   helperText?: string | string[];
 } & IFormControlProps) {
+  console.log(errors, touched);
   return (
     <FormControl {...props}>
       {label && <FormLabel>{label} </FormLabel>}

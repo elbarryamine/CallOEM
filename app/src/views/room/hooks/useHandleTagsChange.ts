@@ -4,7 +4,6 @@ export default function useHandleTagsChange() {
   const [tags, setTags] = useState<Array<string>>([]);
 
   const handleSelectTags = (setValue: SetValue, value: string) => {
-    setValue(value);
     const isTagUsed = tags.find(
       tag => tag.toLowerCase() === value.toLowerCase(),
     );
@@ -14,9 +13,24 @@ export default function useHandleTagsChange() {
       .map((word: string) => word.slice(0, 1).toUpperCase() + word.slice(1))
       .join(' ');
 
+    setValue('Tags', [...tags, capitalizedTag]);
     setTags(prevTags => [...prevTags, capitalizedTag]);
   };
-  return {handleSelectTags, tags, setTags};
+
+  const handleDeleteTag = (setValue: SetValue, value: string) => {
+    const filterdTag = tags.filter(
+      tag => tag.toLowerCase() !== value.toLowerCase(),
+    );
+
+    setValue('Tags', filterdTag);
+    setTags(filterdTag);
+  };
+
+  return {handleSelectTags, tags, setTags, handleDeleteTag};
 }
 
-type SetValue = (value: string) => void;
+export type SetValue = (
+  field: string,
+  value: any,
+  shouldValidate?: boolean | undefined,
+) => void;

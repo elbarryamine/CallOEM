@@ -1,1 +1,1 @@
-<Stack space{}  can be 2 / 5 / 10 
+<Stack/> space prop:  can be 2 / 5 / 10 

@@ -1,4 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {useSelector} from 'react-redux';
+import {StateType} from '@redux/store';
 
 type User = {
   user: {
@@ -32,5 +34,8 @@ export const userSlice = createSlice({
   },
 });
 
+export const useGetUser = () => {
+  return useSelector((state: StateType) => state.auth.user);
+};
 export const {setUser, removeUser} = userSlice.actions;
 export default userSlice.reducer;

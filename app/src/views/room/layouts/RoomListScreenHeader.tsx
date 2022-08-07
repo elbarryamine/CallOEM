@@ -50,11 +50,3 @@ export default function RoomListScreenHeader() {
     </>
   );
 }
-
-export type RoomCreateValues = {
-  Title: string;
-  Description: string;
-  'Room Type': string;
-  Tags: string;
-  Limit: string;
-};

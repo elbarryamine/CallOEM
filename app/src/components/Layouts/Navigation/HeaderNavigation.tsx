@@ -3,14 +3,14 @@ import {Flex, HStack, Stack, Text, View} from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {IViewProps} from 'native-base/lib/typescript/components/basic/View/types';
 import ButtonIcon from '@components/Elements/ButtonIcon';
-import {useSelector} from 'react-redux';
-import {StateType} from '@redux/store';
+
 import moment from 'moment';
 import {SvgCssUri} from 'react-native-svg';
 import {getAvatar} from '@shared/functions/getAvatar';
+import {useGetUser} from '@redux/slices/user';
 
 export default function HeaderNavigation(props: IViewProps) {
-  const user = useSelector((state: StateType) => state.auth.user);
+  const user = useGetUser();
   const [isUserNew, setIsUserNew] = useState<boolean>(false);
 
   useEffect(() => {

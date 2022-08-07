@@ -1,7 +1,9 @@
 import * as Yup from 'yup';
 
+export const limits = [2, 3, 4, 5, 6, 7, 8, 9, 10, null];
+
 const CreateRoomSchema = Yup.object().shape({
-  Title: Yup.string().required('Room title is required'),
+  Title: Yup.string().min(8).max(255).required('Room title is required'),
   Description: Yup.string().test(
     'Description Test',
     'Description must be 30 to 255 characters or not defined',
@@ -14,9 +16,20 @@ const CreateRoomSchema = Yup.object().shape({
       return true;
     },
   ),
-  'Room Type': Yup.string().required('Room type is required'),
-  Tags: Yup.string().required('Room tags is required'),
-  Limit: Yup.string().required('Room limit is required'),
+  'Room Type': Yup.string()
+    .oneOf(['public', 'private'])
+    .required('Room type is required'),
+
+  Tags: Yup.array()
+    .of(Yup.string().required())
+    .test('Len', 'Tags sould be between 1 and 5', values => {
+      return (
+        typeof values !== 'undefined' &&
+        values.length >= 1 &&
+        values.length <= 5
+      );
+    }),
+  Limit: Yup.number().oneOf(limits).required('Room limit is required'),
 });
 
 export default CreateRoomSchema;
