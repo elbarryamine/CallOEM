@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  Button,
-  Heading,
-  Input,
-  Stack,
-  Text,
-  FormControl,
-  View,
-} from 'native-base';
+import {Button, Heading, Stack, Text, View} from 'native-base';
 import ResetPasswordSvg from '@assets/images/reset-password.svg';
 import AuthImageContainer from '../layouts/AuthImageContainer';
 import ScreenContainer from '@components/Containers/ScreenContainer';
@@ -31,15 +23,7 @@ export default function ForgotPasswordScreen({
               We will send you an email link to reset your password
             </Text>
           </Stack>
-          <FormControl>
-            <Input
-              placeholder="Enter your username or email"
-              borderBottomWidth="1"
-            />
-          </FormControl>
-          <Button _text={{color: 'invert'}} bg="primary" color="invert">
-            Reset
-          </Button>
+          {/* Form Goes Here */}
         </Stack>
         <View pb="20px">
           {!isKeyboardShowing && (

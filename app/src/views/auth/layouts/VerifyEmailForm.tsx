@@ -8,11 +8,13 @@ import {
 } from 'native-base';
 import {Formik} from 'formik';
 import FormErrorMessage from '@components/Elements/FormErrorMessage';
-import verifyEmailSchema from '@shared/constants/verifyEmailSchema ';
+import verifyEmailSchema from '@shared/constants/schema/VerifyEmailSchema';
 import {NativeSyntheticEvent, TextInputChangeEventData} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {VerifyScreenProps} from '@navigation/AuthStack';
 import useVerifyCode from '@shared/api/auth/useVerifyCode';
+import FormGrpahqlErrorHandler from '@components/Elements/FormGrpahqlErrorHandler';
+import FormikFormContollerErrorHandler from '@components/Elements/FormikFormContollerErrorHandler';
 
 export default function VerifyEmailScreenForm({
   userEmail,
@@ -54,14 +56,13 @@ export default function VerifyEmailScreenForm({
       onSubmit={handleVerifyEmail}>
       {({handleBlur, handleSubmit, values, errors, touched, setValues}) => (
         <Stack space={2}>
-          <FormControl>
-            <FormErrorMessage isInvalid={!!error}>
-              {error?.graphQLErrors[0]?.message}
-            </FormErrorMessage>
-          </FormControl>
+          <FormGrpahqlErrorHandler error={error} />
 
           <KeyboardAvoidingView>
-            <FormControl>
+            <FormikFormContollerErrorHandler
+              errors={errors}
+              touched={touched}
+              name="Code">
               <Input
                 onBlur={handleBlur('Code')}
                 placeholder="Code"
@@ -73,7 +74,7 @@ export default function VerifyEmailScreenForm({
               <FormErrorMessage isInvalid={!!errors.Code && touched.Code}>
                 {errors.Code}
               </FormErrorMessage>
-            </FormControl>
+            </FormikFormContollerErrorHandler>
           </KeyboardAvoidingView>
           <Button
             isLoading={loading}

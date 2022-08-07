@@ -7,7 +7,7 @@ import {useSelector} from 'react-redux';
 import {StateType} from '@redux/store';
 import moment from 'moment';
 import {SvgCssUri} from 'react-native-svg';
-import {getAvatar} from '@shared/constants/getAvatar';
+import {getAvatar} from '@shared/functions/getAvatar';
 
 export default function HeaderNavigation(props: IViewProps) {
   const user = useSelector((state: StateType) => state.auth.user);

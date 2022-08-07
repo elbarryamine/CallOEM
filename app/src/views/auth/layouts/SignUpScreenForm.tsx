@@ -1,20 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Button,
-  Input,
-  Stack,
-  FormControl,
-  Icon,
-  KeyboardAvoidingView,
-} from 'native-base';
+import {Button, Input, Stack, Icon, KeyboardAvoidingView} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 import {Formik} from 'formik';
-import FormErrorMessage from '@components/Elements/FormErrorMessage';
-import SignupSchema from '@shared/constants/signupSchema';
+import SignupSchema from '@shared/constants/schema/SignupSchema';
 import useSignup from '@shared/api/auth/useSignup';
 import {SignupScreenProps} from '@navigation/AuthStack';
 import {useNavigation} from '@react-navigation/native';
 import useSendVerifyCodeEmail from '@shared/api/auth/useSendVerifyCodeEmail';
+import FormGrpahqlErrorHandler from '@components/Elements/FormGrpahqlErrorHandler';
+import FormikFormContollerErrorHandler from '@components/Elements/FormikFormContollerErrorHandler';
 
 export default function SignUpScreenForm() {
   const [userEmail, setUserEmail] = useState<string | null>();
@@ -65,13 +59,12 @@ export default function SignUpScreenForm() {
       onSubmit={values => handleSignUp(values)}>
       {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
         <Stack space={2}>
-          <FormControl>
-            <FormErrorMessage isInvalid={!!error}>
-              {error?.graphQLErrors[0]?.message}
-            </FormErrorMessage>
-          </FormControl>
+          <FormGrpahqlErrorHandler error={error} />
           <KeyboardAvoidingView>
-            <FormControl>
+            <FormikFormContollerErrorHandler
+              errors={errors}
+              touched={touched}
+              name="Username">
               <Input
                 onBlur={handleBlur('Username')}
                 placeholder="Username"
@@ -79,15 +72,14 @@ export default function SignUpScreenForm() {
                 value={values.Username}
                 onChangeText={handleChange('Username')}
               />
-              <FormErrorMessage
-                isInvalid={!!errors.Username && touched.Username}>
-                {errors.Username}
-              </FormErrorMessage>
-            </FormControl>
+            </FormikFormContollerErrorHandler>
           </KeyboardAvoidingView>
 
           <KeyboardAvoidingView>
-            <FormControl>
+            <FormikFormContollerErrorHandler
+              errors={errors}
+              touched={touched}
+              name="Email">
               <Input
                 onBlur={handleBlur('Email')}
                 placeholder="Email"
@@ -95,13 +87,13 @@ export default function SignUpScreenForm() {
                 value={values.Email}
                 onChangeText={handleChange('Email')}
               />
-              <FormErrorMessage isInvalid={!!errors.Email && touched.Email}>
-                {errors.Email}
-              </FormErrorMessage>
-            </FormControl>
+            </FormikFormContollerErrorHandler>
           </KeyboardAvoidingView>
           <KeyboardAvoidingView>
-            <FormControl>
+            <FormikFormContollerErrorHandler
+              errors={errors}
+              touched={touched}
+              name="Password">
               <Input
                 onBlur={handleBlur('Password')}
                 type={passShowing ? 'text' : 'password'}
@@ -123,14 +115,13 @@ export default function SignUpScreenForm() {
                   </Button>
                 }
               />
-              <FormErrorMessage
-                isInvalid={!!errors.Password && touched.Password}>
-                {errors.Password}
-              </FormErrorMessage>
-            </FormControl>
+            </FormikFormContollerErrorHandler>
           </KeyboardAvoidingView>
           <KeyboardAvoidingView>
-            <FormControl>
+            <FormikFormContollerErrorHandler
+              errors={errors}
+              touched={touched}
+              name="Password Confirm">
               <Input
                 onBlur={handleBlur('Password Confirm')}
                 type={passConfirmShowing ? 'text' : 'password'}
@@ -152,13 +143,7 @@ export default function SignUpScreenForm() {
                   </Button>
                 }
               />
-              <FormErrorMessage
-                isInvalid={
-                  !!errors['Password Confirm'] && touched['Password Confirm']
-                }>
-                {errors['Password Confirm']}
-              </FormErrorMessage>
-            </FormControl>
+            </FormikFormContollerErrorHandler>
           </KeyboardAvoidingView>
 
           <Button

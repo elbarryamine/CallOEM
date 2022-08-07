@@ -1,3 +1,4 @@
+import { HttpException } from '@nestjs/common';
 import { GraphQLScalarType } from 'graphql';
 
 function validate(roomtype: unknown): string {
@@ -5,7 +6,10 @@ function validate(roomtype: unknown): string {
     typeof roomtype !== 'string' ||
     (roomtype !== 'private' && roomtype !== 'public')
   ) {
-    throw new Error('invalid roomtype : must be private or public');
+    throw new HttpException(
+      { message: 'invalid roomtype : must be private or public' },
+      400,
+    );
   }
   return roomtype;
 }

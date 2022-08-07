@@ -17,11 +17,17 @@ export class RoomsResolver {
     this.wantedUserFields = ['id', 'avatar', 'email', 'joinedAt', 'username'];
   }
 
+  //
+  //
+  //
   @Mutation(() => Room, { name: 'CreateRoom' })
   async createRoom(@Args('createRoomInput') createRoomInput: CreateRoomInput) {
     // validate room
     return await this.roomModule.create(createRoomInput);
   }
+  //
+  //
+  //
   @Query(() => [Room], { name: 'GetRooms' })
   async findAll() {
     const rooms = await this.roomModule
@@ -31,6 +37,9 @@ export class RoomsResolver {
       .exec();
     return rooms;
   }
+  //
+  //
+  //
   @Query(() => Room, { name: 'GetRoom' })
   async findOne(@Args('id', { type: () => String }) id: string) {
     const room = await this.roomModule
@@ -41,6 +50,9 @@ export class RoomsResolver {
     console.log(room);
     return room;
   }
+  //
+  //
+  //
   @Mutation(() => Room)
   async updateRoom(@Args('updateRoomInput') updateRoomInput: UpdateRoomInput) {
     return await this.roomModule.findByIdAndUpdate(
@@ -48,8 +60,4 @@ export class RoomsResolver {
       updateRoomInput,
     );
   }
-  // @Mutation(() => Room)
-  // removeRoom(@Args('id', { type: () => Int }) id: number) {
-  //   return '';
-  // }
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import {Button, HStack, Stack, Text, View} from 'native-base';
-import colors from '@shared/constants/colors';
+import colors from '@shared/constants/properties/colors';
 import {Room} from '@shared/types/Room';
-import {getAvatar} from '@shared/constants/getAvatar';
+import {getAvatar} from '@shared/functions/getAvatar';
 import ImageAvatar from '@components/Elements/ImageAvatar';
 
 export default function RoomCard({room}: {room: Room}) {

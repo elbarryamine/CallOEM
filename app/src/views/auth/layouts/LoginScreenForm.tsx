@@ -3,21 +3,21 @@ import {
   Button,
   Input,
   Stack,
-  FormControl,
   Icon,
   KeyboardAvoidingView,
   Text,
 } from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 import {Formik} from 'formik';
-import FormErrorMessage from '@components/Elements/FormErrorMessage';
-import LoginSchema from '@shared/constants/loginSchema';
+import LoginSchema from '@shared/constants/schema/LoginSchema';
 import useSignIn from '@shared/api/auth/useLogin';
 import {useNavigation} from '@react-navigation/native';
 import {LoginScreenProps} from '@navigation/AuthStack';
 import useSendVerifyCodeEmail from '@shared/api/auth/useSendVerifyCodeEmail';
 import {useDispatch} from 'react-redux';
 import {setUser} from '@redux/slices/user';
+import FormGrpahqlErrorHandler from '@components/Elements/FormGrpahqlErrorHandler';
+import FormikFormContollerErrorHandler from '@components/Elements/FormikFormContollerErrorHandler';
 
 export default function LoginScreenForm() {
   const [passShowing, setPassShowing] = useState<boolean>(false);
@@ -72,14 +72,13 @@ export default function LoginScreenForm() {
       onSubmit={values => handleLogin(values)}>
       {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
         <Stack space={2}>
-          <FormControl>
-            <FormErrorMessage isInvalid={!!error}>
-              {error?.graphQLErrors[0]?.message}
-            </FormErrorMessage>
-          </FormControl>
+          <FormGrpahqlErrorHandler error={error} />
 
           <KeyboardAvoidingView>
-            <FormControl>
+            <FormikFormContollerErrorHandler
+              errors={errors}
+              touched={touched}
+              name="Identifier">
               <Input
                 onBlur={handleBlur('Identifier')}
                 placeholder="Email or username"
@@ -87,14 +86,13 @@ export default function LoginScreenForm() {
                 value={values.Identifier}
                 onChangeText={handleChange('Identifier')}
               />
-              <FormErrorMessage
-                isInvalid={!!errors.Identifier && touched.Identifier}>
-                {errors.Identifier}
-              </FormErrorMessage>
-            </FormControl>
+            </FormikFormContollerErrorHandler>
           </KeyboardAvoidingView>
           <KeyboardAvoidingView>
-            <FormControl>
+            <FormikFormContollerErrorHandler
+              errors={errors}
+              touched={touched}
+              name="Password">
               <Input
                 onBlur={handleBlur('Password')}
                 type={passShowing ? 'text' : 'password'}
@@ -116,11 +114,7 @@ export default function LoginScreenForm() {
                   </Button>
                 }
               />
-              <FormErrorMessage
-                isInvalid={!!errors.Password && touched.Password}>
-                {errors.Password}
-              </FormErrorMessage>
-            </FormControl>
+            </FormikFormContollerErrorHandler>
           </KeyboardAvoidingView>
 
           <Button

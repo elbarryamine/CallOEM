@@ -1,15 +1,10 @@
 import React, {useEffect} from 'react';
-import {
-  Button,
-  Input,
-  Stack,
-  FormControl,
-  KeyboardAvoidingView,
-} from 'native-base';
+import {Button, Input, Stack, KeyboardAvoidingView} from 'native-base';
 import {Formik} from 'formik';
-import FormErrorMessage from '@components/Elements/FormErrorMessage';
-import forgotPasswordSchema from '@shared/constants/forgotPasswordSchema';
+import forgotPasswordSchema from '@shared/constants/schema/ForgotPasswordSchema';
 import useSendResetPasswordEmail from '@shared/api/auth/useSendResetPasswordEmail';
+import FormGrpahqlErrorHandler from '@components/Elements/FormGrpahqlErrorHandler';
+import FormikFormContollerErrorHandler from '@components/Elements/FormikFormContollerErrorHandler';
 
 export default function ForgotPasswordScreenForm() {
   const [resetPassword, {data, loading, error}] = useSendResetPasswordEmail();
@@ -35,14 +30,13 @@ export default function ForgotPasswordScreenForm() {
       onSubmit={values => handleResetPassword(values)}>
       {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
         <Stack space={2}>
-          <FormControl>
-            <FormErrorMessage isInvalid={!!error}>
-              {error?.graphQLErrors[0]?.message}
-            </FormErrorMessage>
-          </FormControl>
+          <FormGrpahqlErrorHandler error={error} />
 
           <KeyboardAvoidingView>
-            <FormControl>
+            <FormikFormContollerErrorHandler
+              errors={errors}
+              touched={touched}
+              name="Email">
               <Input
                 onBlur={handleBlur('Email')}
                 placeholder="Email or username"
@@ -50,10 +44,7 @@ export default function ForgotPasswordScreenForm() {
                 value={values.Email}
                 onChangeText={handleChange('Email')}
               />
-              <FormErrorMessage isInvalid={!!errors.Email && touched.Email}>
-                {errors.Email}
-              </FormErrorMessage>
-            </FormControl>
+            </FormikFormContollerErrorHandler>
           </KeyboardAvoidingView>
 
           <Button
