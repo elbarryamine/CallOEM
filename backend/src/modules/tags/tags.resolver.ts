@@ -23,15 +23,19 @@ export class TagsResolver {
 
   @Mutation(() => [Tag], { name: 'CreateTags' })
   async CreateTags(
-    @Args('tags', { type: () => [CreateTagInput] }) tags: CreateTagInput[],
+    @Args('tags', { type: () => [CreateTagInput] }) tagsInput: CreateTagInput[],
   ) {
+    const tags = tagsInput.map((el) => ({ ...el, tag: el.tag.toLowerCase() }));
+
     const insertedTags = await this.tagModule.insertMany(tags, {
       ordered: true,
     });
+    console.log(insertedTags);
 
-    const savedTags = await this.tagModule.find();
+    const savedTags = await this.tagModule.find().sort('tag');
 
     for (let i = 0; i < savedTags.length - 1; i++) {
+      console.log(savedTags[i].tag, savedTags[i + 1].tag);
       if (!savedTags[i + 1]?.tag) break;
       if (savedTags[i].tag === savedTags[i + 1].tag) {
         await this.tagModule.findOneAndRemove({ _id: savedTags[i].id });
