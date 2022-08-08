@@ -17,6 +17,10 @@ export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
     fontFamily: 'body',
     color: colors.text,
   };
+  const buttonTextConfig = {
+    fontSize: '16px',
+    fontFamily: 'body',
+  };
   return extendTheme({
     ...nativeBaseTheme,
     components: {
@@ -48,8 +52,16 @@ export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
         defaultProps: {
           borderRadius: '10px',
           _text: {
-            ...fontTextConfig,
+            ...buttonTextConfig,
             textTransform: 'capitalize',
+          },
+        },
+        variants: {
+          primary: {
+            bg: 'primary',
+            _text: {
+              color: 'invert',
+            },
           },
         },
       },

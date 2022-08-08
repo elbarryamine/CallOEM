@@ -1,5 +1,5 @@
 import React from 'react';
-import {Heading, Modal, Stack} from 'native-base';
+import {Button, Flex, Heading, Modal, Stack} from 'native-base';
 import {useFormik} from 'formik';
 
 import ModalSearchInput from './ModalSearchInput';
@@ -21,7 +21,7 @@ export default function ModalSeach({isModalOpen, onModalClose}: Props) {
   } = formikProps;
   return (
     <Modal isOpen={isModalOpen} onClose={onModalClose} size="full">
-      <Modal.Content w="100%" h="100%" mt="auto" mb="0" borderTopRadius="25px">
+      <Modal.Content w="100%" mt="auto" mb="0" borderTopRadius="25px">
         <Modal.Header borderBottomColor="transparent" mt="10px">
           <Heading>Search</Heading>
           <Modal.CloseButton />
@@ -54,6 +54,9 @@ export default function ModalSeach({isModalOpen, onModalClose}: Props) {
               name="tags"
               label="Room Tags"
             />
+            <Flex flex="1">
+              <Button variant="primary">Apply</Button>
+            </Flex>
           </Stack>
         </Modal.Body>
       </Modal.Content>
