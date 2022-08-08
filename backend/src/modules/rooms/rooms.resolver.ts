@@ -8,6 +8,8 @@ import { UpdateRoomInput } from './dto/update-room.input';
 import { UserDocument, UserSchemaType } from '../users/entities/user.schema';
 import roomValidate from 'src/services/validation/room';
 import { NotAcceptableException } from '@nestjs/common';
+import { SearchRoomInput } from './dto/search-room.input';
+import roomSearchValidate from 'src/services/validation/room-search';
 
 @Resolver(() => Room)
 export class RoomsResolver {
@@ -37,6 +39,42 @@ export class RoomsResolver {
   async findAll() {
     const rooms = await this.roomModule
       .find()
+      .populate('memebers', this.wantedUserFields, this.userModel)
+      .populate('ownerMember', this.wantedUserFields, this.userModel)
+      .exec();
+    return rooms;
+  }
+  //
+  //
+  //
+  @Query(() => [Room], { name: 'SearchRoom' })
+  async searchRoom(@Args('searchRoomInput') searchRoomInput: SearchRoomInput) {
+    const isValid = roomSearchValidate(searchRoomInput);
+    if (!isValid) throw new NotAcceptableException();
+    const tagsQuery =
+      searchRoomInput.tags.length > 0
+        ? [{ tags: [...searchRoomInput.tags, '$tag'] }]
+        : [];
+
+    const searchQuery = searchRoomInput.searchQuery
+      ? [
+          {
+            description: { $regex: '.*' + searchRoomInput.searchQuery + '.*' },
+          },
+          { title: { $regex: '.*' + searchRoomInput.searchQuery + '.*' } },
+        ]
+      : [];
+
+    console.log([...searchQuery, ...tagsQuery]);
+    const rooms = await this.roomModule
+      .find({
+        ...(searchRoomInput.roomType !== 'both' && {
+          roomType: searchRoomInput.roomType,
+        }),
+        ...([...searchQuery, ...tagsQuery].length !== 0 && {
+          $or: [...searchQuery, ...tagsQuery],
+        }),
+      })
       .populate('memebers', this.wantedUserFields, this.userModel)
       .populate('ownerMember', this.wantedUserFields, this.userModel)
       .exec();

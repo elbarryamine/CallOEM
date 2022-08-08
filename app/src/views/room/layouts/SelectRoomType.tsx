@@ -35,9 +35,9 @@ export default function SelectRoomType({
           onValueChange={handleChange}
           selectedValue={value}
           onClose={handleBlur}>
+          <Select.Item value="both" label="Public and private" />
           <Select.Item value="private" label="Private" />
           <Select.Item value="public" label="Public" />
-          <Select.Item value="both" label="Public and private" />
         </Select>
       ) : (
         <Select

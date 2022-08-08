@@ -41,6 +41,7 @@ type Query {
   GetRoom(id: String!): Room!
   GetRooms: [Room!]!
   GetTags: [Tag!]!
+  SearchRoom(searchRoomInput: SearchRoomInput!): [Room!]!
   SignIn(signUserInput: SignUserInput!): UserSignin!
 }
 
@@ -60,6 +61,12 @@ type Room {
 A Scalar Type for Roomtype and must be either "public" or "private"
 """
 scalar Roomtype
+
+input SearchRoomInput {
+  roomType: String
+  searchQuery: String
+  tags: [String!] = []
+}
 
 input SignUserInput {
   identifier: String!

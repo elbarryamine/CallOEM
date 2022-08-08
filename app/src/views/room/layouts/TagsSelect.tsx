@@ -25,7 +25,7 @@ export default function TagsSelect({
   setFieldTouched: SetTouched;
 } & FormikFormContollerErrorHandlerProps) {
   const {data: tagsQueryData, loading: tagsQueryLoading} = useGetTags();
-  const {handleSelectTags, handleDeleteTag, tags} = useHandleTagsChange();
+  const {handleSelectTags, handleDeleteTag, tags} = useHandleTagsChange(name);
   const [tagsData, setTagsData] = useState<Array<Tag>>([]);
 
   useEffect(() => {
@@ -47,10 +47,12 @@ export default function TagsSelect({
         ) : (
           <Select
             placeholder="Select Tags"
-            onValueChange={(value: string) =>
-              handleSelectTags(setFieldValue, value)
-            }
+            onValueChange={(value: string) => {
+              if (value === '') return;
+              handleSelectTags(setFieldValue, value);
+            }}
             onClose={() => setFieldTouched('tags', true)}>
+            <Select.Item value={''} label="Select Tag" />
             {tagsData.map(({tag}, idx) => {
               const capitalizedTag = tag
                 .split(' ')

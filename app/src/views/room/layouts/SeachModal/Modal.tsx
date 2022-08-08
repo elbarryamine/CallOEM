@@ -1,16 +1,34 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Button, Flex, Heading, Modal, Stack} from 'native-base';
 import {useFormik} from 'formik';
 
 import ModalSearchInput from './ModalSearchInput';
 import SelectRoomType from '../SelectRoomType';
 import TagsSelect from '../TagsSelect';
+import useRoomSearch from '@shared/api/room/useRoomSearch';
+import SearchRoomSchema from '@shared/constants/schema/SearchRoomSchema';
 
 export default function ModalSeach({isModalOpen, onModalClose}: Props) {
+  const [roomSearch, {data, loading, error}] = useRoomSearch();
   const formikProps = useFormik({
-    initialValues: {searchQuery: '', roomType: ''},
-    onSubmit: () => {},
+    initialValues: {searchQuery: '', roomType: '', tags: []},
+    onSubmit: async values => {
+      try {
+        await roomSearch({
+          variables: {
+            roomType: values.roomType,
+            searchQuery: values.searchQuery,
+            tags: values.tags,
+          },
+        });
+      } catch {}
+    },
+    validationSchema: SearchRoomSchema,
   });
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
   const {
     errors,
     touched,
@@ -18,7 +36,9 @@ export default function ModalSeach({isModalOpen, onModalClose}: Props) {
     handleChange,
     setFieldTouched,
     setFieldValue,
+    handleSubmit,
   } = formikProps;
+
   return (
     <Modal isOpen={isModalOpen} onClose={onModalClose} size="full">
       <Modal.Content w="100%" mt="auto" mb="0" borderTopRadius="25px">
@@ -55,7 +75,13 @@ export default function ModalSeach({isModalOpen, onModalClose}: Props) {
               label="Room Tags"
             />
             <Flex flex="1">
-              <Button variant="primary">Apply</Button>
+              <Button
+                isLoading={loading}
+                isDisabled={!!error}
+                variant="primary"
+                onPress={handleSubmit}>
+                Apply
+              </Button>
             </Flex>
           </Stack>
         </Modal.Body>

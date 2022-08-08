@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-export default function useHandleTagsChange() {
+export default function useHandleTagsChange(fieldName: string) {
   const [tags, setTags] = useState<Array<string>>([]);
 
   const handleSelectTags = (setValue: SetValue, value: string) => {
@@ -13,7 +13,7 @@ export default function useHandleTagsChange() {
       .map((word: string) => word.slice(0, 1).toUpperCase() + word.slice(1))
       .join(' ');
 
-    setValue('Tags', [...tags, capitalizedTag]);
+    setValue(fieldName, [...tags, capitalizedTag]);
     setTags(prevTags => [...prevTags, capitalizedTag]);
   };
 
@@ -22,7 +22,7 @@ export default function useHandleTagsChange() {
       tag => tag.toLowerCase() !== value.toLowerCase(),
     );
 
-    setValue('Tags', filterdTag);
+    setValue(fieldName, filterdTag);
     setTags(filterdTag);
   };
 
