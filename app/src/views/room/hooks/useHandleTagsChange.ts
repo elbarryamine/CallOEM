@@ -31,6 +31,12 @@ export default function useHandleTagsChange() {
 
 export type SetValue = (
   field: string,
-  value: any,
+  value: unknown,
+  shouldValidate?: boolean | undefined,
+) => void;
+
+export type SetTouched = (
+  field: string,
+  value: boolean | undefined,
   shouldValidate?: boolean | undefined,
 ) => void;

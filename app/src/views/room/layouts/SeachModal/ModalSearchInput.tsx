@@ -3,7 +3,7 @@ import {Icon, IInputProps, Input} from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FormikFormContollerErrorHandler, {
   FormikFormContollerErrorHandlerProps,
-} from '@components/Elements/FormikFormContollerErrorHandler';
+} from '@components/Layouts/Form/FormikFormContollerErrorHandler';
 
 export default function ModalSearchInput({
   touched,

@@ -2,19 +2,28 @@ import React, {useState, useEffect} from 'react';
 import {Flex, Select, Spinner, Stack, Text} from 'native-base';
 import {Tag} from '@shared/types/Tag';
 import useGetTags from '@shared/api/tag/useGetTags';
-import {FormikProps} from 'formik';
-import FormikFormContollerErrorHandler from '@components/Elements/FormikFormContollerErrorHandler';
-import useHandleTagsChange from '../../hooks/useHandleTagsChange';
-import {RoomCreateValues} from './Modal';
+import FormikFormContollerErrorHandler, {
+  FormikFormContollerErrorHandlerProps,
+} from '@components/Layouts/Form/FormikFormContollerErrorHandler';
 import ButtonIcon from '@components/Elements/ButtonIcon';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import useHandleTagsChange, {
+  SetTouched,
+  SetValue,
+} from '@views/room/hooks/useHandleTagsChange';
 
-export default function ModalTagsSelect({
+export default function TagsSelect({
   errors,
   touched,
+  name,
+  label,
+  helperText,
   setFieldValue,
   setFieldTouched,
-}: FormikProps<RoomCreateValues>) {
+}: {
+  setFieldValue: SetValue;
+  setFieldTouched: SetTouched;
+} & FormikFormContollerErrorHandlerProps) {
   const {data: tagsQueryData, loading: tagsQueryLoading} = useGetTags();
   const {handleSelectTags, handleDeleteTag, tags} = useHandleTagsChange();
   const [tagsData, setTagsData] = useState<Array<Tag>>([]);
@@ -29,8 +38,9 @@ export default function ModalTagsSelect({
       <FormikFormContollerErrorHandler
         errors={errors}
         touched={touched}
-        name="tags"
-        label="Room Tags"
+        name={name}
+        label={label}
+        helperText={helperText}
         isRequired>
         {tagsQueryLoading ? (
           <Spinner color="primary" />

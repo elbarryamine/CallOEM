@@ -3,8 +3,8 @@ import {Button, Input, Stack, KeyboardAvoidingView} from 'native-base';
 import {Formik} from 'formik';
 import forgotPasswordSchema from '@shared/constants/schema/ForgotPasswordSchema';
 import useSendResetPasswordEmail from '@shared/api/auth/useSendResetPasswordEmail';
-import FormGrpahqlErrorHandler from '@components/Elements/FormGrpahqlErrorHandler';
-import FormikFormContollerErrorHandler from '@components/Elements/FormikFormContollerErrorHandler';
+import FormGrpahqlErrorHandler from '@components/Layouts/Form/FormGrpahqlErrorHandler';
+import FormikFormContollerErrorHandler from '@components/Layouts/Form/FormikFormContollerErrorHandler';
 
 export default function ForgotPasswordScreenForm() {
   const [resetPassword, {data, loading, error}] = useSendResetPasswordEmail();

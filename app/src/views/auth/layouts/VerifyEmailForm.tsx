@@ -7,14 +7,14 @@ import {
   KeyboardAvoidingView,
 } from 'native-base';
 import {Formik} from 'formik';
-import FormErrorMessage from '@components/Elements/FormErrorMessage';
+import FormErrorMessage from '@components/Layouts/Form/FormErrorMessage';
 import verifyEmailSchema from '@shared/constants/schema/VerifyEmailSchema';
 import {NativeSyntheticEvent, TextInputChangeEventData} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {VerifyScreenProps} from '@navigation/AuthStack';
 import useVerifyCode from '@shared/api/auth/useVerifyCode';
-import FormGrpahqlErrorHandler from '@components/Elements/FormGrpahqlErrorHandler';
-import FormikFormContollerErrorHandler from '@components/Elements/FormikFormContollerErrorHandler';
+import FormGrpahqlErrorHandler from '@components/Layouts/Form/FormGrpahqlErrorHandler';
+import FormikFormContollerErrorHandler from '@components/Layouts/Form/FormikFormContollerErrorHandler';
 
 export default function VerifyEmailScreenForm({
   userEmail,

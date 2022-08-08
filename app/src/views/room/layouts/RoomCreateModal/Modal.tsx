@@ -4,14 +4,15 @@ import {Formik} from 'formik';
 import CreateRoomSchema, {
   limits,
 } from '@shared/constants/schema/CreateRoomSchema';
-import FormGrpahqlErrorHandler from '@components/Elements/FormGrpahqlErrorHandler';
-import FormikFormContollerErrorHandler from '@components/Elements/FormikFormContollerErrorHandler';
+import FormGrpahqlErrorHandler from '@components/Layouts/Form/FormGrpahqlErrorHandler';
+import FormikFormContollerErrorHandler from '@components/Layouts/Form/FormikFormContollerErrorHandler';
 import ModalFooter from './ModalFooter';
 import ModalHeader from './ModalHeader';
-import ModalTagsSelect from './ModalTagsSelect';
+import TagsSelect from '../TagsSelect';
 import {useFormik} from 'formik';
 import useCreateRoom from '@shared/api/room/useCreateRoom';
 import {useGetUser} from '@redux/slices/user';
+import SelectRoomType from '../SelectRoomType';
 
 const initialValues: RoomCreateValues = {
   title: '',
@@ -32,8 +33,15 @@ export default function ModalRoomCreate({
     initialValues,
     validationSchema: CreateRoomSchema,
   });
-  const {handleChange, handleBlur, values, errors, touched, setFieldTouched} =
-    formikProps;
+  const {
+    handleChange,
+    handleBlur,
+    values,
+    errors,
+    touched,
+    setFieldTouched,
+    setFieldValue,
+  } = formikProps;
   const [createRomm, {data, loading}] = useCreateRoom();
   const user = useGetUser();
 
@@ -117,21 +125,15 @@ export default function ModalRoomCreate({
                     borderBottomWidth="1"
                   />
                 </FormikFormContollerErrorHandler>
-                <FormikFormContollerErrorHandler
+                <SelectRoomType
+                  name="roomType"
                   errors={errors}
                   touched={touched}
-                  name="roomType"
-                  label="Room Access Type"
-                  isRequired>
-                  <Select
-                    placeholder="Select Access Type"
-                    onValueChange={handleChange('roomType')}
-                    selectedValue={values.roomType}
-                    onClose={() => setFieldTouched('roomType', true)}>
-                    <Select.Item value="private" label="Private" />
-                    <Select.Item value="public" label="Public" />
-                  </Select>
-                </FormikFormContollerErrorHandler>
+                  label="Room Type"
+                  handleBlur={() => setFieldTouched('roomType', true)}
+                  handleChange={handleChange('roomType')}
+                  value={values.roomType}
+                />
                 <FormikFormContollerErrorHandler
                   errors={errors}
                   touched={touched}
@@ -149,7 +151,14 @@ export default function ModalRoomCreate({
                     ))}
                   </Select>
                 </FormikFormContollerErrorHandler>
-                <ModalTagsSelect {...formikProps} />
+                <TagsSelect
+                  setFieldValue={setFieldValue}
+                  setFieldTouched={setFieldTouched}
+                  errors={errors}
+                  touched={touched}
+                  name="tags"
+                  label="Room Tags"
+                />
               </Stack>
             </ScrollView>
           </Modal.Body>

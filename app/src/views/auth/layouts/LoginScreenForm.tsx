@@ -16,8 +16,8 @@ import {LoginScreenProps} from '@navigation/AuthStack';
 import useSendVerifyCodeEmail from '@shared/api/auth/useSendVerifyCodeEmail';
 import {useDispatch} from 'react-redux';
 import {setUser} from '@redux/slices/user';
-import FormGrpahqlErrorHandler from '@components/Elements/FormGrpahqlErrorHandler';
-import FormikFormContollerErrorHandler from '@components/Elements/FormikFormContollerErrorHandler';
+import FormGrpahqlErrorHandler from '@components/Layouts/Form/FormGrpahqlErrorHandler';
+import FormikFormContollerErrorHandler from '@components/Layouts/Form/FormikFormContollerErrorHandler';
 
 export default function LoginScreenForm() {
   const [passShowing, setPassShowing] = useState<boolean>(false);

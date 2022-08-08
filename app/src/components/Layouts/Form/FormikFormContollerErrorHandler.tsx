@@ -1,5 +1,5 @@
 import React from 'react';
-import FormErrorMessage from './FormErrorMessage';
+import FormErrorMessage from '../Form/FormErrorMessage';
 import {FormikErrors, FormikTouched} from 'formik';
 import {FormControl, IFormControlProps} from 'native-base';
 import FormLabel from './FormLabel';

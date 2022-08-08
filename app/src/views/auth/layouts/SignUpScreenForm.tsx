@@ -7,8 +7,8 @@ import useSignup from '@shared/api/auth/useSignup';
 import {SignupScreenProps} from '@navigation/AuthStack';
 import {useNavigation} from '@react-navigation/native';
 import useSendVerifyCodeEmail from '@shared/api/auth/useSendVerifyCodeEmail';
-import FormGrpahqlErrorHandler from '@components/Elements/FormGrpahqlErrorHandler';
-import FormikFormContollerErrorHandler from '@components/Elements/FormikFormContollerErrorHandler';
+import FormGrpahqlErrorHandler from '@components/Layouts/Form/FormGrpahqlErrorHandler';
+import FormikFormContollerErrorHandler from '@components/Layouts/Form/FormikFormContollerErrorHandler';
 
 export default function SignUpScreenForm() {
   const [userEmail, setUserEmail] = useState<string | null>();
