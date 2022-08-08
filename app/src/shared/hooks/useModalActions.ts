@@ -1,8 +1,7 @@
 import {useState} from 'react';
 
-export default function useCreateRoomModalActions() {
-  const [isCreateRoomModalOpen, setIsCreateRoomModalOpen] =
-    useState<boolean>(false);
+export default function useModalActions() {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [changesNotSaved, setChangesNotSaved] = useState<boolean>(false);
   const [isWarningModalOpen, setIsWarningModalOpen] = useState<boolean>(false);
 
@@ -10,27 +9,27 @@ export default function useCreateRoomModalActions() {
     if (changesNotSaved) {
       setIsWarningModalOpen(true);
     } else {
-      setIsCreateRoomModalOpen(false);
+      setIsModalOpen(false);
     }
   };
 
   const onWarningModalSureAction = () => {
     setChangesNotSaved(false);
     setIsWarningModalOpen(false);
-    setIsCreateRoomModalOpen(false);
+    setIsModalOpen(false);
   };
 
   return {
     onWarningModalClose: () => setIsWarningModalOpen(false),
     onWarningModalOpen: () => setIsWarningModalOpen(true),
-    onCreateRoomModalOpen: () => setIsCreateRoomModalOpen(true),
-    onCreateRoomModalClose: () => setIsCreateRoomModalOpen(false),
+    onModalOpen: () => setIsModalOpen(true),
+    onModalClose: () => setIsModalOpen(false),
     onChangesNotSaved: () => setChangesNotSaved(true),
 
     onWarningModalSureAction,
     onModalOverlayClicked,
 
     isWarningModalOpen,
-    isCreateRoomModalOpen,
+    isModalOpen,
   };
 }

@@ -3,7 +3,7 @@ import {Heading, Text, Stack, HStack} from 'native-base';
 import ModalNotSaved from './RoomCreateModal/NotSavedModal';
 import ButtonIcon from '@components/Elements/ButtonIcon';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import useCreateRoomModalActions from '../hooks/useCreateRoomModalActions';
+import useModalActions from '../../../shared/hooks/useModalActions';
 import ModalRoomCreate from './RoomCreateModal/Modal';
 
 export default function RoomListScreenHeader() {
@@ -12,11 +12,11 @@ export default function RoomListScreenHeader() {
     onModalOverlayClicked,
     onWarningModalSureAction,
     isWarningModalOpen,
-    onCreateRoomModalOpen,
-    onCreateRoomModalClose,
-    isCreateRoomModalOpen,
+    onModalOpen,
+    onModalClose,
+    isModalOpen,
     onChangesNotSaved,
-  } = useCreateRoomModalActions();
+  } = useModalActions();
 
   return (
     <>
@@ -32,7 +32,7 @@ export default function RoomListScreenHeader() {
             as={AntDesign}
             name="plus"
             text="Add"
-            onPress={onCreateRoomModalOpen}
+            onPress={onModalOpen}
           />
         </Stack>
       </HStack>
@@ -43,9 +43,9 @@ export default function RoomListScreenHeader() {
       />
       <ModalRoomCreate
         onChangesNotSaved={onChangesNotSaved}
-        isCreateRoomModalOpen={isCreateRoomModalOpen}
+        isCreateRoomModalOpen={isModalOpen}
         onModalOverlayClicked={onModalOverlayClicked}
-        onCreateRoomModalClose={onCreateRoomModalClose}
+        onCreateRoomModalClose={onModalClose}
       />
     </>
   );

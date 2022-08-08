@@ -4,6 +4,14 @@ import {FormikErrors, FormikTouched} from 'formik';
 import {FormControl, IFormControlProps} from 'native-base';
 import FormLabel from './FormLabel';
 
+export interface FormikFormContollerErrorHandlerProps {
+  name: string;
+  label?: string;
+  errors: FormikErrors<Item>;
+  touched: FormikTouched<Item>;
+  helperText?: string | string[];
+}
+
 export default function FormikFormContollerErrorHandler({
   name,
   errors,
@@ -11,13 +19,7 @@ export default function FormikFormContollerErrorHandler({
   helperText,
   label,
   ...props
-}: {
-  name: string;
-  label?: string;
-  errors: FormikErrors<Item>;
-  touched: FormikTouched<Item>;
-  helperText?: string | string[];
-} & IFormControlProps) {
+}: FormikFormContollerErrorHandlerProps & IFormControlProps) {
   return (
     <FormControl {...props}>
       {label && <FormLabel>{label} </FormLabel>}

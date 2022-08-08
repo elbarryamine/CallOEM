@@ -14,11 +14,11 @@ import useCreateRoom from '@shared/api/room/useCreateRoom';
 import {useGetUser} from '@redux/slices/user';
 
 const initialValues: RoomCreateValues = {
-  Title: '',
-  Description: '',
-  'Room Type': 'public',
-  Tags: [],
-  Limit: undefined,
+  title: '',
+  description: '',
+  roomType: 'public',
+  tags: [],
+  limit: undefined,
 };
 
 export default function ModalRoomCreate({
@@ -43,11 +43,11 @@ export default function ModalRoomCreate({
     try {
       await createRomm({
         variables: {
-          title: values.Title,
-          description: values.Description,
-          limit: values.Limit ? Number(values.Limit) : null,
-          roomType: values['Room Type'],
-          tags: values.Tags,
+          title: values.title,
+          description: values.description,
+          limit: values.limit ? Number(values.limit) : null,
+          roomType: values.roomType,
+          tags: values.tags,
           ownerMember: user.user.id,
         },
       });
@@ -56,11 +56,11 @@ export default function ModalRoomCreate({
 
   useEffect(() => {
     if (
-      values.Description ||
-      values.Limit ||
-      values.Tags ||
-      values.Title ||
-      values['Room Type']
+      values.description ||
+      values.limit ||
+      values.tags ||
+      values.title ||
+      values.roomType
     ) {
       onChangesNotSaved();
     }
@@ -91,27 +91,27 @@ export default function ModalRoomCreate({
                 <FormikFormContollerErrorHandler
                   errors={errors}
                   touched={touched}
-                  name="Title"
+                  name="title"
                   label="Title"
                   helperText="Must be 8 to 255 characters"
                   isRequired>
                   <Input
                     placeholder="Enter Room Title"
                     borderBottomWidth="1"
-                    value={values.Title}
-                    onChangeText={handleChange('Title')}
-                    onBlur={handleBlur('Title')}
+                    value={values.title}
+                    onChangeText={handleChange('title')}
+                    onBlur={handleBlur('title')}
                   />
                 </FormikFormContollerErrorHandler>
                 <FormikFormContollerErrorHandler
                   errors={errors}
                   touched={touched}
-                  name="Description"
+                  name="description"
                   label="Description">
                   <TextArea
-                    value={values.Description}
-                    onChangeText={handleChange('Description')}
-                    onBlur={handleBlur('Description')}
+                    value={values.description}
+                    onChangeText={handleChange('description')}
+                    onBlur={handleBlur('description')}
                     autoCompleteType={false}
                     placeholder="Enter Room Description"
                     borderBottomWidth="1"
@@ -120,14 +120,14 @@ export default function ModalRoomCreate({
                 <FormikFormContollerErrorHandler
                   errors={errors}
                   touched={touched}
-                  name="Room Type"
+                  name="roomType"
                   label="Room Access Type"
                   isRequired>
                   <Select
                     placeholder="Select Access Type"
-                    onValueChange={handleChange('Room Type')}
-                    selectedValue={values['Room Type']}
-                    onClose={() => setFieldTouched('Room Type', true)}>
+                    onValueChange={handleChange('roomType')}
+                    selectedValue={values.roomType}
+                    onClose={() => setFieldTouched('roomType', true)}>
                     <Select.Item value="private" label="Private" />
                     <Select.Item value="public" label="Public" />
                   </Select>
@@ -140,9 +140,9 @@ export default function ModalRoomCreate({
                   isRequired>
                   <Select
                     placeholder="Select Members Limit"
-                    onValueChange={handleChange('Limit')}
-                    selectedValue={values.Limit?.toString()}
-                    onClose={() => setFieldTouched('Limit', true)}>
+                    onValueChange={handleChange('limit')}
+                    selectedValue={values.limit?.toString()}
+                    onClose={() => setFieldTouched('limit', true)}>
                     <Select.Item value={''} label={'No limit'} />
                     {limits.map((limit: string, idx: number) => (
                       <Select.Item key={idx} value={limit} label={limit} />
@@ -171,9 +171,9 @@ interface ModalRoomCreate {
 }
 
 export type RoomCreateValues = {
-  Title: string;
-  Description: string;
-  'Room Type': 'public' | 'private';
-  Tags: string[];
-  Limit: string | undefined;
+  title: string;
+  description: string;
+  roomType: 'public' | 'private';
+  tags: string[];
+  limit: string | undefined;
 };

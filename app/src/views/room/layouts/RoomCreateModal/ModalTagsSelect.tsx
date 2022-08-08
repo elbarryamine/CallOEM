@@ -29,7 +29,7 @@ export default function ModalTagsSelect({
       <FormikFormContollerErrorHandler
         errors={errors}
         touched={touched}
-        name="Tags"
+        name="tags"
         label="Room Tags"
         isRequired>
         {tagsQueryLoading ? (
@@ -40,7 +40,7 @@ export default function ModalTagsSelect({
             onValueChange={(value: string) =>
               handleSelectTags(setFieldValue, value)
             }
-            onClose={() => setFieldTouched('Tags', true)}>
+            onClose={() => setFieldTouched('tags', true)}>
             {tagsData.map(({tag}, idx) => {
               const capitalizedTag = tag
                 .split(' ')

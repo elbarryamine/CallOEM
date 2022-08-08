@@ -1,6 +1,5 @@
 import {gql, useMutation} from '@apollo/client';
 import {Room} from '@shared/types/Room';
-import {RoomCreateVariables} from '@views/room/types/RoomCreateVariables';
 
 const QUERY = gql`
   mutation createRoom(
@@ -30,10 +29,11 @@ export default function useCreateRoom() {
   return useMutation<{CreateRoom: Room}, RoomCreateVariables>(QUERY);
 }
 
-export type RoomCreateValues = {
-  Title: string;
-  Description: string;
-  'Room Type': string;
-  Tags: string;
-  Limit: number | null;
+export type RoomCreateVariables = {
+  title: string;
+  description: string;
+  roomType: string;
+  tags: string[];
+  limit: number | null;
+  ownerMember: string;
 };
