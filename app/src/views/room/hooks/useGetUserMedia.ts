@@ -36,9 +36,7 @@ export default function useGetUserMedia(isFront: boolean) {
       setLocalStream(() => mediaStream);
       setIsLoading(false);
       return mediaStream;
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
   useEffect(() => {
     return () => {

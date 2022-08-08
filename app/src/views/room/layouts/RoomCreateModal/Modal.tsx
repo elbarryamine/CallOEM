@@ -18,7 +18,7 @@ const initialValues: RoomCreateValues = {
   Description: '',
   'Room Type': 'public',
   Tags: [],
-  Limit: null,
+  Limit: undefined,
 };
 
 export default function ModalRoomCreate({
@@ -40,22 +40,12 @@ export default function ModalRoomCreate({
   async function handleCreateRoom() {
     // user is never null since we have a check on the top tree of this component
     if (!user) return;
-    console.log({
-      variables: {
-        title: values.Title,
-        description: values.Description,
-        limit: values.Limit,
-        roomType: values['Room Type'],
-        tags: values.Tags,
-        ownerMember: user.user.id,
-      },
-    });
     try {
       await createRomm({
         variables: {
           title: values.Title,
           description: values.Description,
-          limit: values.Limit,
+          limit: values.Limit ? Number(values.Limit) : null,
           roomType: values['Room Type'],
           tags: values.Tags,
           ownerMember: user.user.id,
@@ -75,6 +65,13 @@ export default function ModalRoomCreate({
       onChangesNotSaved();
     }
   }, [values]);
+
+  useEffect(() => {
+    if (!loading && data && data.CreateRoom) {
+      // should redirect to room page instead of just closing modal
+      onCreateRoomModalClose();
+    }
+  }, [data]);
 
   return (
     <Modal
@@ -146,12 +143,9 @@ export default function ModalRoomCreate({
                     onValueChange={handleChange('Limit')}
                     selectedValue={values.Limit?.toString()}
                     onClose={() => setFieldTouched('Limit', true)}>
-                    {limits.map((limit, idx: number) => (
-                      <Select.Item
-                        key={idx}
-                        value={limit ? limit.toString() : ''}
-                        label={limit ? limit.toString() : 'No limit'}
-                      />
+                    <Select.Item value={''} label={'No limit'} />
+                    {limits.map((limit: string, idx: number) => (
+                      <Select.Item key={idx} value={limit} label={limit} />
                     ))}
                   </Select>
                 </FormikFormContollerErrorHandler>
@@ -181,5 +175,5 @@ export type RoomCreateValues = {
   Description: string;
   'Room Type': 'public' | 'private';
   Tags: string[];
-  Limit: number | null;
+  Limit: string | undefined;
 };

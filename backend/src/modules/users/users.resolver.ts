@@ -12,7 +12,7 @@ import {
   UsersCodesDocument,
   UsersCodesSchemaType,
 } from './entities/usersCodes.schema';
-import sendVerifyCodeEmail from 'src/services/email/sendVerifyCodeEmail';
+import sendVerifyCodeEmail from 'src/services/email/send-verify-email';
 import { promises } from 'fs';
 import { join } from 'path';
 import signUpValidate from 'src/services/validation/signup';

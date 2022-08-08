@@ -30,12 +30,10 @@ export class TagsResolver {
     const insertedTags = await this.tagModule.insertMany(tags, {
       ordered: true,
     });
-    console.log(insertedTags);
 
     const savedTags = await this.tagModule.find().sort('tag');
 
     for (let i = 0; i < savedTags.length - 1; i++) {
-      console.log(savedTags[i].tag, savedTags[i + 1].tag);
       if (!savedTags[i + 1]?.tag) break;
       if (savedTags[i].tag === savedTags[i + 1].tag) {
         await this.tagModule.findOneAndRemove({ _id: savedTags[i].id });

@@ -6,6 +6,8 @@ import { RoomDocument, RoomSchemaType } from './entities/room.schema';
 import { Model } from 'mongoose';
 import { UpdateRoomInput } from './dto/update-room.input';
 import { UserDocument, UserSchemaType } from '../users/entities/user.schema';
+import roomValidate from 'src/services/validation/room';
+import { NotAcceptableException } from '@nestjs/common';
 
 @Resolver(() => Room)
 export class RoomsResolver {
@@ -23,6 +25,9 @@ export class RoomsResolver {
   @Mutation(() => Room, { name: 'CreateRoom' })
   async createRoom(@Args('createRoomInput') createRoomInput: CreateRoomInput) {
     // validate room
+    const valid = await roomValidate(createRoomInput);
+    if (!valid)
+      throw new NotAcceptableException({ message: 'invalid room fields' });
     return await this.roomModule.create(createRoomInput);
   }
   //
@@ -47,7 +52,6 @@ export class RoomsResolver {
       .populate('memebers', this.wantedUserFields, this.userModel)
       .populate('ownerMember', this.wantedUserFields, this.userModel)
       .exec();
-    console.log(room);
     return room;
   }
   //
