@@ -85,7 +85,8 @@ export default function ModalRoomCreate({
     <Modal
       isOpen={isCreateRoomModalOpen}
       onClose={onModalOverlayClicked}
-      size="full">
+      size="full"
+      animationPreset="slide">
       <Formik
         initialValues={initialValues}
         validationSchema={CreateRoomSchema}

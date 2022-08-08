@@ -40,7 +40,11 @@ export default function ModalSeach({isModalOpen, onModalClose}: Props) {
   } = formikProps;
 
   return (
-    <Modal isOpen={isModalOpen} onClose={onModalClose} size="full">
+    <Modal
+      isOpen={isModalOpen}
+      onClose={onModalClose}
+      size="full"
+      animationPreset={'slide'}>
       <Modal.Content w="100%" mt="auto" mb="0" borderTopRadius="25px">
         <Modal.Header borderBottomColor="transparent" mt="10px">
           <Heading>Search</Heading>

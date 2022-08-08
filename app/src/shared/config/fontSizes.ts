@@ -1,7 +1,8 @@
 const fontSizes = {
-  mono: '12px',
-  sub: '14px',
-  body: '16px',
-  subheader: '18px',
+  mono: '14px',
+  sub: '16px',
+  body: '18px',
+  subheader: '20px',
+  header: '22px',
 };
 export default fontSizes;

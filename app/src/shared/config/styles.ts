@@ -1,4 +1,5 @@
 import {extendTheme, ITheme} from 'native-base';
+import fontSizes from './fontSizes';
 
 export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
   const colors = {
@@ -13,12 +14,12 @@ export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
     border: 'rgba(0,0,0,0.05)',
   };
   const fontTextConfig = {
-    fontSize: '16px',
+    fontSize: fontSizes.body,
     fontFamily: 'body',
     color: colors.text,
   };
   const buttonTextConfig = {
-    fontSize: '16px',
+    fontSize: fontSizes.body,
     fontFamily: 'body',
   };
   return extendTheme({
@@ -44,7 +45,7 @@ export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
         defaultProps: {
           ...fontTextConfig,
           fontFamily: 'heading',
-          fontSize: 20,
+          fontSize: fontSizes.header,
           textTransform: 'capitalize',
         },
       },
