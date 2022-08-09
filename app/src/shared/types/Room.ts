@@ -1,7 +1,6 @@
 interface RoomMember {
   id: string;
   avatar: string;
-  email: string;
   joinedAt: Date;
   username: string;
 }

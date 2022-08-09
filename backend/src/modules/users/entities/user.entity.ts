@@ -55,7 +55,6 @@ export class UserSignin {
 @ObjectType()
 export class UserRoomMember extends PickType(User, [
   '_id',
-  'email',
   'avatar',
   'username',
   'joinedAt',
@@ -63,5 +62,5 @@ export class UserRoomMember extends PickType(User, [
 
 export type UserRoomMemberType = Pick<
   User,
-  '_id' | 'email' | 'avatar' | 'username' | 'joinedAt'
+  '_id' | 'avatar' | 'username' | 'joinedAt'
 >;

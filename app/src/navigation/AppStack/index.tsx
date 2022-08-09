@@ -8,18 +8,19 @@ import TabNavigation from '@components/Layouts/Navigation/TabNavigation';
 
 import HomeStack from './HomeStack';
 import {View} from 'native-base';
+import HistoryScreen from '@views/history/screen/HistoryScreen';
+import AccountScreen from '@views/account/screen/AccountScreen';
+import SettingsScreen from '@views/settings/screen/SettingsScreen';
 
 const Tab = createBottomTabNavigator();
 
-const sharedOptions: BottomTabNavigationOptions = {
-  headerShown: false,
-};
+const sharedOptions: BottomTabNavigationOptions = {headerShown: false};
 
 const navigatonRoutes = [
   {name: 'app:home', component: HomeStack},
-  {name: 'app:history', component: RoomsListScreen},
-  {name: 'app:account', component: RoomsListScreen},
-  {name: 'app:settings', component: RoomsListScreen},
+  {name: 'app:history', component: HistoryScreen},
+  {name: 'app:account', component: AccountScreen},
+  {name: 'app:settings', component: SettingsScreen},
 ];
 export default function AppStack() {
   return (

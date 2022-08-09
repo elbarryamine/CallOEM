@@ -4,9 +4,9 @@ import {SvgCssUri} from 'react-native-svg';
 
 export default function ImageAvatar({
   uri,
-  size,
+  size = '50px',
   ...props
-}: {uri: string; size: string} & (IAvatarProps | IFlexProps)) {
+}: {uri: string; size?: string} & (IAvatarProps | IFlexProps)) {
   const containerSize = Number(size.replace('px', ''));
   const avatarSize = Math.floor(containerSize * 1.4);
   if (!uri.toLowerCase().endsWith('svg')) {

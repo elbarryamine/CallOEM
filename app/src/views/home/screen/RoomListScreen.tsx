@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Spinner, Stack, View} from 'native-base';
+import {Stack, View} from 'native-base';
 import RoomCard from '../layouts/RoomCard';
 import ScreenContainer from '@components/Containers/ScreenContainer';
 import HeaderNavigation from '@components/Layouts/Navigation/HeaderNavigation';
@@ -9,6 +9,7 @@ import useGetRooms from '@shared/api/room/useGetRooms';
 import ScrollListContainer from '@components/Containers/ScrollListContainer';
 import {useSearchResultsContext} from '@context/SearchContext';
 import {Room} from '@shared/types/Room';
+import Preloader from '@components/Layouts/Preloader';
 
 export default function RoomsListScreen() {
   const {data, loading} = useGetRooms();
@@ -22,7 +23,7 @@ export default function RoomsListScreen() {
   useEffect(() => {
     setIsSearchScreen(false);
   }, []);
-  if (loading) return <Spinner />;
+  if (loading) return <Preloader />;
   return (
     <>
       <HeaderNavigation />

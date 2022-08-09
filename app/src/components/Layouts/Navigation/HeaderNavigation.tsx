@@ -32,14 +32,20 @@ export default function HeaderNavigation(props: IViewProps) {
       {...props}>
       <Flex flexDir="row" justify="space-between">
         <Stack maxHeight="50px">
-          <Text fontWeight={900}>{user.user.username}</Text>
-          <Text color="subText" fontSize="sub" fontWeight={500}>
+          <Text fontWeight={900} color="invert">
+            {user.user.username}
+          </Text>
+          <Text color="invert" fontSize="sub" fontWeight={500}>
             {isUserNew ? '👋 Welcome' : '👋 Welcome back'}
           </Text>
         </Stack>
         <HStack alignItems="center" space={2} alignSelf="flex-end">
-          <ButtonIcon as={AntDesign} name="bells" />
-          <ImageAvatar uri={getAvatar(user.user.avatar)} size="50px" />
+          <ButtonIcon
+            as={AntDesign}
+            name="bells"
+            iconProps={{color: 'invert'}}
+          />
+          <ImageAvatar uri={getAvatar(user.user.avatar)} />
         </HStack>
       </Flex>
     </View>

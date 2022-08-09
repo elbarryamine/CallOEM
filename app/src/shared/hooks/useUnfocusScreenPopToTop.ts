@@ -7,7 +7,9 @@ function useUnfocusScreenPopToTop(
 ) {
   useEffect(() => {
     navigation.addListener('blur', () => {
-      navigation.popToTop();
+      if (navigation.isFocused()) {
+        navigation.popToTop();
+      }
     });
     return () => {
       navigation.removeListener('blur', () => {});

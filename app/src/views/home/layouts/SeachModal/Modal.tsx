@@ -10,16 +10,21 @@ import SearchRoomSchema from '@shared/constants/schema/SearchRoomSchema';
 import {useNavigation} from '@react-navigation/native';
 import {RoomsListScreenStackNavigationProps} from '@navigation/AppStack/HomeStack';
 import {useSearchResultsContext} from '@context/SearchContext';
+import {useApolloClient} from '@apollo/client';
 
 export default function ModalSearch({isModalOpen, onModalClose}: Props) {
   const [roomSearch, {data, loading}] = useRoomSearch();
   const {isSearchScreen, setRooms} = useSearchResultsContext();
+  const client = useApolloClient();
   const navigation =
     useNavigation<RoomsListScreenStackNavigationProps['navigation']>();
   const formikProps = useFormik({
     initialValues: {searchQuery: '', roomType: 'both', tags: []},
     onSubmit: async values => {
       try {
+        if (data?.SearchRoom) {
+          client.refetchQueries({include: ['SearchRoom']});
+        }
         await roomSearch({
           variables: {
             roomType: values.roomType,

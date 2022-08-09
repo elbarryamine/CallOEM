@@ -7,7 +7,7 @@ export default function ScreenContainer({
   ...props
 }: {children: ReactNode} & IViewProps) {
   return (
-    <View flex="1" px="10px" py="15px" bg="primaryBg" {...props}>
+    <View flex="1" px="10px" pt="20px" bg="primaryBg" {...props}>
       {children}
     </View>
   );

@@ -2,6 +2,7 @@ import React from 'react';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import {View, Flex, Icon, Stack, Text, Button} from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import ButtonIcon from '@components/Elements/ButtonIcon';
 
 export const routes = [
   {name: 'home', iconProvider: AntDesign, title: 'Rooms'},
@@ -22,23 +23,18 @@ export default function TabNavigation({state, navigation}: BottomTabBarProps) {
       <Flex flexDir="row" justify="space-around" align="center" h="100%">
         {routes.map((route, idx) => {
           return (
-            <Button
+            <ButtonIcon
               key={idx}
-              onPress={() => navigation.navigate(state.routes[idx].name)}>
-              <Stack alignItems="center">
-                <Icon
-                  as={route.iconProvider}
-                  name={route.name}
-                  size="25px"
-                  color={state.index === idx ? 'ternary' : 'text'}
-                />
-                <Text
-                  fontSize="mono"
-                  color={state.index === idx ? 'ternary' : 'text'}>
-                  {route.title}
-                </Text>
-              </Stack>
-            </Button>
+              onPress={() => navigation.navigate(state.routes[idx].name)}
+              textProps={{
+                color: state.index === idx ? 'primary' : 'text',
+                fontSize: 'mono',
+              }}
+              iconProps={{color: state.index === idx ? 'primary' : 'text'}}
+              text={route.title}
+              name={route.name}
+              as={route.iconProvider}
+            />
           );
         })}
       </Flex>

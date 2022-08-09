@@ -13,11 +13,13 @@ export default function RoomCard({room}: {room: Room}) {
 
   return (
     <View p="2px">
-      <View shadow="1" borderRadius="10px" bg="white">
+      <View shadow="2" borderRadius="10px" bg="white">
         <View
           borderRadius="10px"
-          bg={colors[Math.floor(Math.random() * colors.length)] + '60'}
-          overflow="hidden">
+          bg="secondary"
+          overflow="hidden"
+          borderWidth="1"
+          borderColor="border">
           <Stack justifyContent="center" space={2} p="12px">
             <Stack flex="1" mr="24px">
               <Text
@@ -44,7 +46,6 @@ export default function RoomCard({room}: {room: Room}) {
                 mr="5px">
                 {[room.ownerMember, ...room.memebers].map((member, index) => (
                   <ImageAvatar
-                    size="50px"
                     key={index}
                     mr="-20px"
                     uri={getAvatar(member.avatar)}

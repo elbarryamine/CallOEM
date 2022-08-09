@@ -39,8 +39,10 @@ export class RoomsResolver {
   async findAll() {
     const rooms = await this.roomModule
       .find()
+      .sort('-createdAt')
       .populate('memebers', this.wantedUserFields, this.userModel)
       .populate('ownerMember', this.wantedUserFields, this.userModel)
+
       .exec();
     return rooms;
   }
@@ -74,6 +76,7 @@ export class RoomsResolver {
           $or: [...searchQuery, ...tagsQuery],
         }),
       })
+      .sort('-createdAt')
       .populate('memebers', this.wantedUserFields, this.userModel)
       .populate('ownerMember', this.wantedUserFields, this.userModel)
       .exec();

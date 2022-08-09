@@ -2,7 +2,7 @@ import {gql, useMutation} from '@apollo/client';
 import {Room} from '@shared/types/Room';
 
 const QUERY = gql`
-  mutation createRoom(
+  mutation CreateRoom(
     $description: String!
     $limit: Int
     $ownerMember: String!

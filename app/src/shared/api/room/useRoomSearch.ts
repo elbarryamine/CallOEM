@@ -2,7 +2,7 @@ import {gql, useLazyQuery} from '@apollo/client';
 import {Room} from '@shared/types/Room';
 
 const QUERY = gql`
-  query SearchRooms($roomType: String, $searchQuery: String, $tags: [String!]) {
+  query SearchRoom($roomType: String, $searchQuery: String, $tags: [String!]) {
     SearchRoom(
       searchRoomInput: {
         roomType: $roomType
@@ -16,16 +16,14 @@ const QUERY = gql`
       id
       limit
       memebers {
-        avatar
-        email
         id
+        avatar
         joinedAt
         username
       }
       ownerMember {
-        avatar
-        email
         id
+        avatar
         joinedAt
         username
       }

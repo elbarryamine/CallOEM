@@ -13,6 +13,7 @@ import {useFormik} from 'formik';
 import useCreateRoom from '@shared/api/room/useCreateRoom';
 import {useGetUser} from '@redux/slices/user';
 import SelectRoomType from '../SelectRoomType';
+import {useApolloClient} from '@apollo/client';
 
 const initialValues: RoomCreateValues = {
   title: '',
@@ -28,34 +29,28 @@ export default function ModalRoomCreate({
   onCreateRoomModalClose,
   onChangesNotSaved,
 }: ModalRoomCreate) {
-  const formikProps = useFormik<RoomCreateValues>({
+  const formik = useFormik<RoomCreateValues>({
     onSubmit: handleCreateRoom,
     initialValues,
     validationSchema: CreateRoomSchema,
   });
-  const {
-    handleChange,
-    handleBlur,
-    values,
-    errors,
-    touched,
-    setFieldTouched,
-    setFieldValue,
-  } = formikProps;
+
   const [createRomm, {data, loading}] = useCreateRoom();
   const user = useGetUser();
+  const client = useApolloClient();
 
   async function handleCreateRoom() {
     // user is never null since we have a check on the top tree of this component
     if (!user) return;
     try {
+      const {description, limit, tags, title, roomType} = formik.values;
       await createRomm({
         variables: {
-          title: values.title,
-          description: values.description,
-          limit: values.limit ? Number(values.limit) : null,
-          roomType: values.roomType,
-          tags: values.tags,
+          title: title,
+          description: description,
+          limit: limit ? Number(limit) : null,
+          roomType: roomType,
+          tags: tags,
           ownerMember: user.user.id,
         },
       });
@@ -63,20 +58,15 @@ export default function ModalRoomCreate({
   }
 
   useEffect(() => {
-    if (
-      values.description ||
-      values.limit ||
-      values.tags ||
-      values.title ||
-      values.roomType
-    ) {
-      onChangesNotSaved();
-    }
-  }, [values]);
+    const {description, limit, tags, title, roomType} = formik.values;
+    if (description || limit || tags || title || roomType) onChangesNotSaved();
+  }, [formik.values]);
 
   useEffect(() => {
+    // refetch rooms data
+    // should redirect to room page instead of just closing modal
     if (!loading && data && data.CreateRoom) {
-      // should redirect to room page instead of just closing modal
+      client.refetchQueries({include: ['GetRooms']});
       onCreateRoomModalClose();
     }
   }, [data]);
@@ -98,8 +88,8 @@ export default function ModalRoomCreate({
               <Stack space={2}>
                 <FormGrpahqlErrorHandler error={undefined} />
                 <FormikFormContollerErrorHandler
-                  errors={errors}
-                  touched={touched}
+                  errors={formik.errors}
+                  touched={formik.touched}
                   name="title"
                   label="Title"
                   helperText="Must be 8 to 255 characters"
@@ -107,20 +97,20 @@ export default function ModalRoomCreate({
                   <Input
                     placeholder="Enter Room Title"
                     borderBottomWidth="1"
-                    value={values.title}
-                    onChangeText={handleChange('title')}
-                    onBlur={handleBlur('title')}
+                    value={formik.values.title}
+                    onChangeText={formik.handleChange('title')}
+                    onBlur={formik.handleBlur('title')}
                   />
                 </FormikFormContollerErrorHandler>
                 <FormikFormContollerErrorHandler
-                  errors={errors}
-                  touched={touched}
+                  errors={formik.errors}
+                  touched={formik.touched}
                   name="description"
                   label="Description">
                   <TextArea
-                    value={values.description}
-                    onChangeText={handleChange('description')}
-                    onBlur={handleBlur('description')}
+                    value={formik.values.description}
+                    onChangeText={formik.handleChange('description')}
+                    onBlur={formik.handleBlur('description')}
                     autoCompleteType={false}
                     placeholder="Enter Room Description"
                     borderBottomWidth="1"
@@ -128,24 +118,24 @@ export default function ModalRoomCreate({
                 </FormikFormContollerErrorHandler>
                 <SelectRoomType
                   name="roomType"
-                  errors={errors}
-                  touched={touched}
+                  errors={formik.errors}
+                  touched={formik.touched}
                   label="Room Type"
-                  handleBlur={() => setFieldTouched('roomType', true)}
-                  handleChange={handleChange('roomType')}
-                  value={values.roomType}
+                  handleBlur={() => formik.setFieldTouched('roomType', true)}
+                  handleChange={formik.handleChange('roomType')}
+                  value={formik.values.roomType}
                 />
                 <FormikFormContollerErrorHandler
-                  errors={errors}
-                  touched={touched}
+                  errors={formik.errors}
+                  touched={formik.touched}
                   name="Limit"
                   label="Room Members Limit"
                   isRequired>
                   <Select
                     placeholder="Select Members Limit"
-                    onValueChange={handleChange('limit')}
-                    selectedValue={values.limit?.toString()}
-                    onClose={() => setFieldTouched('limit', true)}>
+                    onValueChange={formik.handleChange('limit')}
+                    selectedValue={formik.values.limit?.toString()}
+                    onClose={() => formik.setFieldTouched('limit', true)}>
                     <Select.Item value={''} label={'No limit'} />
                     {limits.map((limit: string, idx: number) => (
                       <Select.Item key={idx} value={limit} label={limit} />
@@ -153,10 +143,10 @@ export default function ModalRoomCreate({
                   </Select>
                 </FormikFormContollerErrorHandler>
                 <TagsSelect
-                  setFieldValue={setFieldValue}
-                  setFieldTouched={setFieldTouched}
-                  errors={errors}
-                  touched={touched}
+                  setFieldValue={formik.setFieldValue}
+                  setFieldTouched={formik.setFieldTouched}
+                  errors={formik.errors}
+                  touched={formik.touched}
                   name="tags"
                   label="Room Tags"
                 />

@@ -37,17 +37,21 @@ export default function BackButtonNavigation({
             onPress={handleNavigateBack}
             as={AntDesign}
             name="arrowleft"
-            iconProps={{color: 'text'}}
+            iconProps={{color: 'invert'}}
           />
           {headerTitle && (
-            <Heading textTransform="capitalize" fontWeight={600}>
+            <Heading textTransform="capitalize" fontWeight={600} color="invert">
               {headerTitle}
             </Heading>
           )}
         </HStack>
         <HStack alignItems="center" space={2} alignSelf="flex-end">
-          <ButtonIcon as={AntDesign} name="bells" />
-          <ImageAvatar uri={getAvatar(user.user.avatar)} size="50px" />
+          <ButtonIcon
+            as={AntDesign}
+            name="bells"
+            iconProps={{color: 'invert'}}
+          />
+          <ImageAvatar uri={getAvatar(user.user.avatar)} />
         </HStack>
       </Flex>
     </View>

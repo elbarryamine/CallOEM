@@ -100,7 +100,6 @@ type User {
 
 type UserRoomMember {
   avatar: String!
-  email: String!
   id: String!
   joinedAt: DateTime!
   username: String!

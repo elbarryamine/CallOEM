@@ -6,7 +6,7 @@ export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
     primary: '#0124FB',
     ternary: '#ff6347',
     secondary: '#ffffff',
-    navigation: 'whitesmoke',
+    navigation: '#000b4c',
     dark: '#292C38',
     error: '#ff534f',
     text: isDark ? '#292C38' : '#292C38',
