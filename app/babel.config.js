@@ -14,6 +14,7 @@ module.exports = function (api) {
             '@shared': './src/shared',
             '@views': './src/views',
             '@redux': './src/redux',
+            '@context': './src/context',
           },
         },
       ],

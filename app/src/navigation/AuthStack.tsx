@@ -7,10 +7,9 @@ import {
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 import VerifyEmailScreen from '@views/auth/screens/VerifyEmailScreen';
-import {AuthRootScreenProps} from '.';
-const Stack = createNativeStackNavigator<AuthRootStackParamList>();
+const Stack = createNativeStackNavigator();
 
-export default function AuthStack({}: AuthRootScreenProps) {
+export default function AuthStack() {
   return (
     <Stack.Navigator initialRouteName="auth:login">
       <Stack.Screen
@@ -44,6 +43,7 @@ export type AuthRootStackParamList = {
   'auth:verify': {email: string};
 };
 
+// ScreensTypes
 export type LoginScreenProps = NativeStackScreenProps<
   AuthRootStackParamList,
   'auth:login'

@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, Spinner, Stack, View} from 'native-base';
+import {Spinner, Stack, View} from 'native-base';
 import RoomCard from '../layouts/RoomCard';
 import ScreenContainer from '@components/Containers/ScreenContainer';
 import HeaderNavigation from '@components/Layouts/Navigation/HeaderNavigation';
 import RoomListScreenHeader from '../layouts/RoomListScreenHeader';
-import RoomListScreenSearchFilters from '../layouts/RoomListScreenSearchFilters';
+import RoomSearchFilters from '../layouts/RoomSearchFilters';
 import useGetRooms from '@shared/api/room/useGetRooms';
 import {Room} from '@shared/types/Room';
+import {SearchResultsContext} from '@context/searchContext';
+import ScrollListContainer from '@components/Containers/ScrollListContainer';
 
 export default function RoomsListScreen() {
   const {data, loading} = useGetRooms();
@@ -18,21 +20,24 @@ export default function RoomsListScreen() {
   }, [data]);
   if (loading) return <Spinner />;
   return (
-    <ScreenContainer px="0px">
-      <HeaderNavigation px="12px" />
-      <View px="12px" flex="1">
-        <Stack space={5}>
-          <RoomListScreenSearchFilters />
-          <RoomListScreenHeader />
-        </Stack>
-        <ScrollView showsVerticalScrollIndicator={false} flex="1" mt="8px">
-          <Stack space={5} py="10px">
+    <>
+      <HeaderNavigation />
+      <ScreenContainer>
+        <View flex="1">
+          <Stack space={5}>
+            <SearchResultsContext.Provider
+              value={{navigateToSearch: true, rooms, setRooms}}>
+              <RoomSearchFilters />
+            </SearchResultsContext.Provider>
+            <RoomListScreenHeader />
+          </Stack>
+          <ScrollListContainer>
             {rooms.map((room, i: number) => (
               <RoomCard key={i} room={room} />
             ))}
-          </Stack>
-        </ScrollView>
-      </View>
-    </ScreenContainer>
+          </ScrollListContainer>
+        </View>
+      </ScreenContainer>
+    </>
   );
 }

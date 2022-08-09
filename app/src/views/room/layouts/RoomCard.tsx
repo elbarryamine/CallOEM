@@ -11,7 +11,7 @@ export default function RoomCard({room}: {room: Room}) {
       <View shadow="1" borderRadius="10px" bg="white">
         <View
           borderRadius="10px"
-          bg={colors[Math.floor(Math.random() * colors.length)] + '30'}
+          bg={colors[Math.floor(Math.random() * colors.length)] + '60'}
           overflow="hidden">
           <Stack justifyContent="center" space={2} p="12px">
             <Stack flex="1" mr="24px">

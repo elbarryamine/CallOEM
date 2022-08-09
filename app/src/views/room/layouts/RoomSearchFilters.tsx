@@ -2,15 +2,15 @@ import React from 'react';
 import ButtonIcon from '@components/Elements/ButtonIcon';
 import {Flex, HStack, Icon, Text} from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import ModalSeach from './SeachModal/Modal';
+import ModalSearch from './SeachModal/Modal';
 import useModalActions from '@shared/hooks/useModalActions';
 
-export default function RoomListScreenSearchFilters() {
+export default function RoomSearchFilters() {
   const {isModalOpen, onModalOpen, onModalClose} = useModalActions();
 
   return (
     <Flex flexDir="row">
-      <ModalSeach isModalOpen={isModalOpen} onModalClose={onModalClose} />
+      <ModalSearch isModalOpen={isModalOpen} onModalClose={onModalClose} />
       <FakeSeach onPressSearch={onModalOpen} />
       <ButtonIcon onPress={onModalOpen} as={Ionicons} name="options-outline" />
     </Flex>

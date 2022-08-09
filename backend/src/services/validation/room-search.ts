@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 const searchRoomSchema = Yup.object().shape({
   searchQuery: Yup.string().nullable(true),
 
-  roomType: Yup.string().oneOf(['public', 'private', 'both']).nullable(true),
+  roomType: Yup.string().oneOf(['public', 'private', 'both']).required(),
 
   tags: Yup.array().of(Yup.string().required()),
 });

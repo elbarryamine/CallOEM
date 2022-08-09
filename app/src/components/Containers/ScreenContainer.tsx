@@ -1,13 +1,14 @@
 import React, {ReactNode} from 'react';
-import {Flex, IFlexProps} from 'native-base';
+import {View} from 'native-base';
+import {IViewProps} from 'native-base/lib/typescript/components/basic/View/types';
 
 export default function ScreenContainer({
   children,
   ...props
-}: {children: ReactNode} & IFlexProps) {
+}: {children: ReactNode} & IViewProps) {
   return (
-    <Flex h="100%" flexDir="column" px="12px" bg="primaryBg" {...props}>
+    <View flex="1" px="10px" py="15px" bg="primaryBg" {...props}>
       {children}
-    </Flex>
+    </View>
   );
 }

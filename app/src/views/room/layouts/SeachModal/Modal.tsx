@@ -7,11 +7,16 @@ import SelectRoomType from '../SelectRoomType';
 import TagsSelect from '../TagsSelect';
 import useRoomSearch from '@shared/api/room/useRoomSearch';
 import SearchRoomSchema from '@shared/constants/schema/SearchRoomSchema';
+import {useSearchResultsContext} from '@context/searchContext';
+import {useNavigation} from '@react-navigation/native';
+import {RoomsListScreenProps} from '@navigation/AppStack/HomeStack';
 
-export default function ModalSeach({isModalOpen, onModalClose}: Props) {
-  const [roomSearch, {data, loading, error}] = useRoomSearch();
+export default function ModalSearch({isModalOpen, onModalClose}: Props) {
+  const [roomSearch, {data, loading}] = useRoomSearch();
+  const {navigateToSearch, setRooms} = useSearchResultsContext();
+  const navigation = useNavigation<RoomsListScreenProps['navigation']>();
   const formikProps = useFormik({
-    initialValues: {searchQuery: '', roomType: '', tags: []},
+    initialValues: {searchQuery: '', roomType: 'both', tags: []},
     onSubmit: async values => {
       try {
         await roomSearch({
@@ -26,9 +31,6 @@ export default function ModalSeach({isModalOpen, onModalClose}: Props) {
     validationSchema: SearchRoomSchema,
   });
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
   const {
     errors,
     touched,
@@ -39,6 +41,15 @@ export default function ModalSeach({isModalOpen, onModalClose}: Props) {
     handleSubmit,
   } = formikProps;
 
+  useEffect(() => {
+    if (data && data.SearchRoom) {
+      setRooms(data.SearchRoom);
+      if (navigateToSearch) {
+        navigation.navigate('app:room:search');
+      }
+      onModalClose();
+    }
+  }, [data]);
   return (
     <Modal
       isOpen={isModalOpen}
@@ -81,7 +92,6 @@ export default function ModalSeach({isModalOpen, onModalClose}: Props) {
             <Flex flex="1">
               <Button
                 isLoading={loading}
-                isDisabled={!!error}
                 variant="primary"
                 onPress={handleSubmit}>
                 Apply

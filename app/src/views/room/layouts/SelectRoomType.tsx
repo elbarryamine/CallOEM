@@ -34,7 +34,8 @@ export default function SelectRoomType({
           placeholder="Select Room Type"
           onValueChange={handleChange}
           selectedValue={value}
-          onClose={handleBlur}>
+          onClose={handleBlur}
+          defaultValue="both">
           <Select.Item value="both" label="Public and private" />
           <Select.Item value="private" label="Private" />
           <Select.Item value="public" label="Public" />

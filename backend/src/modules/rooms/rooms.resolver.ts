@@ -65,7 +65,6 @@ export class RoomsResolver {
         ]
       : [];
 
-    console.log([...searchQuery, ...tagsQuery]);
     const rooms = await this.roomModule
       .find({
         ...(searchRoomInput.roomType !== 'both' && {
