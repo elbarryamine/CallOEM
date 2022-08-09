@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Spinner, Stack, View} from 'native-base';
 import RoomCard from '../layouts/RoomCard';
 import ScreenContainer from '@components/Containers/ScreenContainer';
@@ -8,10 +8,12 @@ import RoomSearchFilters from '../layouts/RoomSearchFilters';
 import useGetRooms from '@shared/api/room/useGetRooms';
 import ScrollListContainer from '@components/Containers/ScrollListContainer';
 import {useSearchResultsContext} from '@context/SearchContext';
+import {Room} from '@shared/types/Room';
 
 export default function RoomsListScreen() {
   const {data, loading} = useGetRooms();
-  const {rooms, setRooms, setIsSearchScreen} = useSearchResultsContext();
+  const [rooms, setRooms] = useState<Room[]>([]);
+  const {setIsSearchScreen} = useSearchResultsContext();
   useEffect(() => {
     if (data && data.GetRooms) {
       setRooms(data.GetRooms);

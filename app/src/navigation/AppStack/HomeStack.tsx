@@ -41,3 +41,7 @@ export type RoomSearchStackNavigationProps = NativeStackScreenProps<
   AppgHomeStackParamList,
   'app:home:search'
 >;
+export type RoomViewStackNavigationProps = NativeStackScreenProps<
+  AppgHomeStackParamList,
+  'app:home:room'
+>;

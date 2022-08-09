@@ -48,7 +48,9 @@ export default function ModalSearch({isModalOpen, onModalClose}: Props) {
     // if user search in Search Screen we set the results with setRooms and we dont navigate
     if (data && data.SearchRoom) {
       setRooms(data.SearchRoom);
-      if (!isSearchScreen) navigation.navigate('app:home:search');
+      if (!isSearchScreen) {
+        navigation.navigate('app:home:search');
+      }
       onModalClose();
     }
   }, [data]);

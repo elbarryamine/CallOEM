@@ -4,8 +4,13 @@ import colors from '@shared/constants/properties/colors';
 import {Room} from '@shared/types/Room';
 import {getAvatar} from '@shared/functions/getAvatar';
 import ImageAvatar from '@components/Elements/ImageAvatar';
+import {useNavigation} from '@react-navigation/native';
+import {RoomViewStackNavigationProps} from '@navigation/AppStack/HomeStack';
 
 export default function RoomCard({room}: {room: Room}) {
+  const navigation =
+    useNavigation<RoomViewStackNavigationProps['navigation']>();
+
   return (
     <View p="2px">
       <View shadow="1" borderRadius="10px" bg="white">
@@ -48,6 +53,9 @@ export default function RoomCard({room}: {room: Room}) {
               </HStack>
 
               <Button
+                onPress={() =>
+                  navigation.navigate('app:home:room', {id: room.id})
+                }
                 bg="primary"
                 _text={{color: 'invert'}}
                 px="30px"
