@@ -1,5 +1,4 @@
 import React from 'react';
-import SearchResultsContextProvider from '@context/SearchContext';
 import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
@@ -8,36 +7,37 @@ import {
 import RoomCallScreen from '@views/room/screen/RoomCallScreen';
 import RoomsListScreen from '@views/room/screen/RoomListScreen';
 import RoomSearchScreen from '@views/room/screen/RoomSearchScreen';
+import RoomViewScreen from '@views/room/screen/RoomViewScreen';
 
 const Stack = createNativeStackNavigator();
 const sharedOptions: NativeStackNavigationOptions = {headerShown: false};
 
 export default function HomeStack() {
   return (
-    <SearchResultsContextProvider>
-      <Stack.Navigator
-        initialRouteName="app:room:list"
-        screenOptions={sharedOptions}>
-        <Stack.Screen name="app:room:list" component={RoomsListScreen} />
-        <Stack.Screen name="app:room:call" component={RoomCallScreen} />
-        <Stack.Screen name="app:room:search" component={RoomSearchScreen} />
-      </Stack.Navigator>
-    </SearchResultsContextProvider>
+    <Stack.Navigator
+      initialRouteName="app:home:list"
+      screenOptions={sharedOptions}>
+      <Stack.Screen name="app:home:list" component={RoomsListScreen} />
+      <Stack.Screen name="app:home:call" component={RoomCallScreen} />
+      <Stack.Screen name="app:home:search" component={RoomSearchScreen} />
+      <Stack.Screen name="app:home:room" component={RoomViewScreen} />
+    </Stack.Navigator>
   );
 }
 
 export type AppgHomeStackParamList = {
-  'app:room:list': undefined;
-  'app:room:call': undefined;
-  'app:room:search': undefined;
+  'app:home:list': undefined;
+  'app:home:call': undefined;
+  'app:home:search': undefined;
+  'app:home:room': {id: string};
 };
 
 // ScreensTypes
 export type RoomsListScreenStackNavigationProps = NativeStackScreenProps<
   AppgHomeStackParamList,
-  'app:room:list'
+  'app:home:list'
 >;
 export type RoomSearchStackNavigationProps = NativeStackScreenProps<
   AppgHomeStackParamList,
-  'app:room:search'
+  'app:home:search'
 >;

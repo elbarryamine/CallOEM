@@ -3,7 +3,6 @@ import React from 'react';
 import RoomsListScreen from '@views/room/screen/RoomListScreen';
 import {
   createBottomTabNavigator,
-  BottomTabScreenProps,
   BottomTabNavigationOptions,
 } from '@react-navigation/bottom-tabs';
 import TabNavigation from '@components/Layouts/Navigation/TabNavigation';
@@ -43,14 +42,8 @@ export default function AppStack() {
 }
 
 export type AppStackParamList = {
-  'app:list': undefined;
+  'app:home': undefined;
   'app:history': undefined;
   'app:account': undefined;
   'app:settings': undefined;
-  'app:call': undefined;
 };
-
-export type RoomCallScreenProps = BottomTabScreenProps<
-  AppStackParamList,
-  'app:call'
->;

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Room} from '@shared/types/Room';
-import {createContext, ReactNode, useContext, useState} from 'react';
+import {createContext, useContext} from 'react';
 
 type TypeSearchContext = {
   isSearchScreen: boolean;
@@ -13,19 +13,4 @@ export const SearchResultsContext = createContext({} as TypeSearchContext);
 
 export function useSearchResultsContext() {
   return useContext<TypeSearchContext>(SearchResultsContext);
-}
-
-export default function SearchResultsContextProvider({
-  children,
-}: {
-  children: ReactNode;
-}) {
-  const [rooms, setRooms] = useState<Array<Room>>([]);
-  const [isSearchScreen, setIsSearchScreen] = useState<boolean>(false);
-  return (
-    <SearchResultsContext.Provider
-      value={{rooms, setRooms, isSearchScreen, setIsSearchScreen}}>
-      {children}
-    </SearchResultsContext.Provider>
-  );
 }

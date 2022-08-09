@@ -33,3 +33,7 @@ export default function NavigationProvider() {
     </NavigationContainer>
   );
 }
+export type RootStackParamList = {
+  'auth:root': undefined;
+  'app:root': undefined;
+};
