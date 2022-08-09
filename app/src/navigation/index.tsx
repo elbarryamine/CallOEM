@@ -6,13 +6,13 @@ import {
 } from '@react-navigation/native-stack';
 import AuthStack from './AuthStack';
 import AppStack from './AppStack';
-import {useSelector} from 'react-redux';
-import {StateType} from '@redux/store';
+import {useGetUser} from '@redux/slices/user';
 
 const sharedOptions: NativeStackNavigationOptions = {headerShown: false};
 const Stack = createNativeStackNavigator();
+
 export default function NavigationProvider() {
-  const user = useSelector((state: StateType) => state.auth.user);
+  const user = useGetUser();
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="auth:root">

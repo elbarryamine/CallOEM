@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {Spinner, Stack, View} from 'native-base';
 import RoomCard from '../layouts/RoomCard';
 import ScreenContainer from '@components/Containers/ScreenContainer';
@@ -6,18 +6,20 @@ import HeaderNavigation from '@components/Layouts/Navigation/HeaderNavigation';
 import RoomListScreenHeader from '../layouts/RoomListScreenHeader';
 import RoomSearchFilters from '../layouts/RoomSearchFilters';
 import useGetRooms from '@shared/api/room/useGetRooms';
-import {Room} from '@shared/types/Room';
-import {SearchResultsContext} from '@context/searchContext';
 import ScrollListContainer from '@components/Containers/ScrollListContainer';
+import {useSearchResultsContext} from '@context/SearchContext';
 
 export default function RoomsListScreen() {
   const {data, loading} = useGetRooms();
-  const [rooms, setRooms] = useState<Array<Room>>([]);
+  const {rooms, setRooms, setIsSearchScreen} = useSearchResultsContext();
   useEffect(() => {
     if (data && data.GetRooms) {
       setRooms(data.GetRooms);
     }
   }, [data]);
+  useEffect(() => {
+    setIsSearchScreen(false);
+  }, []);
   if (loading) return <Spinner />;
   return (
     <>
@@ -25,10 +27,7 @@ export default function RoomsListScreen() {
       <ScreenContainer>
         <View flex="1">
           <Stack space={5}>
-            <SearchResultsContext.Provider
-              value={{navigateToSearch: true, rooms, setRooms}}>
-              <RoomSearchFilters />
-            </SearchResultsContext.Provider>
+            <RoomSearchFilters />
             <RoomListScreenHeader />
           </Stack>
           <ScrollListContainer>

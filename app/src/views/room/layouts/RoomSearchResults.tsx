@@ -1,5 +1,5 @@
 import React from 'react';
-import {useSearchResultsContext} from '@context/searchContext';
+import {useSearchResultsContext} from '@context/SearchContext';
 import RoomCard from './RoomCard';
 import ScrollListContainer from '@components/Containers/ScrollListContainer';
 

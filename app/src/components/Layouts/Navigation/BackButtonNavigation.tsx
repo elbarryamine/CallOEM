@@ -8,13 +8,14 @@ import {getAvatar} from '@shared/functions/getAvatar';
 import {useGetUser} from '@redux/slices/user';
 import ImageAvatar from '@components/Elements/ImageAvatar';
 import {useNavigation} from '@react-navigation/native';
-import {RoomSearchNavigationProps} from '@navigation/AppStack/HomeStack';
+import {RoomSearchStackNavigationProps} from '@navigation/AppStack/HomeStack';
 
 export default function BackButtonNavigation({
   headerTitle,
   ...props
 }: {headerTitle?: string} & IViewProps) {
-  const navigation = useNavigation<RoomSearchNavigationProps['navigation']>();
+  const navigation =
+    useNavigation<RoomSearchStackNavigationProps['navigation']>();
   const user = useGetUser();
   const handleNavigateBack = () => {
     navigation.navigate('app:room:list');
