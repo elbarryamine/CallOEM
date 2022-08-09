@@ -1,6 +1,5 @@
 import React from 'react';
-// import RoomCallScreen from '@views/room/screen/RoomCallScreen';
-import RoomsListScreen from '@views/room/screen/RoomListScreen';
+import RoomsListScreen from '@views/home/screen/RoomListScreen';
 import {
   createBottomTabNavigator,
   BottomTabNavigationOptions,

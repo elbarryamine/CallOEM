@@ -1,11 +1,5 @@
 import React, {useEffect} from 'react';
-import {
-  Button,
-  Input,
-  Stack,
-  FormControl,
-  KeyboardAvoidingView,
-} from 'native-base';
+import {Button, Input, Stack, KeyboardAvoidingView} from 'native-base';
 import {Formik} from 'formik';
 import FormErrorMessage from '@components/Layouts/Form/FormErrorMessage';
 import verifyEmailSchema from '@shared/constants/schema/VerifyEmailSchema';

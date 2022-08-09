@@ -18,7 +18,7 @@ export default function BackButtonNavigation({
     useNavigation<RoomSearchStackNavigationProps['navigation']>();
   const user = useGetUser();
   const handleNavigateBack = () => {
-    navigation.navigate('app:room:list');
+    navigation.navigate('app:home:list');
   };
 
   if (!user) return null;

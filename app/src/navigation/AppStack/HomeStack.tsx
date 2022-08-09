@@ -4,10 +4,10 @@ import {
   NativeStackNavigationOptions,
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
-import RoomCallScreen from '@views/room/screen/RoomCallScreen';
-import RoomsListScreen from '@views/room/screen/RoomListScreen';
-import RoomSearchScreen from '@views/room/screen/RoomSearchScreen';
-import RoomViewScreen from '@views/room/screen/RoomViewScreen';
+import RoomCallScreen from '@views/home/screen/RoomCallScreen';
+import RoomsListScreen from '@views/home/screen/RoomListScreen';
+import RoomSearchScreen from '@views/home/screen/RoomSearchScreen';
+import RoomViewScreen from '@views/home/screen/RoomViewScreen';
 
 const Stack = createNativeStackNavigator();
 const sharedOptions: NativeStackNavigationOptions = {headerShown: false};

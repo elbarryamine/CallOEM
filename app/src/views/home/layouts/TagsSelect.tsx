@@ -10,7 +10,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import useHandleTagsChange, {
   SetTouched,
   SetValue,
-} from '@views/room/hooks/useHandleTagsChange';
+} from '../hooks/useHandleTagsChange';
 
 export default function TagsSelect({
   errors,
