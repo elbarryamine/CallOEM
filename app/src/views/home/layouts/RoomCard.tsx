@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, HStack, Stack, Text, View} from 'native-base';
 import {Room} from '@shared/types/Room';
-import {getAvatar} from '@shared/functions/getAvatar';
+import {getAvatar} from '@shared/constants/functions/getAvatar';
 import ImageAvatar from '@components/Elements/ImageAvatar';
 import {useNavigation} from '@react-navigation/native';
 import {CallNativeStack} from '@navigation/AppStack';

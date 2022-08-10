@@ -4,7 +4,7 @@ import {RTCView} from 'react-native-webrtc-web-shim';
 import {StyleSheet} from 'react-native';
 import ScreenContainer from '@components/Containers/ScreenContainer';
 import {Room} from '@shared/types/Room';
-import {getAvatar} from '@shared/functions/getAvatar';
+import {getAvatar} from '@shared/constants/functions/getAvatar';
 import ButtonIcon from '@components/Elements/ButtonIcon';
 import Feather from 'react-native-vector-icons/Feather';
 import RoomBackground from './RoomBackground';

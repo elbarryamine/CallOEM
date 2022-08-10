@@ -1,10 +1,10 @@
 import React, {ReactNode} from 'react';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
-import {BASE_URL} from '@shared/constants/properties/paths';
+import {REACT_APP_BASE_URL} from '@env';
 
 const client = new ApolloClient({
   // Todo : Setup enviromet variables
-  uri: `${BASE_URL}/graphql`,
+  uri: `${REACT_APP_BASE_URL}/graphql`,
   cache: new InMemoryCache(),
 });
 

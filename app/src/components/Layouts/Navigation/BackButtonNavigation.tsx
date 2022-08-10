@@ -4,7 +4,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {IViewProps} from 'native-base/lib/typescript/components/basic/View/types';
 import ButtonIcon from '@components/Elements/ButtonIcon';
 
-import {getAvatar} from '@shared/functions/getAvatar';
+import {getAvatar} from '@shared/constants/functions/getAvatar';
 import {useGetUser} from '@redux/slices/user';
 import ImageAvatar from '@components/Elements/ImageAvatar';
 import {useNavigation} from '@react-navigation/native';
