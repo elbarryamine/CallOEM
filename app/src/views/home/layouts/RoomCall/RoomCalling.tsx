@@ -9,6 +9,7 @@ import ButtonIcon from '@components/Elements/ButtonIcon';
 import Feather from 'react-native-vector-icons/Feather';
 import RoomBackground from './RoomBackground';
 import useCallAndMediaAction from '@views/home/hooks/useGetUserMedia';
+import Preloader from '@components/Layouts/Preloader';
 
 export default function RoomCalling({room}: {room: Room}) {
   const {
@@ -26,6 +27,7 @@ export default function RoomCalling({room}: {room: Room}) {
     isFrontCamera,
     toggleCamera,
   } = useCallAndMediaAction();
+  if (!isStreamReady) return <Preloader />;
   return (
     <View h="100%" w="100%" position="relative">
       <RoomBackground uri={getAvatar(room.ownerMember.avatar)} />
@@ -36,14 +38,12 @@ export default function RoomCalling({room}: {room: Room}) {
         h="100%"
         w="100%"
         zIndex={isVideoEnabled ? '3' : '0'}>
-        {isCalling && (
-          <RTCView
-            stream={localStream}
-            objectFit="cover"
-            mirror={isFrontCamera}
-            style={styles.rtcviewer}
-          />
-        )}
+        <RTCView
+          stream={localStream}
+          objectFit="cover"
+          mirror={isFrontCamera}
+          style={styles.rtcviewer}
+        />
       </View>
       <View position="absolute" top="0" left="0" h="100%" w="100%" zIndex="4">
         <ScreenContainer
@@ -67,7 +67,6 @@ export default function RoomCalling({room}: {room: Room}) {
                 <ButtonIcon
                   size="50px"
                   as={Feather}
-                  isLoading={isStreamReady}
                   name={!isCalling ? 'phone' : 'phone-missed'}
                   onPress={!isCalling ? handleCall : handleHangUp}
                 />

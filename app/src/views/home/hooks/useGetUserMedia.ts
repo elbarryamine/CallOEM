@@ -21,10 +21,10 @@ export default function useCallAndMediaAction() {
   const [localStream, setLocalStream] = useState<MediaStream | null>(null);
 
   const [isFront, setIsFront] = useState<boolean>(true);
-  const [isCalling, setIsCalling] = useState<boolean>(false);
   const [hasAudio, setHasAudio] = useState<boolean>(true);
   const [hasVideo, setHasVideo] = useState<boolean>(true);
-  const [isStreamReady, setIsReady] = useState<boolean>(true);
+  const [isCalling, setIsCalling] = useState<boolean>(false);
+  const [isStreamReady, setIsReady] = useState<boolean>(false);
 
   const navigation = useNavigation<CallNativeStack['navigation']>();
   const toast = useToast();
@@ -68,7 +68,6 @@ export default function useCallAndMediaAction() {
         })) as MediaStream;
 
         setLocalStream(() => mediaStream);
-        setIsReady(false);
         return mediaStream;
       } catch (err) {}
     })();
@@ -104,12 +103,14 @@ export default function useCallAndMediaAction() {
   }, [isFront]);
 
   useEffect(() => {
+    if (localStream) setIsReady(true);
+    if (!localStream) setIsReady(false);
     // stop stream when leaving
     return () => {
       if (!localStream) return;
       localStream.getTracks().map(track => track.stop());
     };
-  }, []);
+  }, [localStream]);
 
   return {
     enableAudio: () => setHasAudio(true),
