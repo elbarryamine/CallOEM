@@ -3,7 +3,7 @@ import {Stack, View} from 'native-base';
 import RoomCard from '../layouts/RoomCard';
 import ScreenContainer from '@components/Containers/ScreenContainer';
 import HeaderNavigation from '@components/Layouts/Navigation/HeaderNavigation';
-import RoomListScreenHeader from '../layouts/RoomListScreenHeader';
+import RoomListScreenHeader from '../layouts/RoomList/RoomListScreenHeader';
 import RoomSearchFilters from '../layouts/RoomSearchFilters';
 import useGetRooms from '@shared/api/room/useGetRooms';
 import ScrollListContainer from '@components/Containers/ScrollListContainer';

@@ -1,10 +1,10 @@
 import React from 'react';
 import {Heading, Text, Stack, HStack} from 'native-base';
-import ModalNotSaved from './RoomCreateModal/NotSavedModal';
+import ModalNotSaved from './NotSavedModal';
 import ButtonIcon from '@components/Elements/ButtonIcon';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import useModalActions from '../../../shared/hooks/useModalActions';
-import ModalRoomCreate from './RoomCreateModal/Modal';
+import useModalActions from '../../../../shared/hooks/useModalActions';
+import ModalRoomCreate from './Modal';
 
 export default function RoomListScreenHeader() {
   const {

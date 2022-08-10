@@ -1,6 +1,6 @@
 import React from 'react';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
-import {View, Flex, Icon, Stack, Text, Button} from 'native-base';
+import {View, Flex} from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ButtonIcon from '@components/Elements/ButtonIcon';
 
@@ -12,7 +12,6 @@ export const routes = [
 ];
 
 export default function TabNavigation({state, navigation}: BottomTabBarProps) {
-  // state.routes.map((route,index)=>)
   return (
     <View
       h="70px"

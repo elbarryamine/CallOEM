@@ -10,8 +10,10 @@ export default function useNavigationChangeHandler(allowed: boolean) {
   const allowNavigate = () => setIsAllowNavigate(true);
   const preventNavigate = () => setIsAllowNavigate(false);
   useEffect(() => {
+    if (isAllowed) {
+      navigation.removeListener('beforeRemove', () => {});
+    }
     navigation.addListener('beforeRemove', e => {
-      if (isAllowed) return;
       e.preventDefault();
       setTrySpam();
     });

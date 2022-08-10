@@ -2,7 +2,7 @@ import React from 'react';
 import ButtonIcon from '@components/Elements/ButtonIcon';
 import {Flex, HStack, Icon, Text} from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import ModalSearch from './SeachModal/Modal';
+import ModalSearch from './RoomSearch/Modal';
 import useModalActions from '@shared/hooks/useModalActions';
 
 export default function RoomSearchFilters() {

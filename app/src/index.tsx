@@ -1,20 +1,21 @@
-import ApolloAppProvider from '@shared/provider/ApolloAppProvider';
-import ReduxProvider from '@shared/provider/ReduxProvider';
-import SearchResultsContextProvider from '@shared/provider/SearchResultsContextProvider';
 import React from 'react';
 import NavigationProvider from './navigation';
-import NativeBaseProvider from './shared/provider/NativeBaseProvider';
+
+import ApolloAppProvider from '@shared/provider/ApolloAppProvider';
+import ReduxProvider from '@shared/provider/ReduxProvider';
+import NativeBaseProvider from '@shared/provider/NativeBaseProvider';
+import GestureHandlerProvider from '@shared/provider/GestureHandlerProvider';
 
 export default function App() {
   return (
-    <SearchResultsContextProvider>
-      <ReduxProvider>
-        <NativeBaseProvider>
-          <ApolloAppProvider>
+    <ReduxProvider>
+      <NativeBaseProvider>
+        <ApolloAppProvider>
+          <GestureHandlerProvider>
             <NavigationProvider />
-          </ApolloAppProvider>
-        </NativeBaseProvider>
-      </ReduxProvider>
-    </SearchResultsContextProvider>
+          </GestureHandlerProvider>
+        </ApolloAppProvider>
+      </NativeBaseProvider>
+    </ReduxProvider>
   );
 }

@@ -1,15 +1,13 @@
 import React from 'react';
 import {Button, HStack, Stack, Text, View} from 'native-base';
-import colors from '@shared/constants/properties/colors';
 import {Room} from '@shared/types/Room';
 import {getAvatar} from '@shared/functions/getAvatar';
 import ImageAvatar from '@components/Elements/ImageAvatar';
 import {useNavigation} from '@react-navigation/native';
-import {RoomViewStackNavigationProps} from '@navigation/AppStack/HomeStack';
+import {CallNativeStack} from '@navigation/AppStack';
 
 export default function RoomCard({room}: {room: Room}) {
-  const navigation =
-    useNavigation<RoomViewStackNavigationProps['navigation']>();
+  const navigation = useNavigation<CallNativeStack['navigation']>();
 
   return (
     <View p="2px">
@@ -54,9 +52,7 @@ export default function RoomCard({room}: {room: Room}) {
               </HStack>
 
               <Button
-                onPress={() =>
-                  navigation.navigate('app:home:room', {id: room.id})
-                }
+                onPress={() => navigation.navigate('call', {id: room.id})}
                 bg="primary"
                 _text={{color: 'invert'}}
                 px="30px"

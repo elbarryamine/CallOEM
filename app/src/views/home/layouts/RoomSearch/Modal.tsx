@@ -8,16 +8,15 @@ import TagsSelect from '../TagsSelect';
 import useRoomSearch from '@shared/api/room/useRoomSearch';
 import SearchRoomSchema from '@shared/constants/schema/SearchRoomSchema';
 import {useNavigation} from '@react-navigation/native';
-import {RoomsListScreenStackNavigationProps} from '@navigation/AppStack/HomeStack';
 import {useSearchResultsContext} from '@context/SearchContext';
 import {useApolloClient} from '@apollo/client';
+import {SearchNativeStack} from '@navigation/HomeStack';
 
 export default function ModalSearch({isModalOpen, onModalClose}: Props) {
   const [roomSearch, {data, loading}] = useRoomSearch();
   const {isSearchScreen, setRooms} = useSearchResultsContext();
   const client = useApolloClient();
-  const navigation =
-    useNavigation<RoomsListScreenStackNavigationProps['navigation']>();
+  const navigation = useNavigation<SearchNativeStack['navigation']>();
   const formikProps = useFormik({
     initialValues: {searchQuery: '', roomType: 'both', tags: []},
     onSubmit: async values => {
@@ -54,7 +53,7 @@ export default function ModalSearch({isModalOpen, onModalClose}: Props) {
     if (data && data.SearchRoom) {
       setRooms(data.SearchRoom);
       if (!isSearchScreen) {
-        navigation.navigate('app:home:search');
+        navigation.navigate('search');
       }
       onModalClose();
     }

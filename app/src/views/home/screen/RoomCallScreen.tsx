@@ -1,131 +1,53 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {Button, Heading, View, useToast, Flex, Text} from 'native-base';
-import {RTCView} from 'react-native-webrtc-web-shim';
-
-import RTCDataChannel from 'react-native-webrtc/lib/typescript/RTCDataChannel';
-import {StyleSheet} from 'react-native';
-
-import {RTCPeerConnection} from 'react-native-webrtc';
-import useGetUserMedia from '../hooks/useGetUserMedia';
-import useBackHandler from '@shared/hooks/useBackHandler';
+import React, {useEffect, useState} from 'react';
 import ScreenContainer from '@components/Containers/ScreenContainer';
-import useNavigationChangeHandler from '@shared/hooks/useNavigationChangeHandler';
+import useGetRoom from '@shared/api/room/useGetRoom';
+import {Room} from '@shared/types/Room';
+import Preloader from '@components/Layouts/Preloader';
+import * as Modal from 'react-native-modalize';
+import {Button, Text, View} from 'native-base';
+import {Dimensions} from 'react-native';
+import RoomCalling from '../layouts/RoomCall/RoomCalling';
+import {CallNativeStack} from '@navigation/AppStack';
 
-const peerConstraints = {iceServers: [{urls: 'stun:stun.l.google.com:19302'}]};
+const {Modalize, useModalize} = Modal;
 
-export default function RoomCallScreen() {
-  const [channel, setChannel] = useState<RTCDataChannel | null>(null);
-  const peerConnection = useRef(new RTCPeerConnection(peerConstraints));
-  const {localStream, setLocalStream, loading, setIsLoading, mutate} =
-    useGetUserMedia(true);
-  const {allowBack, preventBack, isSpamming} = useBackHandler();
-  const {
-    allowNavigate,
-    preventNavigate,
-    isSpamming: isSpammingNavigate,
-  } = useNavigationChangeHandler(false);
-  const toast = useToast();
-
-  const hangUp = async () => {
-    try {
-      if (!localStream) return;
-      localStream.getTracks().map(track => track.stop());
-      setLocalStream(null);
-      allowBack();
-      allowNavigate();
-    } catch (err) {}
-  };
-
-  const handleCall = async () => {
-    try {
-      const stream = await mutate();
-      preventBack();
-      preventNavigate();
-      if (!stream) return;
-      peerConnection.current.addStream(stream);
-      const dataChannel =
-        peerConnection.current.createDataChannel('my_channel');
-      setChannel(dataChannel);
-    } catch (err) {}
-  };
-
+export default function RoomCallScreen({route}: CallNativeStack) {
+  const roomId = route.params.id;
+  const [room, setRoom] = useState<Room>({} as Room);
+  const [loaded, setLoaded] = useState<boolean>(false);
+  const [runRoomQuery, {data}] = useGetRoom();
+  const {ref, open} = useModalize();
   useEffect(() => {
-    if (!channel) return;
-    channel.addEventListener('message', () => {});
-    return () => {
-      channel.removeEventListener('message', () => {});
-    };
-  }, [channel]);
-
-  useEffect(() => {
-    if (isSpamming || isSpammingNavigate) {
-      toast.show({
-        description: 'Please end call before going back',
-        placement: 'top',
-      });
+    if (!roomId) return;
+    async function getRoom() {
+      await runRoomQuery({variables: {id: roomId}});
     }
-  }, [isSpamming, isSpammingNavigate]);
+    getRoom();
+  }, [roomId]);
+  useEffect(() => {
+    if (data && data.GetRoom) {
+      setRoom(data.GetRoom);
+      setLoaded(true);
+    }
+  }, [data]);
+  useEffect(() => {
+    if (!ref || !ref.current) return;
+    open();
+  }, [ref.current]);
+
   return (
-    <View h="100%" w="100%" position="relative">
-      <View position="absolute" top="0" left="0" h="100%" w="100%">
-        {localStream && (
-          <RTCView
-            stream={localStream}
-            objectFit="cover"
-            mirror={true}
-            style={styles.rtcviewer}
-          />
-        )}
-        <ScreenContainer
-          position="absolute"
-          top={0}
-          left={0}
-          h="100%"
-          w="100%"
-          bg="transparent">
-          <Heading color="white">NewMeeting</Heading>
-          <Flex
-            h="100%"
-            w="100%"
-            position="relative"
-            justify="center"
-            align="center">
-            {!localStream && (
-              <Button
-                bg="primary"
-                position="absolute"
-                bottom="50px"
-                onPress={() => {
-                  setIsLoading(true);
-                  handleCall();
-                }}
-                isLoading={loading}>
-                <Text color="invert">Start Call</Text>
-              </Button>
-            )}
-            {localStream && (
-              <Button
-                mx="20px"
-                position="absolute"
-                bottom="50px"
-                bg="primary"
-                onPress={hangUp}>
-                <Text color="invert">End Call</Text>
-              </Button>
-            )}
-          </Flex>
+    <View h="100%" position="relative" pb="30px">
+      {!loaded ? <Preloader /> : <RoomCalling room={room} />}
+
+      <Modalize
+        ref={ref}
+        alwaysOpen={30}
+        handlePosition="inside"
+        modalHeight={Dimensions.get('window').height * 0.7}>
+        <ScreenContainer mt="20px">
+          <Text>Modal</Text>
         </ScreenContainer>
-      </View>
+      </Modalize>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  rtcviewer: {
-    height: '100%',
-    width: '100%',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-  },
-});

@@ -5,8 +5,8 @@ import {
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
 import AuthStack from './AuthStack';
-import AppStack from './AppStack';
 import {useGetUser} from '@redux/slices/user';
+import AppStack from './AppStack';
 
 const sharedOptions: NativeStackNavigationOptions = {headerShown: false};
 const Stack = createNativeStackNavigator();
@@ -15,16 +15,16 @@ export default function NavigationProvider() {
   const user = useGetUser();
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="auth:root">
+      <Stack.Navigator initialRouteName="auth">
         {!user ? (
           <Stack.Screen
-            name="auth:root"
+            name="auth"
             component={AuthStack}
             options={sharedOptions}
           />
         ) : (
           <Stack.Screen
-            name="app:root"
+            name="app"
             component={AppStack}
             options={sharedOptions}
           />
@@ -34,6 +34,6 @@ export default function NavigationProvider() {
   );
 }
 export type RootStackParamList = {
-  'auth:root': undefined;
-  'app:root': undefined;
+  auth: undefined;
+  app: undefined;
 };
