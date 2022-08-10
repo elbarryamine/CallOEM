@@ -27,6 +27,7 @@ export class SocketGateway {
     @MessageBody() data: JoinRoomDto,
     @ConnectedSocket() client: Socket,
   ) {
+    console.log('joined');
     if (!data.roomId || !data.userId) {
       throw new WsException({ message: 'roomId or userId was not provided' });
     }

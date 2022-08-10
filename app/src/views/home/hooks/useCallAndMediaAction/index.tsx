@@ -9,6 +9,13 @@ import {useToast} from 'native-base';
 import useBackHandler from '@shared/hooks/useBackHandler';
 import {useNavigation} from '@react-navigation/native';
 import {CallNativeStack} from '@navigation/AppStack';
+import {useCallState} from './useCallState';
+import {useVideoAudioState} from './useVideoAudioState';
+import {useLocalSteamReadyState} from './useLocalSteamReadyState';
+import useCallSocketActions, {
+  JoinRoom,
+  LeaveRoom,
+} from './useCallSocketActions';
 
 interface Device {
   kind: string;
@@ -17,35 +24,47 @@ interface Device {
 }
 const peerConstraints = {iceServers: [{urls: 'stun:stun.l.google.com:19302'}]};
 export default function useCallAndMediaAction() {
-  const peerConnection = useRef(new RTCPeerConnection(peerConstraints));
-  const [localStream, setLocalStream] = useState<MediaStream | null>(null);
-
-  const [hasMultipleCameras, setHasMultipleCameras] = useState<boolean>(false);
   const [isFront, setIsFront] = useState<boolean>(true);
-  const [hasAudio, setHasAudio] = useState<boolean>(true);
-  const [hasVideo, setHasVideo] = useState<boolean>(false);
-  const [isCalling, setIsCalling] = useState<boolean>(false);
-  const [isStreamReady, setIsReady] = useState<boolean>(false);
+  const [localStream, setLocalStream] = useState<MediaStream | null>(null);
+  const peerConnection = useRef(new RTCPeerConnection(peerConstraints));
+  const [hasMultipleCameras, setHasMultipleCameras] = useState<boolean>(false);
 
-  const navigation = useNavigation<CallNativeStack['navigation']>();
   const toast = useToast();
+  const {joinRoom, leaveRoom} = useCallSocketActions();
+  const navigation = useNavigation<CallNativeStack['navigation']>();
+  const {isStreamReady, setIsReady} = useLocalSteamReadyState(localStream);
+  const {
+    isAudioEnabled,
+    isVideoEnabled,
+    enableAudio,
+    disableAudio,
+    enableVideo,
+    disableVideo,
+  } = useVideoAudioState(localStream);
+
+  const {call, hanup, isCalling} = useCallState(
+    localStream,
+    peerConnection.current,
+  );
+  //
   const {allowBack, preventBack, isSpamming} = useBackHandler({
+    initialAllowedState: true,
     onAllowBack: () => navigation.navigate('tab'),
   });
 
-  const handleHangUp = async () => {
+  const handleHangUp = async (leaveRoomData: LeaveRoom) => {
     // leave the remote offer
-    setIsCalling(false);
     allowBack();
+    leaveRoom(leaveRoomData);
+    hanup();
   };
 
-  const handleCall = async () => {
-    // Check if there is a remote offer
-    // if yes join it directly
-    // if not create one and join it then send it using socket io and save it to room
-
-    setIsCalling(true);
+  const handleCall = async (joinRoomData: JoinRoom) => {
+    // send to server that user is joining
+    // server will check if offer exist { yes => joinit , no ==> create one and join it}
     preventBack();
+    joinRoom(joinRoomData);
+    call();
   };
 
   // Get the localMediaStream
@@ -89,48 +108,19 @@ export default function useCallAndMediaAction() {
   }, [isSpamming]);
 
   useEffect(() => {
-    // handle enable/disable audio and video
-    if (!localStream) return;
-    let videoTrack = localStream.getVideoTracks()[0];
-    const audioTrack = localStream.getAudioTracks()[0];
-    if (hasAudio) audioTrack.enabled = true;
-    if (!hasAudio) audioTrack.enabled = false;
-    if (hasVideo) videoTrack.enabled = true;
-    if (!hasVideo) videoTrack.enabled = false;
-  }, [hasVideo, hasAudio, localStream]);
-
-  useEffect(() => {
-    // add Stream from server when calling and remove it when not
-    if (isCalling) peerConnection.current.addStream(localStream!);
-    if (!isCalling) peerConnection.current.removeStream(localStream!);
-  }, [isCalling, localStream]);
-
-  useEffect(() => {
     if (!localStream) return;
     // if ( cameraCount < 2 ) { return; };
     const videoTrack = localStream.getVideoTracks()[0];
     videoTrack._switchCamera();
   }, [isFront]);
 
-  useEffect(() => {
-    // set localSteam Ready State
-    if (localStream) setIsReady(true);
-    if (!localStream) setIsReady(false);
-    // stop stream when leaving
-    return () => {
-      if (!localStream) return;
-      localStream.getTracks().map(track => track.stop());
-    };
-  }, [localStream]);
-
   return {
-    enableAudio: () => setHasAudio(true),
-    disableAudio: () => setHasAudio(false),
-    isAudioEnabled: hasAudio,
-
-    enableVideo: () => setHasVideo(true),
-    disableVideo: () => setHasVideo(false),
-    isVideoEnabled: hasVideo,
+    isAudioEnabled,
+    enableAudio,
+    disableAudio,
+    enableVideo,
+    disableVideo,
+    isVideoEnabled,
 
     isFrontCamera: isFront,
     toggleCamera: () => hasMultipleCameras && setIsFront(!isFront),
@@ -146,5 +136,7 @@ export default function useCallAndMediaAction() {
     handleCall,
 
     peerConnection,
+    joinRoom,
+    leaveRoom,
   };
 }

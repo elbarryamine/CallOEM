@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Flex, HStack} from 'native-base';
 import {RTCView} from 'react-native-webrtc-web-shim';
 import {StyleSheet} from 'react-native';
@@ -8,8 +8,9 @@ import {getAvatar} from '@shared/constants/functions/getAvatar';
 import ButtonIcon from '@components/Elements/ButtonIcon';
 import Feather from 'react-native-vector-icons/Feather';
 import RoomBackground from './RoomBackground';
-import useCallAndMediaAction from '@views/home/hooks/useGetUserMedia';
+import useCallAndMediaAction from '@views/home/hooks/useCallAndMediaAction';
 import Preloader from '@components/Layouts/Preloader';
+import {useGetUser} from '@redux/slices/user';
 
 export default function RoomCalling({room}: {room: Room}) {
   const {
@@ -28,7 +29,21 @@ export default function RoomCalling({room}: {room: Room}) {
     toggleCamera,
     hasMultipleCameras,
   } = useCallAndMediaAction();
-  if (!isStreamReady) return <Preloader />;
+  const user = useGetUser();
+
+  const handleRoomCallStart = () => {
+    if (!user) return;
+    handleCall({roomId: room.id, userId: user.user.id});
+  };
+  const handleRoomCallEnd = () => {
+    if (!user) return;
+    handleHangUp({roomId: room.id, userId: user.user.id});
+  };
+  useEffect(() => {
+    return handleRoomCallEnd;
+  }, [user]);
+
+  if (!isStreamReady || !user) return <Preloader />;
   return (
     <View h="100%" w="100%" position="relative">
       <RoomBackground uri={getAvatar(room.ownerMember.avatar)} />
@@ -69,7 +84,7 @@ export default function RoomCalling({room}: {room: Room}) {
                   size="50px"
                   as={Feather}
                   name={!isCalling ? 'phone' : 'phone-missed'}
-                  onPress={!isCalling ? handleCall : handleHangUp}
+                  onPress={!isCalling ? handleRoomCallStart : handleRoomCallEnd}
                 />
               </Flex>
 

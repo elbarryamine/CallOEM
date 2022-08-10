@@ -4,12 +4,15 @@ import {BackHandler} from 'react-native';
 import useIsSpamming from './useIsSpamming';
 
 export default function useBackHandler({
+  initialAllowedState,
   onAllowBack,
 }: {
+  initialAllowedState: boolean;
   onAllowBack?: () => void;
 }) {
   const navigation = useNavigation();
-  const [isAllowedToGoBack, setIsAllowedToGoBack] = useState<boolean>(true);
+  const [isAllowedToGoBack, setIsAllowedToGoBack] =
+    useState<boolean>(initialAllowedState);
   const {setTrySpam, isSpamming} = useIsSpamming();
   function goBack() {
     navigation.goBack();
@@ -17,9 +20,10 @@ export default function useBackHandler({
   const callBack = () => {
     if (isAllowedToGoBack) {
       onAllowBack && onAllowBack();
+      return true;
     }
     setTrySpam();
-    return false;
+    return !isAllowedToGoBack;
   };
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', callBack);
