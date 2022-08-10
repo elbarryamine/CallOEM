@@ -23,7 +23,7 @@ export default function useCallAndMediaAction() {
   const [hasMultipleCameras, setHasMultipleCameras] = useState<boolean>(false);
   const [isFront, setIsFront] = useState<boolean>(true);
   const [hasAudio, setHasAudio] = useState<boolean>(true);
-  const [hasVideo, setHasVideo] = useState<boolean>(true);
+  const [hasVideo, setHasVideo] = useState<boolean>(false);
   const [isCalling, setIsCalling] = useState<boolean>(false);
   const [isStreamReady, setIsReady] = useState<boolean>(false);
 
@@ -34,11 +34,16 @@ export default function useCallAndMediaAction() {
   });
 
   const handleHangUp = async () => {
+    // leave the remote offer
     setIsCalling(false);
     allowBack();
   };
 
   const handleCall = async () => {
+    // Check if there is a remote offer
+    // if yes join it directly
+    // if not create one and join it then send it using socket io and save it to room
+
     setIsCalling(true);
     preventBack();
   };
@@ -139,5 +144,7 @@ export default function useCallAndMediaAction() {
     isCalling,
     handleHangUp,
     handleCall,
+
+    peerConnection,
   };
 }

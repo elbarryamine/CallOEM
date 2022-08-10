@@ -7,7 +7,7 @@ import { join } from 'path';
 import { JwtModuleService } from './modules/shared/jwt.module';
 import { ConfigModule } from './modules/shared/env.module';
 import { UsersModule } from './modules/users/users.module';
-import { TalkModule } from './modules/talk/talk.module';
+import { SocketModule } from './modules/socket/socket.module';
 import { AvatarModule } from './modules/shared/avatar.module';
 import { RoomsModule } from './modules/rooms/rooms.module';
 import { RoomtypeScalar } from './modules/rooms/entities/room.scalar';
@@ -43,7 +43,7 @@ const GraphQLImportedModule = GraphQLModule.forRoot<ApolloDriverConfig>({
     JwtModuleService,
     AvatarModule,
     UsersModule,
-    TalkModule,
+    SocketModule,
     RoomsModule,
     TagsModule,
   ],

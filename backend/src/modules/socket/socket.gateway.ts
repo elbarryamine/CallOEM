@@ -12,20 +12,7 @@ import { Socket } from 'dgram';
     origin: '*',
   },
 })
-export class TalkGateway {
-  @SubscribeMessage('room:create')
-  createRoom(@MessageBody() data: unknown, @ConnectedSocket() client: Socket) {
-    // get user id to determine who created Room
-    // Should create room in db
-    // and user (id) auto join to his room
-
-    client.emit('room:created', {
-      data: {
-        roomId: 'room:657289564984ds5q6d498qsd42az94d',
-      },
-    });
-  }
-
+export class SocketGateway {
   @SubscribeMessage('room:join')
   joinRoom(@MessageBody() data: unknown, @ConnectedSocket() client: Socket) {
     // get user id  to determine who joined
@@ -38,8 +25,8 @@ export class TalkGateway {
   @SubscribeMessage('room:leave')
   leaveRoom(@MessageBody() data: unknown, @ConnectedSocket() client: Socket) {
     // get user id  to determine who left
-    // leave room by deleting user from room users
-    client.emit('room:joined', {
+    // leave room by deleting user from room members
+    client.emit('room:leave', {
       data: {},
     });
   }
