@@ -26,6 +26,7 @@ export default function RoomCalling({room}: {room: Room}) {
     disableAudio,
     isFrontCamera,
     toggleCamera,
+    hasMultipleCameras,
   } = useCallAndMediaAction();
   if (!isStreamReady) return <Preloader />;
   return (
@@ -94,14 +95,16 @@ export default function RoomCalling({room}: {room: Room}) {
                   onPress={isAudioEnabled ? disableAudio : enableAudio}
                 />
               </Flex>
-              <Flex align="center" bg="white" borderRadius="25px">
-                <ButtonIcon
-                  size="50px"
-                  as={Feather}
-                  name="camera"
-                  onPress={toggleCamera}
-                />
-              </Flex>
+              {hasMultipleCameras && (
+                <Flex align="center" bg="white" borderRadius="25px">
+                  <ButtonIcon
+                    size="50px"
+                    as={Feather}
+                    name="camera"
+                    onPress={toggleCamera}
+                  />
+                </Flex>
+              )}
             </HStack>
           </Flex>
         </ScreenContainer>

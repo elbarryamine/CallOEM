@@ -20,6 +20,7 @@ export default function useCallAndMediaAction() {
   const peerConnection = useRef(new RTCPeerConnection(peerConstraints));
   const [localStream, setLocalStream] = useState<MediaStream | null>(null);
 
+  const [hasMultipleCameras, setHasMultipleCameras] = useState<boolean>(false);
   const [isFront, setIsFront] = useState<boolean>(true);
   const [hasAudio, setHasAudio] = useState<boolean>(true);
   const [hasVideo, setHasVideo] = useState<boolean>(true);
@@ -49,6 +50,9 @@ export default function useCallAndMediaAction() {
         let videoSourceId;
         const sourceInfos =
           (await mediaDevices.enumerateDevices()) as Array<Device>;
+        if (sourceInfos.length >= 2) {
+          setHasMultipleCameras(true);
+        }
         for (let i = 0; i < sourceInfos.length; i++) {
           const sourceInfo = sourceInfos[i];
           if (
@@ -95,6 +99,7 @@ export default function useCallAndMediaAction() {
     if (isCalling) peerConnection.current.addStream(localStream!);
     if (!isCalling) peerConnection.current.removeStream(localStream!);
   }, [isCalling, localStream]);
+
   useEffect(() => {
     if (!localStream) return;
     // if ( cameraCount < 2 ) { return; };
@@ -103,6 +108,7 @@ export default function useCallAndMediaAction() {
   }, [isFront]);
 
   useEffect(() => {
+    // set localSteam Ready State
     if (localStream) setIsReady(true);
     if (!localStream) setIsReady(false);
     // stop stream when leaving
@@ -122,12 +128,13 @@ export default function useCallAndMediaAction() {
     isVideoEnabled: hasVideo,
 
     isFrontCamera: isFront,
-    toggleCamera: () => setIsFront(!isFront),
+    toggleCamera: () => hasMultipleCameras && setIsFront(!isFront),
 
     localStream,
     setLocalStream,
     isStreamReady,
     setIsReady,
+    hasMultipleCameras,
 
     isCalling,
     handleHangUp,
