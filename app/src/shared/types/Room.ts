@@ -16,3 +16,8 @@ export interface Room {
   roomType: 'public' | 'private';
   createdAt: Date;
 }
+export interface RoomOffer {
+  roomId: string;
+  callDescription: string;
+  createdAt: Date;
+}

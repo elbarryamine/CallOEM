@@ -22,9 +22,7 @@ const GraphQLImportedModule = GraphQLModule.forRoot<ApolloDriverConfig>({
   playground: true,
   autoSchemaFile: join(process.cwd(), 'src/graphql/schema.gql'),
   sortSchema: true,
-  resolvers: {
-    Roomtype: RoomtypeScalar,
-  },
+  resolvers: { Roomtype: RoomtypeScalar },
   formatError(err) {
     err.extensions.exception['name'] = undefined;
     return {

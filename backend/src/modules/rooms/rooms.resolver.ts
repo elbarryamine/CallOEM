@@ -99,9 +99,6 @@ export class RoomsResolver {
   //
   @Mutation(() => Room)
   async updateRoom(@Args('updateRoomInput') updateRoomInput: UpdateRoomInput) {
-    return await this.roomModule.findByIdAndUpdate(
-      updateRoomInput.id,
-      updateRoomInput,
-    );
+    return await this.roomModule.findByIdAndUpdate(updateRoomInput.id, {});
   }
 }

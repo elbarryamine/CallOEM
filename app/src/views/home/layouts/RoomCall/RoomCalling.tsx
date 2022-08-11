@@ -11,9 +11,11 @@ import RoomBackground from './RoomBackground';
 import useCallAndMediaAction from '@views/home/hooks/useCallAndMediaAction';
 import Preloader from '@components/Layouts/Preloader';
 import {useGetUser} from '@redux/slices/user';
+import {RTCSessionDescription} from 'react-native-webrtc';
 
 export default function RoomCalling({room}: {room: Room}) {
   const {
+    peerConnection,
     localStream,
     isStreamReady,
     isCalling,
@@ -28,12 +30,20 @@ export default function RoomCalling({room}: {room: Room}) {
     isFrontCamera,
     toggleCamera,
     hasMultipleCameras,
+    sessionConstraints,
   } = useCallAndMediaAction();
   const user = useGetUser();
 
-  const handleRoomCallStart = () => {
+  const handleRoomCallStart = async () => {
     if (!user) return;
-    handleCall({roomId: room.id, userId: user.user.id});
+    const offerDescription = (await peerConnection.current.createOffer(
+      sessionConstraints,
+    )) as RTCSessionDescription;
+    handleCall({
+      roomId: room.id,
+      userId: user.user.id,
+      localDescription: offerDescription,
+    });
   };
   const handleRoomCallEnd = () => {
     if (!user) return;

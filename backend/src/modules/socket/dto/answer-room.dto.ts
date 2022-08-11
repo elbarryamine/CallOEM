@@ -1,9 +1,8 @@
 import { Types } from 'mongoose';
 
-export class JoinRoomDto {
-  userId: Types.ObjectId;
+export class AnswerRoomDto {
   roomId: Types.ObjectId;
-  localDescription: {
+  answerDescription: {
     type: string | null;
     sdp: string;
   };

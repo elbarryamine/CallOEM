@@ -22,15 +22,27 @@ interface Device {
   facing: string;
   deviceId: string;
 }
-const peerConstraints = {iceServers: [{urls: 'stun:stun.l.google.com:19302'}]};
 export default function useCallAndMediaAction() {
+  const peerConstraints = {
+    iceServers: [{urls: 'stun:stun.l.google.com:19302'}],
+  };
+  const sessionConstraints = {
+    mandatory: {
+      OfferToReceiveAudio: true,
+      OfferToReceiveVideo: true,
+      VoiceActivityDetection: true,
+    },
+  };
   const [isFront, setIsFront] = useState<boolean>(true);
   const [localStream, setLocalStream] = useState<MediaStream | null>(null);
   const peerConnection = useRef(new RTCPeerConnection(peerConstraints));
   const [hasMultipleCameras, setHasMultipleCameras] = useState<boolean>(false);
 
   const toast = useToast();
-  const {joinRoom, leaveRoom} = useCallSocketActions();
+  const {joinRoom, leaveRoom} = useCallSocketActions(
+    peerConnection.current,
+    sessionConstraints,
+  );
   const navigation = useNavigation<CallNativeStack['navigation']>();
   const {isStreamReady, setIsReady} = useLocalSteamReadyState(localStream);
   const {
@@ -136,6 +148,8 @@ export default function useCallAndMediaAction() {
     handleCall,
 
     peerConnection,
+    sessionConstraints,
+    peerConstraints,
     joinRoom,
     leaveRoom,
   };
