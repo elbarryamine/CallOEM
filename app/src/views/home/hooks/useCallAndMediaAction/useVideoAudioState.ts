@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {MediaStream} from 'react-native-webrtc';
 
-export function useVideoAudioState(localStream: MediaStream | null) {
+export default function useVideoAudioState(localStream: MediaStream | null) {
   const [isAudioEnabled, setHasAudio] = useState<boolean>(true);
   const [isVideoEnabled, setHasVideo] = useState<boolean>(false);
   const enableAudio = () => setHasAudio(true);

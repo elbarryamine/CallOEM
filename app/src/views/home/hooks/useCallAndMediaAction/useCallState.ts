@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {MediaStream, RTCPeerConnection} from 'react-native-webrtc';
 
-export function useCallState(
+export default function useCallState(
   localStream: MediaStream | null,
   peerConnection: RTCPeerConnection,
 ) {

@@ -17,6 +17,7 @@ export default function RoomCalling({room}: {room: Room}) {
   const {
     peerConnection,
     localStream,
+    // remoteStream,
     isStreamReady,
     isCalling,
     handleCall,
@@ -57,6 +58,20 @@ export default function RoomCalling({room}: {room: Room}) {
   return (
     <View h="100%" w="100%" position="relative">
       <RoomBackground uri={getAvatar(room.ownerMember.avatar)} />
+      <View
+        position="absolute"
+        top="0"
+        left="0"
+        h="100%"
+        w="100%"
+        zIndex={isVideoEnabled ? '3' : '0'}>
+        <RTCView
+          stream={localStream}
+          objectFit="cover"
+          mirror={isFrontCamera}
+          style={styles.rtcviewer}
+        />
+      </View>
       <View
         position="absolute"
         top="0"

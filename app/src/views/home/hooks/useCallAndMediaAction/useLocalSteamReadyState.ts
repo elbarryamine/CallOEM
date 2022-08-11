@@ -1,7 +1,9 @@
 import {useEffect, useState} from 'react';
 import {MediaStream} from 'react-native-webrtc';
 
-export function useLocalSteamReadyState(localStream: MediaStream | null) {
+export default function useLocalSteamReadyState(
+  localStream: MediaStream | null,
+) {
   const [isStreamReady, setIsReady] = useState<boolean>(false);
 
   useEffect(() => {
