@@ -8,7 +8,7 @@ import {getAvatar} from '@shared/constants/functions/getAvatar';
 import ButtonIcon from '@components/Elements/ButtonIcon';
 import Feather from 'react-native-vector-icons/Feather';
 import RoomBackground from './RoomBackground';
-import useCallAndMediaAction from '@views/home/hooks/useCallAndMediaAction';
+import useCallAndMediaAction from '@shared/hooks/useCallAndMediaAction';
 import Preloader from '@components/Layouts/Preloader';
 import {useGetUser} from '@redux/slices/user';
 import {RTCSessionDescription} from 'react-native-webrtc';
@@ -17,7 +17,6 @@ export default function RoomCalling({room}: {room: Room}) {
   const {
     peerConnection,
     localStream,
-    // remoteStream,
     isStreamReady,
     isCalling,
     handleCall,
@@ -58,34 +57,26 @@ export default function RoomCalling({room}: {room: Room}) {
   return (
     <View h="100%" w="100%" position="relative">
       <RoomBackground uri={getAvatar(room.ownerMember.avatar)} />
-      <View
-        position="absolute"
-        top="0"
-        left="0"
-        h="100%"
-        w="100%"
-        zIndex={isVideoEnabled ? '3' : '0'}>
-        <RTCView
-          stream={localStream}
-          objectFit="cover"
-          mirror={isFrontCamera}
-          style={styles.rtcviewer}
-        />
-      </View>
-      <View
-        position="absolute"
-        top="0"
-        left="0"
-        h="100%"
-        w="100%"
-        zIndex={isVideoEnabled ? '3' : '0'}>
-        <RTCView
-          stream={localStream}
-          objectFit="cover"
-          mirror={isFrontCamera}
-          style={styles.rtcviewer}
-        />
-      </View>
+      {localStream && ( // remote stream
+        <View position="absolute" top="0" left="0" h="100%" w="100%" zIndex="4">
+          <RTCView
+            stream={localStream}
+            objectFit="cover"
+            mirror={isFrontCamera}
+            style={styles.rtcviewer}
+          />
+        </View>
+      )}
+      {isVideoEnabled && (
+        <View position="absolute" top="0" right="0" h="200px" w="150px">
+          <RTCView
+            stream={localStream}
+            objectFit="cover"
+            mirror={isFrontCamera}
+            style={styles.rtcviewer}
+          />
+        </View>
+      )}
       <View position="absolute" top="0" left="0" h="100%" w="100%" zIndex="4">
         <ScreenContainer
           position="absolute"

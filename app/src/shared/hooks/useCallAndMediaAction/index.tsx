@@ -13,7 +13,6 @@ import useCallSocketActions, {
   LeaveRoom,
 } from './useCallSocketActions';
 import useLocalStream from './useLocalStream';
-import useRemoteStream from './useRemoteStream';
 
 const peerConstraints = {
   iceServers: [
@@ -49,9 +48,6 @@ export default function useCallAndMediaAction() {
     isFrontCamera,
     toggleCamera,
   } = useLocalStream();
-  const {remoteStream, setRemoteStream} = useRemoteStream(
-    peerConnection.current,
-  );
 
   const {joinRoom, leaveRoom} = useCallSocketActions(
     peerConnection.current,
@@ -123,8 +119,6 @@ export default function useCallAndMediaAction() {
     setIsReady,
 
     // remoteStream State
-    remoteStream,
-    setRemoteStream,
 
     // calling State
     isCalling,
