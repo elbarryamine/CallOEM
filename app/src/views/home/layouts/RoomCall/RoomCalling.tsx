@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {View, Flex, HStack} from 'native-base';
 import {RTCView} from 'react-native-webrtc-web-shim';
 import {StyleSheet} from 'react-native';
@@ -11,11 +11,9 @@ import RoomBackground from './RoomBackground';
 import useCallAndMediaAction from '@shared/hooks/useCallAndMediaAction';
 import Preloader from '@components/Layouts/Preloader';
 import {useGetUser} from '@redux/slices/user';
-import {RTCSessionDescription} from 'react-native-webrtc';
 
 export default function RoomCalling({room}: {room: Room}) {
   const {
-    peerConnection,
     localStream,
     isStreamReady,
     isCalling,
@@ -30,28 +28,8 @@ export default function RoomCalling({room}: {room: Room}) {
     isFrontCamera,
     toggleCamera,
     hasMultipleCameras,
-    sessionConstraints,
   } = useCallAndMediaAction();
   const user = useGetUser();
-
-  const handleRoomCallStart = async () => {
-    if (!user) return;
-    const offerDescription = (await peerConnection.current.createOffer(
-      sessionConstraints,
-    )) as RTCSessionDescription;
-    handleCall({
-      roomId: room.id,
-      userId: user.user.id,
-      localDescription: offerDescription,
-    });
-  };
-  const handleRoomCallEnd = () => {
-    if (!user) return;
-    handleHangUp({roomId: room.id, userId: user.user.id});
-  };
-  useEffect(() => {
-    return handleRoomCallEnd;
-  }, [user]);
 
   if (!isStreamReady || !user) return <Preloader />;
   return (
@@ -67,7 +45,7 @@ export default function RoomCalling({room}: {room: Room}) {
           />
         </View>
       )}
-      {isVideoEnabled && (
+      {isVideoEnabled && localStream && (
         <View position="absolute" top="0" right="0" h="200px" w="150px">
           <RTCView
             stream={localStream}
@@ -100,7 +78,7 @@ export default function RoomCalling({room}: {room: Room}) {
                   size="50px"
                   as={Feather}
                   name={!isCalling ? 'phone' : 'phone-missed'}
-                  onPress={!isCalling ? handleRoomCallStart : handleRoomCallEnd}
+                  onPress={!isCalling ? handleCall : handleHangUp}
                 />
               </Flex>
 

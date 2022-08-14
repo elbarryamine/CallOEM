@@ -32,8 +32,8 @@ const roomSchema = Yup.object().shape({
     }),
   limit: Yup.number()
     .oneOf(
-      limits.map((el: string) => Number(el)),
-      'Limit should be either between 2 and 10 have no limit',
+      [...limits.map((el: string) => Number(el)), null],
+      'Limit should be either between 2 and 10 or have no limit',
     )
     .nullable(true),
   //   no need to send message here since we send it manually if not valid means user did something skitchy

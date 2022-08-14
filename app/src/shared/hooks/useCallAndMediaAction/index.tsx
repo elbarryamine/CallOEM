@@ -12,7 +12,7 @@ import useCallSocketActions, {
   JoinRoom,
   LeaveRoom,
 } from './useCallSocketActions';
-import useLocalStream from './useLocalStream';
+import useLocalStream from '../useWebRtcCall/useLocalStream';
 
 const peerConstraints = {
   iceServers: [
@@ -64,24 +64,24 @@ export default function useCallAndMediaAction() {
     disableVideo,
   } = useVideoAudioState(localStream);
 
-  const {call, hanup, isCalling} = useCallState(
+  const {call, hangup, isCalling} = useCallState(
     localStream,
     peerConnection.current,
   );
   //
 
-  const handleHangUp = async (leaveRoomData: LeaveRoom) => {
+  const handleHangUp = async () => {
     allowBack();
     // leave the remote offer
-    leaveRoom(leaveRoomData);
-    hanup();
+    // leaveRoom(leaveRoomData);
+    hangup();
   };
 
-  const handleCall = async (joinRoomData: JoinRoom) => {
+  const handleCall = async () => {
     preventBack();
     // send to server that user is joining
     // server will check if offer exist { yes => joinit , no ==> create one and join it}
-    joinRoom(joinRoomData);
+    // joinRoom();
     call();
   };
 

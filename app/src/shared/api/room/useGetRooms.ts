@@ -1,4 +1,5 @@
 import {gql, useQuery} from '@apollo/client';
+import {Room} from '@shared/types/Room';
 
 const QUERY = gql`
   query GetRooms {
@@ -27,5 +28,5 @@ const QUERY = gql`
 `;
 
 export default function useGetRooms() {
-  return useQuery(QUERY);
+  return useQuery<{GetRooms: Room[]}>(QUERY);
 }

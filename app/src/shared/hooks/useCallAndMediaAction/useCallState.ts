@@ -8,7 +8,7 @@ export default function useCallState(
   const [isCalling, setIsCalling] = useState<boolean>(false);
 
   const call = () => setIsCalling(true);
-  const hanup = () => setIsCalling(false);
+  const hangup = () => setIsCalling(false);
   useEffect(() => {
     // add Stream from server when calling and remove it when not
     if (isCalling) peerConnection.addStream(localStream!);
@@ -16,7 +16,7 @@ export default function useCallState(
   }, [isCalling, localStream]);
   return {
     call,
-    hanup,
+    hangup,
     isCalling,
   };
 }

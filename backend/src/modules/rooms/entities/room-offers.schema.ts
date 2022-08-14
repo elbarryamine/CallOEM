@@ -7,7 +7,7 @@ export class RoomOffersSchemaType {
   roomId: Types.ObjectId;
 
   @Prop({ required: true })
-  callDescription: string;
+  offer: string;
 
   @Prop({ default: Date.now })
   createdAt: Date;

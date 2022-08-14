@@ -28,9 +28,13 @@ const CreateRoomSchema = Yup.object().shape({
         values.length >= 1 &&
         values.length <= 4
       );
-    }),
+    })
+    .required(),
   limit: Yup.string()
-    .oneOf(limits, 'Limit should be either between 2 and 10 have no limit')
+    .oneOf(
+      [...limits, null],
+      'Limit should be either between 2 and 10 have no limit',
+    )
     .nullable(true),
 });
 

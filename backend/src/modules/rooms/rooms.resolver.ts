@@ -27,6 +27,7 @@ export class RoomsResolver {
   @Mutation(() => Room, { name: 'CreateRoom' })
   async createRoom(@Args('createRoomInput') createRoomInput: CreateRoomInput) {
     // validate room
+    console.log(createRoomInput);
     const valid = await roomValidate(createRoomInput);
     if (!valid)
       throw new NotAcceptableException({ message: 'invalid room fields' });

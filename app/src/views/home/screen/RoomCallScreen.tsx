@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import useGetRoom from '@shared/api/room/useGetRoom';
-import {Room} from '@shared/types/Room';
 import Preloader from '@components/Layouts/Preloader';
 import {View} from 'native-base';
 
 import RoomCalling from '../layouts/RoomCall/RoomCalling';
 import {CallNativeStack} from '@navigation/AppStack';
 import ModalRoomCall from '../layouts/RoomCall/ModalRoomCall';
+import RoomGroupCalling from '../layouts/RoomCall/RoomGroupCalling';
 
 export default function RoomCallScreen({route}: CallNativeStack) {
   const roomId = route.params.id;
-  const [room, setRoom] = useState<Room>({} as Room);
-  const [loaded, setLoaded] = useState<boolean>(false);
-  const [runRoomQuery, {data}] = useGetRoom();
+  const [runRoomQuery, {data, loading}] = useGetRoom();
+  const loaded = !loading && data && data?.GetRoom;
+  const room = data?.GetRoom;
   useEffect(() => {
     if (!roomId) return;
     async function getRoom() {
@@ -20,16 +20,10 @@ export default function RoomCallScreen({route}: CallNativeStack) {
     }
     getRoom();
   }, [roomId]);
-  useEffect(() => {
-    if (data && data.GetRoom) {
-      setRoom(data.GetRoom);
-      setLoaded(true);
-    }
-  }, [data]);
 
   return (
     <View h="100%" position="relative" pb="30px">
-      {!loaded ? <Preloader /> : <RoomCalling room={room} />}
+      {!loaded ? <Preloader /> : <RoomGroupCalling room={room!} />}
       <ModalRoomCall />
     </View>
   );

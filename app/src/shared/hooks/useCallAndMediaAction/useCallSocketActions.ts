@@ -20,28 +20,6 @@ export default function useCallSocketActions(
     };
   },
 ) {
-  // let remoteCandidates: RTCIceCandidate[] = [];
-  //
-  // function handleRemoteCandidate(iceCandidate: RTCIceCandidate) {
-  //   iceCandidate = new RTCIceCandidate(iceCandidate);
-
-  //   if (peerConnection.remoteDescription == null) {
-  //     return remoteCandidates.push(iceCandidate);
-  //   }
-
-  //   return peerConnection.addIceCandidate(iceCandidate);
-  // }
-
-  // function processCandidates() {
-  //   if (remoteCandidates.length < 1) {
-  //     return;
-  //   }
-
-  //   remoteCandidates.map(candidate =>
-  //     peerConnection.addIceCandidate(candidate),
-  //   );
-  //   remoteCandidates = [];
-  // }
   const joinRoom = (data: JoinRoom) => {
     return Socket.emit('room:join', data);
   };
