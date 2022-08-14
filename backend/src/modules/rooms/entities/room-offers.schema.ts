@@ -6,8 +6,14 @@ export class RoomOffersSchemaType {
   @Prop({ type: mongoose.Types.ObjectId, required: true })
   roomId: Types.ObjectId;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   offer: string;
+
+  @Prop({ type: [String], required: true })
+  offerCandidates: string[];
+
+  @Prop({ type: [String], required: true })
+  answerCandidates: string[];
 
   @Prop({ default: Date.now })
   createdAt: Date;
