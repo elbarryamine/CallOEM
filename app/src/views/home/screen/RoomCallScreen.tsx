@@ -6,7 +6,6 @@ import {View} from 'native-base';
 import RoomCalling from '../layouts/RoomCall/RoomCalling';
 import {CallNativeStack} from '@navigation/AppStack';
 import ModalRoomCall from '../layouts/RoomCall/ModalRoomCall';
-import RoomGroupCalling from '../layouts/RoomCall/RoomGroupCalling';
 
 export default function RoomCallScreen({route}: CallNativeStack) {
   const roomId = route.params.id;
@@ -23,7 +22,7 @@ export default function RoomCallScreen({route}: CallNativeStack) {
 
   return (
     <View h="100%" position="relative" pb="30px">
-      {!loaded ? <Preloader /> : <RoomGroupCalling room={room!} />}
+      {!loaded ? <Preloader /> : <RoomCalling room={room!} />}
       <ModalRoomCall />
     </View>
   );

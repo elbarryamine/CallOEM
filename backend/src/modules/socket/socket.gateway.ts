@@ -12,9 +12,6 @@ import {
   RoomOffersSchemaType,
 } from '../rooms/entities/room-offers.schema';
 import { RoomDocument, RoomSchemaType } from '../rooms/entities/room.schema';
-// import { AnswerRoomDto } from './dto/answer-room.dto';
-// import { JoinRoomDto } from './dto/join-room.dto';
-// import { LeaveRoomDto } from './dto/leave-room.dto';
 
 @WebSocketGateway({
   transports: ['websocket'],
@@ -26,4 +23,79 @@ export class SocketGateway {
     @InjectModel(RoomOffersSchemaType.name)
     private roomOffersModel: Model<RoomOfferDocument>,
   ) {}
+  @SubscribeMessage('client:checkoffer')
+  async findOffer(
+    @MessageBody() data: { id: string },
+    @ConnectedSocket() client: Socket,
+  ) {
+    const roomOffer = await this.roomOffersModel.findOne({ roomId: data.id });
+    client.emit('server:checkoffer', {
+      id: data.id,
+      hasOffer: !!roomOffer,
+      offer: roomOffer ? roomOffer.offer : null,
+    });
+  }
+
+  @SubscribeMessage('client:saveoffer')
+  async saveRoomOffer(
+    @MessageBody()
+    data: {
+      id: string;
+      offer: { sdp: string; type: string };
+    },
+    @ConnectedSocket() client: Socket,
+  ) {
+    const roomOffer = await this.roomOffersModel.create({
+      roomId: data.id,
+      offer: data.offer,
+    });
+
+    client.emit('server:checkoffer', {
+      id: data.id,
+      hasOffer: !!roomOffer,
+    });
+  }
+
+  @SubscribeMessage('client:answeroffer')
+  async answerRoomOffer(
+    @MessageBody()
+    data: {
+      id: string;
+      answer: { sdp: string; type: string };
+    },
+    @ConnectedSocket() client: Socket,
+  ) {
+    client.emit('server:answeroffer', {
+      id: data.id,
+      answer: data.answer,
+    });
+  }
+
+  @SubscribeMessage('client:answercandidate')
+  async saveAnswerCandidate(
+    @MessageBody()
+    data: { id: string; candidate: string },
+    @ConnectedSocket() client: Socket,
+  ) {
+    client.emit('server:answercandidate', {
+      id: data.id,
+      candidate: JSON.parse(data.candidate),
+    });
+  }
+
+  @SubscribeMessage('client:offercandidate')
+  async saveOfferCandidate(
+    @MessageBody()
+    data: { id: string; candidate: string },
+    @ConnectedSocket() client: Socket,
+  ) {
+    client.emit('server:offercandidate', {
+      id: data.id,
+      candidate: JSON.parse(data.candidate),
+    });
+  }
+
+  // await this.roomOffersModel
+  //   .findOne({ roomId: data.id })
+  //   .updateOne({ $addToSet: { answerCandidates: data.candidate } });
 }
