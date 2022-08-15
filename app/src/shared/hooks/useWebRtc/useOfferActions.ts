@@ -1,9 +1,4 @@
-import {useEffect} from 'react';
-import {
-  RTCIceCandidate,
-  RTCPeerConnection,
-  RTCSessionDescription,
-} from 'react-native-webrtc';
+import {RTCPeerConnection, RTCSessionDescription} from 'react-native-webrtc';
 import useSocket from '../useSocket';
 
 const option = {
@@ -13,7 +8,12 @@ const option = {
     VoiceActivityDetection: true,
   },
 };
-export default function useOfferActions({peer, roomId}: OfferActions) {
+type OfferActionsHook = {
+  peer: RTCPeerConnection;
+  roomId: string;
+};
+
+export default function useOfferActions({peer, roomId}: OfferActionsHook) {
   const {socket} = useSocket();
   const checkHasOffer = async (): Promise<{
     hasOffer: boolean;
@@ -63,45 +63,8 @@ export default function useOfferActions({peer, roomId}: OfferActions) {
     });
   };
 
-  const listenToOfferCandidates = () => {
-    socket.on('server:offercandidate', data => {
-      if (data.id !== roomId) return;
-      peer.addIceCandidate(new RTCIceCandidate(data.candidate));
-    });
-    peer.onicecandidate = (e: any) => {
-      if (!e.candidate) return;
-      socket.emit('client:answercandidate', {
-        id: roomId,
-        candidate: JSON.stringify(e.candidate),
-      });
-    };
-  };
-
-  const listenToAnswerCandidates = () => {
-    socket.on('server:answercandidate', data => {
-      if (data.id !== roomId) return;
-      peer.addIceCandidate(new RTCIceCandidate(data.candidate));
-    });
-    peer.onicecandidate = (e: any) => {
-      if (!e.candidate) return;
-      socket.emit('client:offercandidate', {
-        id: roomId,
-        candidate: JSON.stringify(e.candidate),
-      });
-    };
-  };
-  useEffect(() => {
-    listenToAnswerCandidates();
-    listenToOfferCandidates();
-  }, []);
-
   return {
     createOffer,
     answerOffer,
   };
 }
-
-type OfferActions = {
-  peer: RTCPeerConnection;
-  roomId: string;
-};
