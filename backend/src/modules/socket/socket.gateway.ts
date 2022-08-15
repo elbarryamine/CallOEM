@@ -29,9 +29,8 @@ export class SocketGateway {
     @ConnectedSocket() client: Socket,
   ) {
     const roomOffer = await this.roomOffersModel.findOne({ roomId: data.id });
-    client.emit('server:checkoffer', {
-      id: data.id,
-      hasOffer: !!roomOffer,
+    client.emit(`room:${data.id}:checkoffer`, {
+      hasOffer: roomOffer && !!roomOffer.offer,
       offer: roomOffer ? roomOffer.offer : null,
     });
   }
@@ -41,18 +40,12 @@ export class SocketGateway {
     @MessageBody()
     data: {
       id: string;
-      offer: { sdp: string; type: string };
+      offer: any;
     },
-    @ConnectedSocket() client: Socket,
   ) {
-    const roomOffer = await this.roomOffersModel.create({
+    await this.roomOffersModel.create({
       roomId: data.id,
       offer: data.offer,
-    });
-
-    client.emit('server:checkoffer', {
-      id: data.id,
-      hasOffer: !!roomOffer,
     });
   }
 
@@ -61,12 +54,11 @@ export class SocketGateway {
     @MessageBody()
     data: {
       id: string;
-      answer: { sdp: string; type: string };
+      answer: any;
     },
     @ConnectedSocket() client: Socket,
   ) {
-    client.emit('server:answeroffer', {
-      id: data.id,
+    client.emit(`room:${data.id}:answeroffer`, {
       answer: data.answer,
     });
   }
@@ -74,24 +66,22 @@ export class SocketGateway {
   @SubscribeMessage('client:answercandidate')
   async saveAnswerCandidate(
     @MessageBody()
-    data: { id: string; candidate: string },
+    data: { id: string; candidate: any },
     @ConnectedSocket() client: Socket,
   ) {
-    client.emit('server:answercandidate', {
-      id: data.id,
-      candidate: JSON.parse(data.candidate),
+    client.emit(`room:${data.id}:answercandidate`, {
+      candidate: data.candidate,
     });
   }
 
   @SubscribeMessage('client:offercandidate')
   async saveOfferCandidate(
     @MessageBody()
-    data: { id: string; candidate: string },
+    data: { id: string; candidate: any },
     @ConnectedSocket() client: Socket,
   ) {
-    client.emit('server:offercandidate', {
-      id: data.id,
-      candidate: JSON.parse(data.candidate),
+    client.emit(`room:${data.id}:offercandidate`, {
+      candidate: data.candidate,
     });
   }
 

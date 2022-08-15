@@ -4,12 +4,13 @@ import {MediaStream, RTCPeerConnection} from 'react-native-webrtc';
 export default function useRemoteStream(peer: RTCPeerConnection) {
   const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
   useEffect(() => {
-    peer.addEventListener('addstream', (e: any) => {
+    peer.onaddstream = (e: any) => {
       setRemoteStream(e.stream);
-    });
-    return () => {
-      peer.removeEventListener('addstream', () => {});
+    };
+    peer.ontrack = (e: any) => {
+      setRemoteStream(e.streams[0]);
     };
   }, []);
+
   return {remoteStream};
 }

@@ -1,5 +1,9 @@
 import {useEffect, useState} from 'react';
-import {mediaDevices, MediaStream} from 'react-native-webrtc';
+import {
+  mediaDevices,
+  MediaStream,
+  RTCPeerConnection,
+} from 'react-native-webrtc';
 
 interface Device {
   kind: string;
@@ -7,7 +11,7 @@ interface Device {
   deviceId: string;
 }
 
-export default function useLocalStream() {
+export default function useLocalStream(peer: RTCPeerConnection) {
   const [localStream, setLocalStream] = useState<MediaStream | null>(null);
   const [isFrontCamera, setIsFront] = useState<boolean>(true);
   const [hasMultipleCameras, setHasMultipleCameras] = useState<boolean>(false);
@@ -42,10 +46,19 @@ export default function useLocalStream() {
         })) as MediaStream;
 
         setLocalStream(() => mediaStream);
+        peer.addStream(mediaStream);
         return mediaStream;
       } catch (err) {}
     })();
   }, []);
+
+  useEffect(() => {
+    if (!localStream) return;
+    localStream.getTracks().forEach(track => {
+      peer.getLocalStreams().map(t => t.addTrack(track));
+    });
+  }, [localStream]);
+
   return {
     localStream,
     setLocalStream,
