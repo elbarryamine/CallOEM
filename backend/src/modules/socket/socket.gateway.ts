@@ -63,25 +63,38 @@ export class SocketGateway {
     });
   }
 
-  @SubscribeMessage('client:answercandidate')
+  @SubscribeMessage('client:offercandidate')
   async saveAnswerCandidate(
     @MessageBody()
     data: { id: string; candidate: any },
     @ConnectedSocket() client: Socket,
   ) {
-    client.emit(`room:${data.id}:answercandidate`, {
-      candidate: data.candidate,
+    await this.roomOffersModel.findOne({ roomId: data.id }).updateOne({
+      $addToSet: { offerCandidates: JSON.stringify(data.candidate) },
+    });
+
+    const roomOffer = await this.roomOffersModel.findOne({ roomId: data.id });
+
+    client.emit(`room:${data.id}:candidates`, {
+      answerCandidates: roomOffer.answerCandidates.map((el) => JSON.parse(el)),
+      offerCandidates: roomOffer.offerCandidates.map((el) => JSON.parse(el)),
     });
   }
 
-  @SubscribeMessage('client:offercandidate')
+  @SubscribeMessage('client:answercandidate')
   async saveOfferCandidate(
     @MessageBody()
     data: { id: string; candidate: any },
     @ConnectedSocket() client: Socket,
   ) {
-    client.emit(`room:${data.id}:offercandidate`, {
-      candidate: data.candidate,
+    await this.roomOffersModel.findOne({ roomId: data.id }).updateOne({
+      $addToSet: { answerCandidates: JSON.stringify(data.candidate) },
+    });
+    const roomOffer = await this.roomOffersModel.findOne({ roomId: data.id });
+
+    client.emit(`room:${data.id}:candidates`, {
+      answerCandidates: roomOffer.answerCandidates.map((el) => JSON.parse(el)),
+      offerCandidates: roomOffer.offerCandidates.map((el) => JSON.parse(el)),
     });
   }
 

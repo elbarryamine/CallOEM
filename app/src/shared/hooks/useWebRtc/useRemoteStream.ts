@@ -7,10 +7,13 @@ export default function useRemoteStream(peer: RTCPeerConnection) {
     peer.onaddstream = (e: any) => {
       setRemoteStream(e.stream);
     };
-    peer.ontrack = (e: any) => {
-      setRemoteStream(e.streams[0]);
-    };
   }, []);
 
+  useEffect(() => {
+    if (!remoteStream) return;
+    remoteStream.getTracks().forEach(track => {
+      peer.getRemoteStreams().map(t => t.addTrack(track));
+    });
+  }, [remoteStream]);
   return {remoteStream};
 }

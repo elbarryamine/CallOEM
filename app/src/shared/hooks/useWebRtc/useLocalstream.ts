@@ -21,27 +21,25 @@ export default function useLocalStream(peer: RTCPeerConnection) {
   useEffect(() => {
     (async function () {
       try {
-        let videoSourceId;
+        // let videoSourceId;
         const sourceInfos =
           (await mediaDevices.enumerateDevices()) as Array<Device>;
         if (sourceInfos.length >= 2) {
           setHasMultipleCameras(true);
         }
-        for (let i = 0; i < sourceInfos.length; i++) {
-          const sourceInfo = sourceInfos[i];
-          if (
-            sourceInfo.kind === 'videoinput' &&
-            sourceInfo.facing === (isFrontCamera ? 'front' : 'environment')
-          ) {
-            videoSourceId = sourceInfo.deviceId;
-          }
-        }
+        // for (let i = 0; i < sourceInfos.length; i++) {
+        //   const sourceInfo = sourceInfos[i];
+        //   if (
+        //     sourceInfo.kind === 'videoinput' &&
+        //     sourceInfo.facing === (isFrontCamera ? 'front' : 'environment')
+        //   ) {
+        //   }
+        // }
         const mediaStream = (await mediaDevices.getUserMedia({
           audio: true,
           video: {
             frameRate: 30,
             facingMode: isFrontCamera ? 'user' : 'environment',
-            deviceId: videoSourceId,
           },
         })) as MediaStream;
 
@@ -51,13 +49,6 @@ export default function useLocalStream(peer: RTCPeerConnection) {
       } catch (err) {}
     })();
   }, []);
-
-  useEffect(() => {
-    if (!localStream) return;
-    localStream.getTracks().forEach(track => {
-      peer.getLocalStreams().map(t => t.addTrack(track));
-    });
-  }, [localStream]);
 
   return {
     localStream,

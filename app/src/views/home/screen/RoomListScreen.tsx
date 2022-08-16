@@ -18,23 +18,26 @@ export default function RoomsListScreen() {
 
   useEffect(() => setIsSearchScreen(false), []);
 
-  if (!loaded) return <Preloader />;
   return (
     <>
       <HeaderNavigation />
-      <ScreenContainer>
-        <View flex="1">
-          <Stack space={5}>
-            <RoomSearchFilters />
-            <RoomListScreenHeader />
-          </Stack>
-          <ScrollListContainer>
-            {rooms!.map((room, i: number) => (
-              <RoomCard key={i} room={room} />
-            ))}
-          </ScrollListContainer>
-        </View>
-      </ScreenContainer>
+      {!loaded ? (
+        <Preloader />
+      ) : (
+        <ScreenContainer>
+          <View flex="1">
+            <Stack space={5}>
+              <RoomSearchFilters />
+              <RoomListScreenHeader />
+            </Stack>
+            <ScrollListContainer>
+              {rooms!.map((room, i: number) => (
+                <RoomCard key={i} room={room} />
+              ))}
+            </ScrollListContainer>
+          </View>
+        </ScreenContainer>
+      )}
     </>
   );
 }

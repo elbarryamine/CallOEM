@@ -8,16 +8,19 @@ import {StyleSheet} from 'react-native';
 import {RTCView} from 'react-native-webrtc';
 import ButtonIcon from '@components/Elements/ButtonIcon';
 import Feather from 'react-native-vector-icons/Feather';
+import {useGetUser} from '@redux/slices/user';
 
 const RTCViewer = (props: any) => <RTCView {...props} />;
 export default function RoomCalling({room}: {room: Room}) {
   const {answerOffer, createOffer, localStream, remoteStream} = useWebRtc(
     room.id,
   );
+  const user = useGetUser();
+
   return (
     <View h="100%" w="100%" position="relative">
-      <RoomBackground uri={getAvatar(room.ownerMember.avatar)} />
-      {remoteStream && ( // remote stream
+      {user && <RoomBackground uri={getAvatar(user.user.avatar)} />}
+      {localStream && ( // remote stream
         <View
           position="absolute"
           top="0"
@@ -26,19 +29,20 @@ export default function RoomCalling({room}: {room: Room}) {
           w="180px"
           zIndex="7">
           <RTCViewer
-            streamURL={remoteStream.toURL()}
+            streamURL={localStream.toURL()}
             objectFit="cover"
             mirror={true}
             style={styles.rtcviewer}
           />
         </View>
       )}
-      {localStream && ( // remote stream
+      {remoteStream && ( // remote stream
         <View position="absolute" top="0" left="0" h="100%" w="100%" zIndex="4">
           <RTCViewer
-            streamURL={localStream.toURL()}
+            streamURL={remoteStream.toURL()}
             objectFit="cover"
-            mirror={true}
+            mirror={false}
+            zOrder={5}
             style={styles.rtcviewer}
           />
         </View>
