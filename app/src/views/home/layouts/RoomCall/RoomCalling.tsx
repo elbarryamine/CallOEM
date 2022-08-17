@@ -18,33 +18,33 @@ export default function RoomCallingGroup({room}: {room: Room}) {
   return (
     <View h="100%" w="100%" position="relative">
       {user && <RoomBackground uri={getAvatar(user.user.avatar)} />}
-      {localStream && ( // remote stream
-        <View
-          position="absolute"
-          top="0"
-          right="0"
-          h="200px"
-          w="180px"
-          zIndex="7">
+      <View
+        position="absolute"
+        top="0"
+        right="0"
+        h="200px"
+        w="180px"
+        zIndex="7">
+        {localStream && ( // remote stream
           <RtcViewer
             stream={localStream}
             objectFit="cover"
             mirror={true}
+            zOrder={2}
             style={styles.rtcviewer}
           />
-        </View>
-      )}
-      {remoteStream && ( // remote stream
-        <View position="absolute" top="0" left="0" h="100%" w="100%" zIndex="4">
+        )}
+      </View>
+      <View position="absolute" top="0" left="0" h="100%" w="100%" zIndex="4">
+        {remoteStream && ( // remote stream
           <RtcViewer
             stream={remoteStream}
             objectFit="cover"
             mirror={false}
-            zOrder={5}
             style={styles.rtcviewer}
           />
-        </View>
-      )}
+        )}
+      </View>
       <View position="absolute" bottom="20px" w="100%" h="80px" zIndex="5">
         <Flex justify="space-evenly" align="center" flexDir="row">
           <Flex align="center" bg="green.500" borderRadius="25px">
