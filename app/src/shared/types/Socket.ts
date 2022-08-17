@@ -34,10 +34,12 @@ export type RequestOfferResponse = {
 // ListenToAnswer
 export type ListenToAnswerData = {
   room: string;
+  userId: string;
   answer: RTCSessionDescription;
 };
 
 export type ListenToAnswerResponse = {
+  userId: string;
   answer: RTCSessionDescription;
 };
 

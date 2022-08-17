@@ -109,7 +109,7 @@ export class SocketGateway {
       $addToSet: { offerCandidates: data.candidate },
     });
     const roomCall = await this.roomCalls.findOne({ roomId: data.room });
-    client.to(data.room).emit('server:candidates', {
+    client.broadcast.emit(`server:${data.room}:candidates`, {
       offerCandidates: roomCall.offerCandidates,
       answerCandidates: roomCall.answerCandidates,
     });

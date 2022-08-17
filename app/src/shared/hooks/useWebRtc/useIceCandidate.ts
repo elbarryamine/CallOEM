@@ -1,6 +1,6 @@
 import {Candidates} from '@shared/types/Socket';
 import {useRef} from 'react';
-import {RTCIceCandidate, RTCPeerConnection} from 'react-native-webrtc';
+import {RTCIceCandidate, RTCPeerConnection} from 'react-native-webrtc-web-shim';
 import useSocket from '../useSocket';
 
 type IceCandidateHook = {
@@ -25,7 +25,7 @@ export default function useIceCandidate({peer, roomId}: IceCandidateHook) {
   const triggerAnswerCandidates = () => {
     peer.onicecandidate = (e: any) => {
       if (!e.candidate) return;
-      socket.emit('client:offerCandidates', {
+      socket.emit('client:answerCandidates', {
         room: roomId,
         candidate: e.candidate,
       });
@@ -33,7 +33,7 @@ export default function useIceCandidate({peer, roomId}: IceCandidateHook) {
   };
 
   const setCandidates = () => {
-    socket.on('server:candidates', async (data: Candidates) => {
+    socket.on(`server:${roomId}:candidates`, async (data: Candidates) => {
       data.answerCandidates.forEach(async cand => {
         if (answerCandidates.current.includes(cand)) return;
         answerCandidates.current.push(cand);

@@ -1,5 +1,9 @@
+import {useGetUser} from '@redux/slices/user';
 import {useEffect} from 'react';
-import {RTCPeerConnection, RTCSessionDescription} from 'react-native-webrtc';
+import {
+  RTCPeerConnection,
+  RTCSessionDescription,
+} from 'react-native-webrtc-web-shim';
 import useSocket from '../useSocket';
 import useIceCandidate from './useIceCandidate';
 
@@ -19,6 +23,7 @@ const options = {
 export default function useOfferActions({peer, roomId}: OfferActionsHook) {
   const {saveOffer, triggerAnswer, listenToAnswer, joinRoom, requestOffer} =
     useSocket();
+  const user = useGetUser();
 
   const {triggerAnswerCandidates, triggerOfferCandidates, setCandidates} =
     useIceCandidate({
@@ -27,35 +32,35 @@ export default function useOfferActions({peer, roomId}: OfferActionsHook) {
     });
 
   const createCall = async () => {
-    triggerOfferCandidates();
     const offer = (await peer.createOffer(options)) as RTCSessionDescription;
     await peer.setLocalDescription(offer);
     saveOffer({offer, room: roomId});
     listenToAnswer(async data => {
-      console.log('run');
-      const ansDesc = new RTCSessionDescription(data.answer as never);
-      await peer.setRemoteDescription(ansDesc);
+      if (data.userId === user?.user.id) return;
+      await peer.setRemoteDescription(data.answer as never);
     });
   };
 
   const joinCall = async () => {
-    triggerAnswerCandidates();
-    const {hasOffer, offer} = await requestOffer({room: roomId});
-    if (!hasOffer) throw Error('could not find any offer');
+    if (!user) return;
+    const {offer} = await requestOffer({room: roomId});
     // set offer
     const offerDesc = new RTCSessionDescription(offer as never);
-    await peer.setRemoteDescription(offerDesc);
+    await peer.setRemoteDescription(offerDesc as never);
 
     // create answer
     const answer = (await peer.createAnswer(options)) as never;
     await peer.setLocalDescription(answer);
 
     // send answer
-    triggerAnswer({answer, room: roomId});
+
+    triggerAnswer({answer, room: roomId, userId: user.user.id});
   };
 
   useEffect(() => {
     joinRoom(roomId);
+    triggerOfferCandidates();
+    triggerAnswerCandidates();
     setCandidates();
   }, []);
 

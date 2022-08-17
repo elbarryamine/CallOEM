@@ -10,6 +10,7 @@ import ButtonIcon from '@components/Elements/ButtonIcon';
 import Feather from 'react-native-vector-icons/Feather';
 import {useGetUser} from '@redux/slices/user';
 
+const RtcViewer = (props: any) => <RTCView {...props} />;
 export default function RoomCallingGroup({room}: {room: Room}) {
   const {createCall, joinCall, localStream, remoteStream} = useWebRtc(room.id);
   const user = useGetUser();
@@ -25,7 +26,7 @@ export default function RoomCallingGroup({room}: {room: Room}) {
           h="200px"
           w="180px"
           zIndex="7">
-          <RTCView
+          <RtcViewer
             stream={localStream}
             objectFit="cover"
             mirror={true}
@@ -35,7 +36,7 @@ export default function RoomCallingGroup({room}: {room: Room}) {
       )}
       {remoteStream && ( // remote stream
         <View position="absolute" top="0" left="0" h="100%" w="100%" zIndex="4">
-          <RTCView
+          <RtcViewer
             stream={remoteStream}
             objectFit="cover"
             mirror={false}

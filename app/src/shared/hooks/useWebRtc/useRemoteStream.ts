@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {MediaStream, RTCPeerConnection} from 'react-native-webrtc';
+import {MediaStream, RTCPeerConnection} from 'react-native-webrtc-web-shim';
 
 export default function useRemoteStream(peer: RTCPeerConnection) {
   const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
