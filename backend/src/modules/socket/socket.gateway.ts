@@ -56,7 +56,10 @@ export class SocketGateway {
     @Mbody() data: RequestOfferData,
     @CSocket() client: Socket,
   ) {
-    const roomCall = await this.roomCalls.findOne({ roomId: data.room });
+    const roomCall = await this.roomCalls
+      .findOne({ roomId: data.room })
+      .sort({ createdAt: -1 });
+
     client.emit('server:requestOffer', {
       hasOffer: !!(roomCall && roomCall.offer),
       offer: roomCall.offer,
@@ -65,7 +68,10 @@ export class SocketGateway {
 
   @Subscribe('client:requestAnswer')
   async getOffer(@Mbody() data: RequestAnswerData, @CSocket() client: Socket) {
-    const roomCall = await this.roomCalls.findOne({ roomId: data.room });
+    const roomCall = await this.roomCalls
+      .findOne({ roomId: data.room })
+      .sort({ createdAt: -1 });
+
     client.emit('server:requestAnswer', {
       hasAnswer: !!(roomCall && roomCall.answer),
       answer: roomCall.answer,
@@ -77,10 +83,13 @@ export class SocketGateway {
     @Mbody() data: ListenToAnswerData,
     @CSocket() client: Socket,
   ) {
-    const roomCall = await this.roomCalls.findOne({ roomId: data.room });
+    const roomCall = await this.roomCalls
+      .findOne({ roomId: data.room })
+      .sort({ createdAt: -1 });
+
     if (!roomCall.answer) {
       await this.roomCalls
-        .findOne({ roomId: data.room })
+        .findOne({ roomId: data.room }, {}, { sort: { createAt: -1 } })
         .updateOne({ answer: data.answer });
     }
     client.broadcast.emit('server:listenToAnswer', { answer: data.answer });
@@ -91,10 +100,15 @@ export class SocketGateway {
     @Mbody() data: CandidatesData,
     @CSocket() client: Socket,
   ) {
-    await this.roomCalls.findOne({ roomId: data.room }).updateOne({
-      $addToSet: { answerCandidates: data.candidate },
-    });
-    const roomCall = await this.roomCalls.findOne({ roomId: data.room });
+    await this.roomCalls
+      .findOne({ roomId: data.room }, {}, { sort: { createAt: -1 } })
+      .updateOne({
+        $addToSet: { answerCandidates: data.candidate },
+      });
+    const roomCall = await this.roomCalls
+      .findOne({ roomId: data.room })
+      .sort({ createdAt: -1 });
+
     client.broadcast.emit('server:candidates', {
       offerCandidates: roomCall.offerCandidates,
       answerCandidates: roomCall.answerCandidates,
@@ -105,10 +119,16 @@ export class SocketGateway {
     @Mbody() data: CandidatesData,
     @CSocket() client: Socket,
   ) {
-    await this.roomCalls.findOne({ roomId: data.room }).updateOne({
-      $addToSet: { offerCandidates: data.candidate },
-    });
-    const roomCall = await this.roomCalls.findOne({ roomId: data.room });
+    await this.roomCalls
+      .findOne({ roomId: data.room }, {}, { sort: { createAt: -1 } })
+      .updateOne({
+        $addToSet: { offerCandidates: data.candidate },
+      });
+
+    const roomCall = await this.roomCalls
+      .findOne({ roomId: data.room })
+      .sort({ createdAt: -1 });
+
     client.broadcast.emit(`server:${data.room}:candidates`, {
       offerCandidates: roomCall.offerCandidates,
       answerCandidates: roomCall.answerCandidates,

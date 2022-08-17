@@ -3,7 +3,11 @@ import mongoose, { Document, Types } from 'mongoose';
 
 @Schema({ collection: 'roomsoffers' })
 export class RoomCallsSchemaType {
-  @Prop({ type: mongoose.Types.ObjectId, required: true })
+  @Prop({
+    type: mongoose.Types.ObjectId,
+    index: { unique: true, dropDups: true },
+    required: true,
+  })
   roomId: Types.ObjectId;
 
   @Prop(raw({ type: { type: String }, sdp: { type: String } }))
