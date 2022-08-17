@@ -83,7 +83,7 @@ export class SocketGateway {
         .findOne({ roomId: data.room })
         .updateOne({ answer: data.answer });
     }
-    client.to(data.room).emit('server:listenToAnswer', { answer: data.answer });
+    client.broadcast.emit('server:listenToAnswer', { answer: data.answer });
   }
 
   @Subscribe('client:answerCandidates')
@@ -95,7 +95,7 @@ export class SocketGateway {
       $addToSet: { answerCandidates: data.candidate },
     });
     const roomCall = await this.roomCalls.findOne({ roomId: data.room });
-    client.to(data.room).emit('server:candidates', {
+    client.broadcast.emit('server:candidates', {
       offerCandidates: roomCall.offerCandidates,
       answerCandidates: roomCall.answerCandidates,
     });

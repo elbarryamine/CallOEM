@@ -35,10 +35,10 @@ export default function useOfferActions({peer, roomId}: OfferActionsHook) {
     const offer = (await peer.createOffer(options)) as RTCSessionDescription;
     await peer.setLocalDescription(offer);
     saveOffer({offer, room: roomId});
-    listenToAnswer(async data => {
-      if (data.userId === user?.user.id) return;
+    await listenToAnswer(async data => {
       await peer.setRemoteDescription(data.answer as never);
     });
+    triggerAnswerCandidates();
   };
 
   const joinCall = async () => {
@@ -51,6 +51,7 @@ export default function useOfferActions({peer, roomId}: OfferActionsHook) {
     // create answer
     const answer = (await peer.createAnswer(options)) as never;
     await peer.setLocalDescription(answer);
+    triggerOfferCandidates();
 
     // send answer
 
@@ -58,9 +59,7 @@ export default function useOfferActions({peer, roomId}: OfferActionsHook) {
   };
 
   useEffect(() => {
-    joinRoom(roomId);
-    triggerOfferCandidates();
-    triggerAnswerCandidates();
+    // joinRoom(roomId);
     setCandidates();
   }, []);
 
