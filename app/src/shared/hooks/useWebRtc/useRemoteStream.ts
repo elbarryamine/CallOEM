@@ -1,12 +1,10 @@
 import {useEffect, useState} from 'react';
-import {MediaStream, RTCPeerConnection} from 'react-native-webrtc-web-shim';
+import {MediaStream, RTCPeerConnection} from 'react-native-webrtc';
 
-export default function useRemoteStream(
-  peer: React.MutableRefObject<RTCPeerConnection>,
-) {
+export default function useRemoteStream(peer: RTCPeerConnection) {
   const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
   useEffect(() => {
-    peer.current.onaddstream = (e: any) => {
+    peer.onaddstream = (e: any) => {
       setRemoteStream(e.stream);
     };
   }, []);
@@ -14,7 +12,7 @@ export default function useRemoteStream(
   useEffect(() => {
     if (!remoteStream) return;
     remoteStream.getTracks().forEach(track => {
-      peer.current.getRemoteStreams().map(t => t.addTrack(track));
+      peer.getRemoteStreams().map(t => t.addTrack(track));
     });
   }, [remoteStream]);
   return {remoteStream};

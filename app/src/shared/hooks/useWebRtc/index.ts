@@ -7,11 +7,11 @@ export default function useWebRtc(roomId: string) {
   const {peer} = usePeerConnection();
   const {localStream} = useLocalStream(peer);
   const {remoteStream} = useRemoteStream(peer);
-  const {answerOffer, createOffer} = useOfferActions({peer, roomId});
+  const {createCall, joinCall} = useOfferActions({peer, roomId});
   return {
     localStream,
-    answerOffer,
-    createOffer,
+    createCall,
+    joinCall,
     remoteStream,
   };
 }

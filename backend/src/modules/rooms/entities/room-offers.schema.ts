@@ -2,7 +2,7 @@ import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document, Types } from 'mongoose';
 
 @Schema({ collection: 'roomsoffers' })
-export class RoomOffersSchemaType {
+export class RoomCallsSchemaType {
   @Prop({ type: mongoose.Types.ObjectId, required: true })
   roomId: Types.ObjectId;
 
@@ -40,9 +40,9 @@ export class RoomOffersSchemaType {
   createdAt: Date;
 }
 
-export const RoomOffersSchema =
-  SchemaFactory.createForClass(RoomOffersSchemaType);
-export type RoomOfferDocument = RoomOffersSchemaType & Document;
+export const RoomCallsSchema =
+  SchemaFactory.createForClass(RoomCallsSchemaType);
+export type RoomCallsDocument = RoomCallsSchemaType & Document;
 
 type Candidate = {
   candidate: string;
