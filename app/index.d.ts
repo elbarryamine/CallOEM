@@ -1,6 +1,6 @@
 declare module '@assets/images/*';
 declare module 'react-native-webrtc-web-shim' {
-  export {RTCView};
+  export * from 'react-native-webrtc';
 }
 
 declare module '@env' {

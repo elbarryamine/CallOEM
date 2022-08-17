@@ -1,9 +1,9 @@
 import {useEffect, useRef} from 'react';
-import {RTCIceCandidate, RTCPeerConnection} from 'react-native-webrtc';
+import {RTCIceCandidate, RTCPeerConnection} from 'react-native-webrtc-web-shim';
 import useSocket from '../useSocket';
 
 type IceCandidateHook = {
-  peer: RTCPeerConnection;
+  peer: React.MutableRefObject<RTCPeerConnection>;
   roomId: string;
 };
 
@@ -13,7 +13,7 @@ export default function useIceCandidate({peer, roomId}: IceCandidateHook) {
   const offerCandidates = useRef<RTCIceCandidate[]>([]);
 
   const sendAnswerCandidate = () => {
-    peer.onicecandidate = async (e: any) => {
+    peer.current.onicecandidate = async (e: any) => {
       try {
         if (!e.candidate) return;
         socket.emit('client:answercandidate', {
@@ -25,17 +25,14 @@ export default function useIceCandidate({peer, roomId}: IceCandidateHook) {
   };
 
   const sendOfferCandidate = () => {
-    peer.onicecandidate = async (e: any) => {
-      try {
-        if (!e.candidate) return;
-        socket.emit('client:offercandidate', {
-          id: roomId,
-          candidate: e.candidate.toJSON(),
-        });
-      } catch {}
+    peer.current.onicecandidate = (e: any) => {
+      if (!e.candidate) return;
+      socket.emit('client:offercandidate', {
+        id: roomId,
+        candidate: e.candidate,
+      });
     };
   };
-  console.log(answerCandidates.current, offerCandidates.current);
 
   useEffect(() => {
     socket.on(
@@ -49,13 +46,13 @@ export default function useIceCandidate({peer, roomId}: IceCandidateHook) {
             if (answerCandidates.current.includes(cand)) return;
             answerCandidates.current.push(cand);
             const iceCandidate = new RTCIceCandidate(cand);
-            await peer.addIceCandidate(iceCandidate);
+            await peer.current.addIceCandidate(iceCandidate);
           });
           data.offerCandidates.forEach(async cand => {
             if (offerCandidates.current.includes(cand)) return;
             offerCandidates.current.push(cand);
             const iceCandidate = new RTCIceCandidate(cand);
-            await peer.addIceCandidate(iceCandidate);
+            await peer.current.addIceCandidate(iceCandidate);
           });
         } catch {}
       },

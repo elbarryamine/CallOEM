@@ -1,24 +1,40 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document, Types } from 'mongoose';
 
-@Schema({ collection: 'rooms-offers' })
+@Schema({ collection: 'roomsoffers' })
 export class RoomOffersSchemaType {
   @Prop({ type: mongoose.Types.ObjectId, required: true })
   roomId: Types.ObjectId;
 
-  @Prop(
-    raw({
-      type: { type: String },
-      sdp: { type: String },
-    }),
-  )
+  @Prop(raw({ type: { type: String }, sdp: { type: String } }))
   offer: Record<string, string>;
 
-  @Prop({ type: [String], default: [] })
-  offerCandidates: string[];
+  @Prop(raw({ type: { type: String }, sdp: { type: String } }))
+  answer: Record<string, string>;
 
-  @Prop({ type: [String], default: [] })
-  answerCandidates: string[];
+  @Prop({
+    type: [
+      raw({
+        candidate: { type: String },
+        sdpMLineIndex: { type: Number },
+        sdpMid: { type: String },
+      }),
+    ],
+    default: [],
+  })
+  offerCandidates: Candidate[];
+
+  @Prop({
+    type: [
+      raw({
+        candidate: { type: String },
+        sdpMLineIndex: { type: Number },
+        sdpMid: { type: String },
+      }),
+    ],
+    default: [],
+  })
+  answerCandidates: Candidate[];
 
   @Prop({ default: Date.now })
   createdAt: Date;
@@ -27,3 +43,9 @@ export class RoomOffersSchemaType {
 export const RoomOffersSchema =
   SchemaFactory.createForClass(RoomOffersSchemaType);
 export type RoomOfferDocument = RoomOffersSchemaType & Document;
+
+type Candidate = {
+  candidate: string;
+  sdpMLineIndex: number;
+  sdpMid: string;
+};

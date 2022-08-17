@@ -1,24 +1,33 @@
 import {useEffect} from 'react';
-import {RTCPeerConnection, RTCSessionDescription} from 'react-native-webrtc';
+import {
+  RTCPeerConnection,
+  RTCSessionDescription,
+} from 'react-native-webrtc-web-shim';
 import useSocket from '../useSocket';
-import useIceCandidate from './useIceCandidate';
+
+type CheckOffer = {hasOffer: boolean; offer: RTCSessionDescription};
+type OfferActionsHook = {
+  peer: React.MutableRefObject<RTCPeerConnection>;
+  roomId: string;
+};
 
 const option = {
-  mandatory: {OfferToReceiveAudio: true, OfferToReceiveVideo: true},
-};
-type CheckOffer = {hasOffer: boolean; offer: {type: null; sdp: string}};
-type OfferActionsHook = {
-  peer: RTCPeerConnection;
-  roomId: string;
+  mandatory: {
+    OfferToReceiveAudio: true,
+    OfferToReceiveVideo: true,
+    VoiceActivityDetection: true,
+  },
 };
 
 export default function useOfferActions({peer, roomId}: OfferActionsHook) {
   const {socket} = useSocket();
-  const {sendAnswerCandidate, sendOfferCandidate} = useIceCandidate({
-    peer,
-    roomId,
-  });
-
+  // const {sendAnswerCandidate, sendOfferCandidate} = useIceCandidate({
+  //   peer,
+  //   roomId,
+  // });
+  //
+  //
+  //
   const checkHasOffer = async (): Promise<CheckOffer> => {
     return new Promise(resolve => {
       socket.on(`room:${roomId}:checkoffer`, data => {
@@ -27,45 +36,45 @@ export default function useOfferActions({peer, roomId}: OfferActionsHook) {
       socket.emit('client:checkoffer', {id: roomId});
     });
   };
-
-  const createOffer = async () => {
-    try {
-      sendOfferCandidate();
-
-      const offDesc = await peer.createOffer(option);
-      console.log('receiving local offer');
-      await peer.setLocalDescription(offDesc as RTCSessionDescription);
-      socket.emit('client:saveoffer', {
-        id: roomId,
-        offer: offDesc,
-      });
-    } catch {}
+  //
+  //
+  //
+  const createOffer = () => {
+    peer.current.createOffer(option).then(async offDesc => {
+      socket.emit('client:saveoffer', {id: roomId, offer: offDesc});
+      await peer.current.setLocalDescription(offDesc as never);
+      // sendOfferCandidate();
+    });
   };
-
+  //
+  //
+  //
   const answerOffer = async () => {
-    try {
-      sendAnswerCandidate();
-      const {hasOffer, offer} = await checkHasOffer();
-      if (!hasOffer) return;
+    // sendAnswerCandidate();
+    const {hasOffer, offer} = await checkHasOffer();
+    if (!hasOffer || !offer || !offer.sdp) return;
 
-      const offerDesc = new RTCSessionDescription(offer);
-      console.log('receiving remote offer');
-      await peer.setRemoteDescription(offerDesc as RTCSessionDescription);
+    const offDesc = new RTCSessionDescription(offer as never);
+    peer.current.signalingState = 'have-local-offer';
+    await peer.current.setRemoteDescription({
+      sdp: offDesc.sdp,
+      type: offDesc.type,
+    } as RTCSessionDescription);
 
-      const ansDesc = await peer.createAnswer(option);
-      console.log('receiving local answer');
-      await peer.setLocalDescription(ansDesc as RTCSessionDescription);
-
-      socket.emit('client:answeroffer', {
-        id: roomId,
-        answer: ansDesc,
-      });
-    } catch {}
+    peer.current.createAnswer(option).then(async ansDesc => {
+      await peer.current.setLocalDescription(ansDesc as never);
+      socket.emit('client:answeroffer', {id: roomId, answer: ansDesc});
+    });
   };
+
   useEffect(() => {
     socket.on(`room:${roomId}:answeroffer`, async data => {
-      console.log('receiving remote answer');
-      await peer.setRemoteDescription(data.answer as RTCSessionDescription);
+      if (!data || !data.answer) return;
+      const ansDesc = new RTCSessionDescription(data.answer as never);
+      await peer.current.setRemoteDescription({
+        sdp: ansDesc.sdp,
+        type: ansDesc.type,
+      } as RTCSessionDescription);
     });
   }, []);
 

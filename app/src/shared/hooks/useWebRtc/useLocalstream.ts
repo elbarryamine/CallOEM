@@ -3,7 +3,7 @@ import {
   mediaDevices,
   MediaStream,
   RTCPeerConnection,
-} from 'react-native-webrtc';
+} from 'react-native-webrtc-web-shim';
 
 interface Device {
   kind: string;
@@ -11,7 +11,9 @@ interface Device {
   deviceId: string;
 }
 
-export default function useLocalStream(peer: RTCPeerConnection) {
+export default function useLocalStream(
+  peer: React.MutableRefObject<RTCPeerConnection>,
+) {
   const [localStream, setLocalStream] = useState<MediaStream | null>(null);
   const [isFrontCamera, setIsFront] = useState<boolean>(true);
   const [hasMultipleCameras, setHasMultipleCameras] = useState<boolean>(false);
@@ -44,7 +46,7 @@ export default function useLocalStream(peer: RTCPeerConnection) {
         })) as MediaStream;
 
         setLocalStream(() => mediaStream);
-        peer.addStream(mediaStream);
+        peer.current.addStream(mediaStream);
         return mediaStream;
       } catch (err) {}
     })();

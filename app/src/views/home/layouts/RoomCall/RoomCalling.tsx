@@ -5,13 +5,13 @@ import {getAvatar} from '@shared/constants/functions/getAvatar';
 import RoomBackground from './RoomBackground';
 import useWebRtc from '@shared/hooks/useWebRtc';
 import {StyleSheet} from 'react-native';
-import {RTCView} from 'react-native-webrtc';
+import {RTCView} from 'react-native-webrtc-web-shim';
 import ButtonIcon from '@components/Elements/ButtonIcon';
 import Feather from 'react-native-vector-icons/Feather';
 import {useGetUser} from '@redux/slices/user';
 
 const RTCViewer = (props: any) => <RTCView {...props} />;
-export default function RoomCalling({room}: {room: Room}) {
+export default function RoomCallingGroup({room}: {room: Room}) {
   const {answerOffer, createOffer, localStream, remoteStream} = useWebRtc(
     room.id,
   );
@@ -29,7 +29,7 @@ export default function RoomCalling({room}: {room: Room}) {
           w="180px"
           zIndex="7">
           <RTCViewer
-            streamURL={localStream.toURL()}
+            stream={localStream}
             objectFit="cover"
             mirror={true}
             style={styles.rtcviewer}
@@ -39,7 +39,7 @@ export default function RoomCalling({room}: {room: Room}) {
       {remoteStream && ( // remote stream
         <View position="absolute" top="0" left="0" h="100%" w="100%" zIndex="4">
           <RTCViewer
-            streamURL={remoteStream.toURL()}
+            stream={remoteStream}
             objectFit="cover"
             mirror={false}
             zOrder={5}

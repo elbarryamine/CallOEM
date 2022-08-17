@@ -23,6 +23,7 @@ export default function RoomCallScreen({route}: CallNativeStack) {
   return (
     <View h="100%" position="relative" pb="30px">
       {!loaded ? <Preloader /> : <RoomCalling room={room!} />}
+
       <ModalRoomCall />
     </View>
   );
