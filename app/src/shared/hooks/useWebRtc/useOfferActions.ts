@@ -21,8 +21,13 @@ const options = {
 };
 
 export default function useOfferActions({peer, roomId}: OfferActionsHook) {
-  const {saveOffer, triggerAnswer, listenToAnswer, joinRoom, requestOffer} =
-    useSocket();
+  const {
+    saveOffer,
+    triggerAnswer,
+    listenToAnswer,
+    requestOffer,
+    // joinRoom,
+  } = useSocket();
   const user = useGetUser();
 
   const {triggerAnswerCandidates, triggerOfferCandidates, setCandidates} =

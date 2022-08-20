@@ -11,12 +11,12 @@ export default function RoomCard({room}: {room: Room}) {
 
   return (
     <View p="2px">
-      <View shadow="2" borderRadius="10px" bg="white">
+      <View borderRadius="10px" bg="white">
         <View
           borderRadius="10px"
           bg="secondary"
           overflow="hidden"
-          borderWidth="1"
+          borderWidth="1px"
           borderColor="border">
           <Stack justifyContent="center" space={2} p="12px">
             <Stack flex="1" mr="24px">

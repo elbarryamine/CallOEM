@@ -28,5 +28,7 @@ const QUERY = gql`
 `;
 
 export default function useGetRooms() {
-  return useQuery<{GetRooms: Room[]}>(QUERY);
+  return useQuery<{GetRooms: Room[]}>(QUERY, {
+    notifyOnNetworkStatusChange: true,
+  });
 }

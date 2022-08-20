@@ -16,8 +16,6 @@ export default function useLocalStream(peer: RTCPeerConnection) {
   const [isFrontCamera, setIsFront] = useState<boolean>(true);
   const [hasMultipleCameras, setHasMultipleCameras] = useState<boolean>(false);
 
-  // Get the localMediaStream
-
   useEffect(() => {
     (async function () {
       try {
@@ -27,14 +25,14 @@ export default function useLocalStream(peer: RTCPeerConnection) {
         if (sourceInfos.length >= 2) {
           setHasMultipleCameras(true);
         }
-        // for (let i = 0; i < sourceInfos.length; i++) {
-        //   const sourceInfo = sourceInfos[i];
-        //   if (
-        //     sourceInfo.kind === 'videoinput' &&
-        //     sourceInfo.facing === (isFrontCamera ? 'front' : 'environment')
-        //   ) {
-        //   }
-        // }
+        for (let i = 0; i < sourceInfos.length; i++) {
+          const sourceInfo = sourceInfos[i];
+          if (
+            sourceInfo.kind === 'videoinput' &&
+            sourceInfo.facing === (isFrontCamera ? 'front' : 'environment')
+          ) {
+          }
+        }
         const mediaStream = (await mediaDevices.getUserMedia({
           audio: true,
           video: {

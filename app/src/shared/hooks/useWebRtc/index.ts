@@ -15,3 +15,5 @@ export default function useWebRtc(roomId: string) {
     remoteStream,
   };
 }
+
+// [{peer ,users :["","" ],status :"done" };{peer ,users :["","" ],status :"done" },{peer ,users :["","" ],status :"done" },{peer ,users :["","" ],status :"done" },{peer ,users :["","" ],status :"done" },{peer ,users :["","" ],status :"done" },{peer ,users :["","" ],status :"done" },]
