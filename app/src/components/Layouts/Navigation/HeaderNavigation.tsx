@@ -17,7 +17,7 @@ export default function HeaderNavigation(props: IViewProps) {
       shadow="md"
       bg="navigation"
       px="8px"
-      py="10px"
+      h="50px"
       borderBottomColor="border"
       borderBottomWidth="2px"
       {...props}>
@@ -31,9 +31,9 @@ export default function HeaderNavigation(props: IViewProps) {
           <ButtonIcon
             as={AntDesign}
             name="bells"
-            iconProps={{color: 'invert'}}
+            iconProps={{color: 'invert', size: '20px'}}
           />
-          <ImageAvatar uri={getAvatar(user.user.avatar)} />
+          <ImageAvatar uri={getAvatar(user.user.avatar)} size="35px" />
         </HStack>
       </Flex>
     </View>

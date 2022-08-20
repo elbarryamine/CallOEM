@@ -31,17 +31,17 @@ export default function CallNavigation(props: NativeStackHeaderProps) {
       shadow="md"
       bg="dark"
       px="8px"
-      py="10px"
+      h="50px"
       borderBottomColor="border"
       borderBottomWidth="2px">
       <Flex flexDir="row" justify="space-between">
-        <HStack alignItems="center" maxHeight="50px">
+        <HStack alignItems="center">
           <ButtonIcon
             pl="0"
             onPress={handleNavigateBack}
             as={AntDesign}
             name="arrowleft"
-            iconProps={{color: 'invert'}}
+            iconProps={{color: 'invert', size: '20px'}}
           />
           {room && (
             <Heading

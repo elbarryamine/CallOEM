@@ -1,4 +1,5 @@
 const fontSizes = {
+  tiny: '12px',
   mono: '14px',
   sub: '16px',
   body: '18px',

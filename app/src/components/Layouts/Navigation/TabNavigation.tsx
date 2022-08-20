@@ -14,7 +14,8 @@ export const routes = [
 export default function TabNavigation({state, navigation}: BottomTabBarProps) {
   return (
     <View
-      h="70px"
+      h="60px"
+      py="5px"
       w="100%"
       bg="secondary"
       borderTopColor="border"
@@ -27,9 +28,12 @@ export default function TabNavigation({state, navigation}: BottomTabBarProps) {
               onPress={() => navigation.navigate(state.routes[idx].name)}
               textProps={{
                 color: state.index === idx ? 'primary' : 'text',
-                fontSize: 'mono',
+                fontSize: 'tiny',
               }}
-              iconProps={{color: state.index === idx ? 'primary' : 'text'}}
+              iconProps={{
+                color: state.index === idx ? 'primary' : 'text',
+                size: '20px',
+              }}
               text={route.title}
               name={route.name}
               as={route.iconProvider}

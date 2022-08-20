@@ -54,7 +54,7 @@ export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
       },
       Button: {
         defaultProps: {
-          borderRadius: '10px',
+          borderRadius: '4px',
           pb: '4%',
           pt: '3%',
           _text: {
