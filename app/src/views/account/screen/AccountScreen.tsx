@@ -27,11 +27,9 @@ export default function AccountScreen() {
   return (
     <ScreenContainer>
       <ScrollView>
-        <Stack space={10} mb="50px">
+        <Stack space={5} mb="50px">
           <Flex flexDir="row" align="center" justify="space-between">
-            <Heading color="primary" fontWeight={900}>
-              My Account
-            </Heading>
+            <Heading color="primary">My Account</Heading>
             <Button
               mr="5px"
               px="20px"
@@ -43,7 +41,7 @@ export default function AccountScreen() {
             </Button>
           </Flex>
           <Stack space={2}>
-            <Text fontWeight="bold">Personal information</Text>
+            <Heading fontSize="subheader">Personal information</Heading>
             <HStack space={5} alignItems="center">
               <ImageAvatar uri={getAvatar(user.user.avatar)} size="100px" />
               <Button variant="primary-outline">Update Profile Avatar</Button>
@@ -79,13 +77,13 @@ export default function AccountScreen() {
             </FormikFormContollerErrorHandler>
           </Stack>
           <Stack space={2}>
-            <Text fontWeight="bold">Email Adress</Text>
-            <Text fontWeight="light">{user.user.email}</Text>
+            <Heading fontSize="subheader">Email Adress</Heading>
+            <Text>{user.user.email}</Text>
             <Button variant="primary-outline">Change email address</Button>
           </Stack>
           <Stack space={2}>
-            <Text fontWeight="bold">Password</Text>
-            <Text fontWeight="light">Change your login password</Text>
+            <Heading fontSize="subheader">Password</Heading>
+            <Text>Change your login password</Text>
             <Button variant="primary-outline">Enter A New Password</Button>
           </Stack>
           <Button variant="primary">Save Changes</Button>

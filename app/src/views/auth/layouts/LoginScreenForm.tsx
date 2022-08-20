@@ -100,6 +100,7 @@ export default function LoginScreenForm() {
                 borderBottomWidth="1"
                 value={values.Password}
                 onChangeText={handleChange('Password')}
+                autoComplete="password"
                 InputRightElement={
                   <Button
                     bg="primary"

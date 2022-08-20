@@ -1,0 +1,13 @@
+{
+    "name": "talk",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "https://github.com/elbarryamine/TalkToSomeoneApp.git",
+    "author": "elbarryamine <aminegtipsn@gmail.com>",
+    "license": "MIT",
+    "scripts": {
+        "client": "cd app && npm run dev",
+        "server": "cd backend && npm run dev",
+        "dev": "concurrently \"npm run client\" \"npm run server\""
+    }
+}

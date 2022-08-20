@@ -21,7 +21,9 @@ const navigatonRoutes = [
   {
     name: 'history',
     component: HistoryScreen,
-    header: () => <BackButtonNavigation headerTitle="History" />,
+    header: () => (
+      <BackButtonNavigation headerTitle="History" borderBottomWidth="0" />
+    ),
   },
   {
     name: 'settings',

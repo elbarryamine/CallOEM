@@ -39,10 +39,7 @@ export default function BackButtonNavigation({
             iconProps={{color: 'invert', size: '20px'}}
           />
           {headerTitle && (
-            <Heading
-              textTransform="capitalize"
-              fontWeight="bold"
-              color="invert">
+            <Heading textTransform="capitalize" color="invert">
               {headerTitle}
             </Heading>
           )}

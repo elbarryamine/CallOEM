@@ -14,9 +14,9 @@ export default function RoomCard({room}: {room: Room}) {
   whenAdded = whenAdded[0].toUpperCase() + whenAdded.slice(1);
   return (
     <View p="2px">
-      <View borderRadius="10px" bg="white">
+      <View borderRadius="10px" bg="white" shadow="1">
         <View
-          bg="primaryBright"
+          bg="secondary"
           overflow="hidden"
           borderWidth="1px"
           borderColor="border">
@@ -25,16 +25,11 @@ export default function RoomCard({room}: {room: Room}) {
               <Heading
                 fontSize="subheader"
                 color="text"
-                fontWeight="extrabold"
                 noOfLines={1}
                 textTransform="uppercase">
                 {room.title}
               </Heading>
-              <Text
-                color="text"
-                fontSize="sub"
-                fontWeight="light"
-                noOfLines={2}>
+              <Text color="text" fontSize="sub" noOfLines={2}>
                 {room.description}
               </Text>
             </Stack>
@@ -52,16 +47,13 @@ export default function RoomCard({room}: {room: Room}) {
               <Text
                 textAlign="right"
                 fontSize="mono"
-                textTransform="capitalize"
-                fontWeight="extrabold">
+                textTransform="capitalize">
                 {whenAdded}
               </Text>
             </Flex>
             {room.memebers.length > 0 ? (
               <Stack space={2}>
-                <Heading textTransform="capitalize" fontWeight="extrabold">
-                  Members
-                </Heading>
+                <Heading textTransform="capitalize">Members</Heading>
                 <HStack
                   alignItems="center"
                   h="100%"

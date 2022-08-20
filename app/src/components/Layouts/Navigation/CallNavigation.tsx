@@ -46,7 +46,6 @@ export default function CallNavigation(props: NativeStackHeaderProps) {
           {room && (
             <Heading
               textTransform="capitalize"
-              fontWeight="bold"
               color="invert"
               noOfLines={1}
               w="90%">

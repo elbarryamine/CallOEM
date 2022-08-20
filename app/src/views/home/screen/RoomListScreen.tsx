@@ -25,15 +25,15 @@ export default function RoomsListScreen() {
       ) : (
         <View flex="1">
           <Stack space={5}>
-            <RoomSearchFilters />
             <RoomListScreenHeader />
+            <RoomSearchFilters />
+            <LoadMoreList
+              loadMoreEnded={loading}
+              renderItem={({item}) => <RoomCard room={item as Room} />}
+              data={rooms!}
+              onLoadMore={refetch}
+            />
           </Stack>
-          <LoadMoreList
-            loadMoreEnded={loading}
-            renderItem={({item}) => <RoomCard room={item as Room} />}
-            data={rooms!}
-            onLoadMore={refetch}
-          />
         </View>
       )}
     </ScreenContainer>
