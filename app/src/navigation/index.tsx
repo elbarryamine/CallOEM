@@ -3,6 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
+  NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 import AuthStack from './AuthStack';
 import {useGetUser} from '@redux/slices/user';
@@ -37,3 +38,8 @@ export type RootStackParamList = {
   auth: undefined;
   app: undefined;
 };
+
+export type AppStackNativeStack = NativeStackScreenProps<
+  RootStackParamList,
+  'app'
+>;

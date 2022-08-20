@@ -1,41 +1,47 @@
 import React from 'react';
 import {Flex, View} from 'native-base';
 import {Room} from '@shared/types/Room';
-import {getAvatar} from '@shared/constants/functions/getAvatar';
-import RoomBackground from './RoomBackground';
 import useWebRtc from '@shared/hooks/useWebRtc';
 import {StyleSheet} from 'react-native';
 import {RTCView} from 'react-native-webrtc-web-shim';
 import ButtonIcon from '@components/Elements/ButtonIcon';
-import Feather from 'react-native-vector-icons/Feather';
-import {useGetUser} from '@redux/slices/user';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import ImageAvatar from '@components/Elements/ImageAvatar';
+import {getAvatar} from '@shared/constants/functions/getAvatar';
 
 const RtcViewer = (props: any) => <RTCView {...props} />;
 export default function RoomCallingGroup({room}: {room: Room}) {
   const {createCall, joinCall, localStream, remoteStream} = useWebRtc(room.id);
-  const user = useGetUser();
 
   return (
-    <View h="100%" w="100%" position="relative">
-      {user && <RoomBackground uri={getAvatar(user.user.avatar)} />}
+    <Flex
+      align="center"
+      justify="center"
+      h="100%"
+      w="100%"
+      position="relative"
+      bg="gray.900">
+      <ImageAvatar uri={getAvatar(room.ownerMember.avatar)} size="150px" />
       <View
         position="absolute"
-        top="0"
-        right="0"
-        h="200px"
-        w="180px"
-        zIndex="7">
-        {localStream && ( // remote stream
+        top="5px"
+        right="5px"
+        borderRadius="10px"
+        overflow="hidden"
+        h="180px"
+        w="170px"
+        zIndex="2">
+        {localStream && (
           <RtcViewer
             stream={localStream}
             objectFit="cover"
             mirror={true}
-            zOrder={2}
+            zOrder={1}
             style={styles.rtcviewer}
           />
         )}
       </View>
-      <View position="absolute" top="0" left="0" h="100%" w="100%" zIndex="4">
+      <View position="absolute" top="0" left="0" h="100%" w="100%" zIndex="1">
         {remoteStream && ( // remote stream
           <RtcViewer
             stream={remoteStream}
@@ -45,27 +51,29 @@ export default function RoomCallingGroup({room}: {room: Room}) {
           />
         )}
       </View>
-      <View position="absolute" bottom="20px" w="100%" h="80px" zIndex="5">
+      <View position="absolute" bottom="20px" w="100%" h="80px" zIndex="3">
         <Flex justify="space-evenly" align="center" flexDir="row">
-          <Flex align="center" bg="green.500" borderRadius="25px">
+          <Flex align="center" bg="white" borderRadius="25px">
             <ButtonIcon
               size="50px"
-              as={Feather}
+              as={MaterialCommunityIcons}
               name={'phone'}
               onPress={createCall}
+              iconProps={{color: 'black'}}
             />
           </Flex>
           <Flex align="center" bg="red.500" borderRadius="25px">
             <ButtonIcon
               size="50px"
-              as={Feather}
-              name={'phone'}
+              as={MaterialCommunityIcons}
+              name={'phone-off'}
               onPress={joinCall}
+              iconProps={{color: 'white'}}
             />
           </Flex>
         </Flex>
       </View>
-    </View>
+    </Flex>
   );
 }
 const styles = StyleSheet.create({

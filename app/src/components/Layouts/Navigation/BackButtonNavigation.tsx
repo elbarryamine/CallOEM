@@ -14,11 +14,10 @@ export default function BackButtonNavigation({
   headerTitle,
   ...props
 }: {headerTitle?: string} & IViewProps) {
-  const navigation = useNavigation<SearchNativeStack['navigation']>();
   const user = useGetUser();
-  const handleNavigateBack = () => {
-    navigation.navigate('list');
-  };
+  const navigation = useNavigation<SearchNativeStack['navigation']>();
+
+  const handleNavigateBack = () => navigation.goBack();
 
   if (!user) return null;
   return (
