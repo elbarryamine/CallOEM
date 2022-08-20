@@ -2,6 +2,7 @@ import React from 'react';
 import ScreenContainer from '@components/Containers/ScreenContainer';
 import {
   Button,
+  Flex,
   Heading,
   HStack,
   Input,
@@ -11,20 +12,36 @@ import {
 } from 'native-base';
 import ImageAvatar from '@components/Elements/ImageAvatar';
 import {getAvatar} from '@shared/constants/functions/getAvatar';
-import {useGetUser} from '@redux/slices/user';
+import {removeUser, useGetUser} from '@redux/slices/user';
 import Preloader from '@components/Layouts/Preloader';
 import FormikFormContollerErrorHandler from '@components/Layouts/Form/FormikFormContollerErrorHandler';
+import {useDispatch} from 'react-redux';
 
 export default function AccountScreen() {
   const user = useGetUser();
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(removeUser());
+  };
   if (!user) return <Preloader />;
   return (
     <ScreenContainer>
       <ScrollView>
         <Stack space={10} mb="50px">
-          <Heading color="primary" fontWeight={900}>
-            My Account
-          </Heading>
+          <Flex flexDir="row" align="center" justify="space-between">
+            <Heading color="primary" fontWeight={900}>
+              My Account
+            </Heading>
+            <Button
+              mr="5px"
+              px="20px"
+              variant="solid"
+              bg="red.500"
+              _text={{color: 'invert'}}
+              onPress={handleLogout}>
+              Logout
+            </Button>
+          </Flex>
           <Stack space={2}>
             <Text fontWeight="bold">Personal information</Text>
             <HStack space={5} alignItems="center">
