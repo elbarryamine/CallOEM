@@ -4,6 +4,7 @@ import fontSizes from './fontSizes';
 export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
   const colors = {
     primary: '#0070f3',
+    primaryBright: '#0070f320',
     ternary: '#ff6347',
     secondary: '#ffffff',
     navigation: '#0070f3',
@@ -54,6 +55,8 @@ export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
       Button: {
         defaultProps: {
           borderRadius: '10px',
+          pb: '4%',
+          pt: '3%',
           _text: {
             ...buttonTextConfig,
             textTransform: 'capitalize',
