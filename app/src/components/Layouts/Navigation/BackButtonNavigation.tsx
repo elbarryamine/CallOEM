@@ -25,26 +25,34 @@ export default function BackButtonNavigation({
     <View
       shadow="md"
       bg="navigation"
-      px="20px"
+      px="8px"
       py="10px"
       borderBottomColor="border"
       borderBottomWidth="2px"
       {...props}>
       <Flex flexDir="row" justify="space-between">
-        <HStack alignItems="center">
+        <HStack alignItems="center" maxHeight="50px">
           <ButtonIcon
+            pl="0"
             onPress={handleNavigateBack}
             as={AntDesign}
             name="arrowleft"
             iconProps={{color: 'invert'}}
           />
           {headerTitle && (
-            <Heading textTransform="capitalize" fontWeight={600} color="invert">
+            <Heading
+              textTransform="capitalize"
+              fontWeight="bold"
+              color="invert">
               {headerTitle}
             </Heading>
           )}
         </HStack>
-        <HStack alignItems="center" space={2} alignSelf="flex-end">
+        <HStack
+          alignItems="center"
+          space={2}
+          alignSelf="flex-end"
+          maxHeight="50px">
           <ButtonIcon
             as={AntDesign}
             name="bells"

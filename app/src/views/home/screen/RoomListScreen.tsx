@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {Stack, View} from 'native-base';
 import RoomCard from '../layouts/RoomCard';
 import ScreenContainer from '@components/Containers/ScreenContainer';
-import HeaderNavigation from '@components/Layouts/Navigation/HeaderNavigation';
 import RoomListScreenHeader from '../layouts/RoomList/RoomListScreenHeader';
 import RoomSearchFilters from '../layouts/RoomSearchFilters';
 import useGetRooms from '@shared/api/room/useGetRooms';
@@ -20,26 +19,23 @@ export default function RoomsListScreen() {
   useEffect(() => setIsSearchScreen(false), []);
 
   return (
-    <>
-      <HeaderNavigation />
+    <ScreenContainer>
       {!loaded ? (
         <Preloader />
       ) : (
-        <ScreenContainer>
-          <View flex="1">
-            <Stack space={5}>
-              <RoomSearchFilters />
-              <RoomListScreenHeader />
-            </Stack>
-            <LoadMoreList
-              loadMoreEnded={loading}
-              renderItem={({item}) => <RoomCard room={item as Room} />}
-              data={rooms!}
-              onLoadMore={refetch}
-            />
-          </View>
-        </ScreenContainer>
+        <View flex="1">
+          <Stack space={5}>
+            <RoomSearchFilters />
+            <RoomListScreenHeader />
+          </Stack>
+          <LoadMoreList
+            loadMoreEnded={loading}
+            renderItem={({item}) => <RoomCard room={item as Room} />}
+            data={rooms!}
+            onLoadMore={refetch}
+          />
+        </View>
       )}
-    </>
+    </ScreenContainer>
   );
 }

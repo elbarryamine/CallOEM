@@ -3,10 +3,10 @@ import fontSizes from './fontSizes';
 
 export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
   const colors = {
-    primary: '#0124FB',
+    primary: '#0070f3',
     ternary: '#ff6347',
     secondary: '#ffffff',
-    navigation: '#000b4c',
+    navigation: '#0070f3',
     dark: '#292C38',
     error: '#ff534f',
     text: isDark ? '#292C38' : '#292C38',
@@ -64,6 +64,14 @@ export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
             bg: 'primary',
             _text: {
               color: 'invert',
+            },
+          },
+          'primary-outline': {
+            borderColor: 'primary',
+            borderWidth: '1px',
+            bg: 'secondary',
+            _text: {
+              color: 'primary',
             },
           },
         },

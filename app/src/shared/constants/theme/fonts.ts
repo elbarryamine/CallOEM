@@ -1,6 +1,6 @@
 const fonts = {
-  heading: 'Proxima',
-  body: 'Proxima',
-  mono: 'Proxima',
+  heading: 'Josefin',
+  body: 'Josefin',
+  mono: 'Josefin',
 };
 export default fonts;

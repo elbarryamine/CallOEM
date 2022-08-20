@@ -1,14 +1,14 @@
 const fontConfig = {
-  Roboto: {
-    100: {normal: 'Proxima', italic: 'Proxima'},
-    200: {normal: 'Proxima', italic: 'Proxima'},
-    300: {normal: 'Proxima', italic: 'Proxima'},
-    400: {normal: 'Proxima', italic: 'Proxima'},
-    500: {normal: 'Proxima', italic: 'Proxima'},
-    600: {normal: 'Proxima', italic: 'Proxima'},
-    700: {normal: 'Proxima', italic: 'Proxima'},
-    800: {normal: 'Proxima', italic: 'Proxima'},
-    900: {normal: 'Proxima', italic: 'Proxima'},
+  Josefin: {
+    100: 'JosefinSans',
+    200: 'JosefinSans',
+    300: 'JosefinSans',
+    400: 'JosefinSans',
+    500: 'JosefinSans',
+    600: 'JosefinSans-SemiBold',
+    700: 'JosefinSans-SemiBold',
+    800: 'JosefinSans-Bold',
+    900: 'JosefinSans-Bold',
   },
 };
 export default fontConfig;

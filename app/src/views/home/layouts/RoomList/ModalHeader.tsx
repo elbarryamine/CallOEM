@@ -6,7 +6,7 @@ export default function ModalHeader() {
     <>
       <Modal.CloseButton />
       <Modal.Header>
-        <Heading>Create a new room</Heading>
+        <Heading color="primary">Create a new room</Heading>
       </Modal.Header>
     </>
   );

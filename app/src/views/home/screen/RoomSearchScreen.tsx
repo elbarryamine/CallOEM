@@ -1,5 +1,4 @@
 import ScreenContainer from '@components/Containers/ScreenContainer';
-import BackButtonNavigation from '@components/Layouts/Navigation/BackButtonNavigation';
 import {useSearchResultsContext} from '@context/SearchContext';
 import React, {useEffect} from 'react';
 import RoomSearchFilters from '../layouts/RoomSearchFilters';
@@ -12,12 +11,9 @@ export default function RoomSearchScreen() {
   }, []);
 
   return (
-    <>
-      <BackButtonNavigation headerTitle="search" />
-      <ScreenContainer>
-        <RoomSearchFilters />
-        <RoomSearchResults />
-      </ScreenContainer>
-    </>
+    <ScreenContainer>
+      <RoomSearchFilters />
+      <RoomSearchResults />
+    </ScreenContainer>
   );
 }

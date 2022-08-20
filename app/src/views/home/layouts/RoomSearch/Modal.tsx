@@ -66,7 +66,7 @@ export default function ModalSearch({isModalOpen, onModalClose}: Props) {
       animationPreset={'slide'}>
       <Modal.Content w="100%" mt="auto" mb="0" borderTopRadius="25px">
         <Modal.Header borderBottomColor="transparent" mt="10px">
-          <Heading>Search</Heading>
+          <Heading color="primary">Search</Heading>
           <Modal.CloseButton />
         </Modal.Header>
         <Modal.Body>

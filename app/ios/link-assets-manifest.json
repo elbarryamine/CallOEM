@@ -2,8 +2,24 @@
   "migIndex": 1,
   "data": [
     {
-      "path": "assets/fonts/Proxima.otf",
-      "sha1": "e41a5e523f03be8b9b9002422a52e4e8741ca462"
+      "path": "assets/fonts/JosefinSans-Bold.ttf",
+      "sha1": "bd9707aad222a53f88a00d8389e7e0fbeefeaa52"
+    },
+    {
+      "path": "assets/fonts/JosefinSans-SemiBold.ttf",
+      "sha1": "9695f75e7b8d95d6db3130eb7be32286538e4af7"
+    },
+    {
+      "path": "assets/fonts/JosefinSans.ttf",
+      "sha1": "95f405d66578ae639e154a5249f4590098684ba1"
+    },
+    {
+      "path": "assets/fonts/JosefinSlab-Thin.ttf",
+      "sha1": "d12a5e23834723ad362c7eb006e94c2e0aeb5793"
+    },
+    {
+      "path": "assets/fonts/JosefinSlab.ttf",
+      "sha1": "3a6252370939b67fbc2437abff34dc731fef7e9b"
     }
   ]
 }

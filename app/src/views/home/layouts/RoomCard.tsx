@@ -23,12 +23,16 @@ export default function RoomCard({room}: {room: Room}) {
               <Text
                 fontSize="subheader"
                 color="text"
-                fontWeight={900}
+                fontWeight="bold"
                 noOfLines={1}
                 textTransform="uppercase">
                 {room.title}
               </Text>
-              <Text color="text" fontSize="sub" fontWeight={100} noOfLines={2}>
+              <Text
+                color="text"
+                fontSize="sub"
+                fontWeight="light"
+                noOfLines={2}>
                 {room.description}
               </Text>
             </Stack>

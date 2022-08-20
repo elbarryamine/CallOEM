@@ -22,7 +22,7 @@ export default function RoomListScreenHeader() {
     <>
       <HStack>
         <Stack flex="1">
-          <Heading color="text">Latest Rooms</Heading>
+          <Heading color="primary">Latest Rooms</Heading>
           <Text fontSize="sub" color="subText" flexWrap="wrap">
             Join a room and start sharing your ideas
           </Text>

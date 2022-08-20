@@ -20,9 +20,9 @@ export default function ButtonIcon({
   return (
     <Button h="50px" _pressed={{opacity: 0.5}} {...props}>
       <Stack alignItems="center">
-        <Icon name={name} as={as} color="text" size="25px" {...iconProps} />
+        <Icon name={name} as={as} color="ternary" size="25px" {...iconProps} />
         {text && (
-          <Text color="text" {...textProps}>
+          <Text color="ternary" {...textProps}>
             {text}
           </Text>
         )}

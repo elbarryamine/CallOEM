@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  createBottomTabNavigator,
-  BottomTabNavigationOptions,
-} from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import TabNavigation from '@components/Layouts/Navigation/TabNavigation';
 
 import HomeStack from './HomeStack';
@@ -11,28 +8,46 @@ import AccountScreen from '@views/account/screen/AccountScreen';
 import SettingsScreen from '@views/settings/screen/SettingsScreen';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {TabNativeStack} from './AppStack';
+import BackButtonNavigation from '@components/Layouts/Navigation/BackButtonNavigation';
 
 const Tab = createBottomTabNavigator();
 
-const sharedOptions: BottomTabNavigationOptions = {headerShown: false};
-
 const navigatonRoutes = [
-  {name: 'home', component: HomeStack},
-  {name: 'history', component: HistoryScreen},
-  {name: 'account', component: AccountScreen},
-  {name: 'settings', component: SettingsScreen},
+  {
+    name: 'home',
+    component: HomeStack,
+    headerShown: false,
+  },
+  {
+    name: 'history',
+    component: HistoryScreen,
+    header: () => <BackButtonNavigation headerTitle="History" />,
+  },
+  {
+    name: 'settings',
+    component: SettingsScreen,
+    header: () => <BackButtonNavigation headerTitle="Settings" />,
+  },
+  {
+    name: 'account',
+    component: AccountScreen,
+    header: () => <BackButtonNavigation headerTitle="Account" />,
+  },
 ];
 export default function TabStack({}: TabNativeStack) {
   return (
     <Tab.Navigator
       initialRouteName="home"
-      tabBar={tabProps => <TabNavigation {...tabProps} />}
-      screenOptions={sharedOptions}>
+      tabBar={tabProps => <TabNavigation {...tabProps} />}>
       {navigatonRoutes.map(route => (
         <Tab.Screen
           key={route.name}
           name={route.name}
           component={route.component}
+          options={{
+            headerShown: route.headerShown,
+            header: route.header,
+          }}
         />
       ))}
     </Tab.Navigator>

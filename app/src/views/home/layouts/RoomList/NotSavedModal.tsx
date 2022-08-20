@@ -11,7 +11,7 @@ export default function ModalNotSaved({
       <Modal.Content w="95%">
         <Modal.CloseButton />
         <Modal.Header>
-          <Heading>Changes will be lost</Heading>
+          <Heading color="primary">Changes will be lost</Heading>
         </Modal.Header>
         <Modal.Body>
           <Text>
