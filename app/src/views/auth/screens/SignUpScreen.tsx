@@ -2,7 +2,7 @@ import React from 'react';
 import {Heading, Stack, Text, ScrollView, View, Button} from 'native-base';
 import SignupSvg from '@assets/images/signup.svg';
 import AuthImageContainer from '../layouts/AuthImageContainer';
-import ScreenContainer from '@components/Containers/ScreenContainer';
+import Container from '@components/Containers/ScreenContainer';
 import SignUpScreenForm from '../layouts/SignUpScreenForm';
 import useKeyboardShowing from '@shared/hooks/useKeyboardShowing';
 import {NativeStackSignup} from '@navigation/';
@@ -10,7 +10,7 @@ import {NativeStackSignup} from '@navigation/';
 export default function SignupScreen({navigation}: NativeStackSignup) {
   const {isKeyboardShowing} = useKeyboardShowing();
   return (
-    <ScreenContainer>
+    <Container>
       <Stack h="100%" justifyContent="space-between">
         <AuthImageContainer>
           <SignupSvg />
@@ -39,6 +39,6 @@ export default function SignupScreen({navigation}: NativeStackSignup) {
           )}
         </View>
       </Stack>
-    </ScreenContainer>
+    </Container>
   );
 }

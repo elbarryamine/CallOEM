@@ -3,19 +3,19 @@ import fontSizes from './fontSizes';
 
 export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
   const colors = {
-    navigation: '#6900FF',
+    navigation: '#F5F7FA',
+    primaryBg: '#F5F7FA',
     primary: '#6900FF',
     primaryShade: '#8733ff',
     primaryBright: '#6900FF20',
     primaryBrighter: '#0070f315',
     ternary: '#b480ff',
-    secondary: '#fefefe',
+    secondary: '#FFFFFF',
     dark: '#292C38',
     error: '#FC3C3C',
     text: isDark ? '#292C38' : '#292C38',
     invert: '#fefefe',
-    subText: '#818589',
-    primaryBg: '#FFFFFF',
+    subtext: '#818589',
     border: 'rgba(0,0,0,0.05)',
   };
   const fontTextConfig = {
@@ -65,21 +65,18 @@ export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
             ...buttonTextConfig,
             textTransform: 'capitalize',
           },
+          _spinner: {color: 'primary'},
         },
         variants: {
           primary: {
             bg: 'primary',
-            _text: {
-              color: 'invert',
-            },
+            _text: {color: 'invert'},
           },
           'primary-outline': {
             borderColor: 'primary',
             borderWidth: '1px',
             bg: 'secondary',
-            _text: {
-              color: 'primary',
-            },
+            _text: {color: 'primary'},
           },
         },
       },

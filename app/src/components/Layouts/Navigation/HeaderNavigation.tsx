@@ -19,12 +19,10 @@ export default function HeaderNavigation(props: IViewProps) {
       px="8px"
       h="70px"
       justify="center"
-      borderBottomColor="border"
-      borderBottomWidth="2px"
       {...props}>
       <Flex flexDir="row" justify="space-between">
         <HStack alignItems="center" space={2}>
-          <Heading color="invert" textAlign="center">
+          <Heading color="text" textAlign="center">
             Callsm
           </Heading>
         </HStack>
@@ -32,7 +30,7 @@ export default function HeaderNavigation(props: IViewProps) {
           <ButtonIcon
             as={MaterialCommunityIcons}
             name="bell"
-            iconProps={{color: 'invert'}}
+            iconProps={{color: 'text'}}
           />
           <ImageAvatar uri={getAvatar(user.user.avatar)} size="35px" />
         </HStack>

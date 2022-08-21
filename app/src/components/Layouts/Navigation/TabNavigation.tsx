@@ -13,14 +13,7 @@ export const routes = [
 
 export default function TabNavigation({state, navigation}: BottomTabBarProps) {
   return (
-    <Flex
-      py="5px"
-      w="100%"
-      h="60px"
-      justify="center"
-      bg="secondary"
-      borderTopColor="border"
-      borderTopWidth="1px">
+    <Flex py="5px" w="100%" h="60px" justify="center" bg="secondary">
       <Flex flexDir="row" justify="space-around" align="center" h="100%">
         {routes.map((route, idx) => {
           return (

@@ -1,15 +1,15 @@
 import React from 'react';
-import {Button, Heading, Stack, Text, View} from 'native-base';
+import {Button, Heading, Input, Stack, Text, View} from 'native-base';
 import ResetPasswordSvg from '@assets/images/reset-password.svg';
 import AuthImageContainer from '../layouts/AuthImageContainer';
-import ScreenContainer from '@components/Containers/ScreenContainer';
+import Container from '@components/Containers/ScreenContainer';
 import useKeyboardShowing from '@shared/hooks/useKeyboardShowing';
 import {NativeStackForgot} from '@navigation/';
 
 export default function ForgotPasswordScreen({navigation}: NativeStackForgot) {
   const {isKeyboardShowing} = useKeyboardShowing();
   return (
-    <ScreenContainer>
+    <Container>
       <Stack h="100%" justifyContent="space-between">
         <AuthImageContainer>
           <ResetPasswordSvg />
@@ -22,6 +22,7 @@ export default function ForgotPasswordScreen({navigation}: NativeStackForgot) {
             </Text>
           </Stack>
           {/* Form Goes Here */}
+          <Input placeholder="Enter your email address" />
         </Stack>
         <View pb="20px">
           {!isKeyboardShowing && (
@@ -33,6 +34,6 @@ export default function ForgotPasswordScreen({navigation}: NativeStackForgot) {
           )}
         </View>
       </Stack>
-    </ScreenContainer>
+    </Container>
   );
 }

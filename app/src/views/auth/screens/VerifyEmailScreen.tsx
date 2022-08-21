@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Button, Heading, Stack, Text, View} from 'native-base';
 import ResetPasswordSvg from '@assets/images/reset-password.svg';
 import AuthImageContainer from '../layouts/AuthImageContainer';
-import ScreenContainer from '@components/Containers/ScreenContainer';
+import Container from '@components/Containers/ScreenContainer';
 import useKeyboardShowing from '@shared/hooks/useKeyboardShowing';
 import VerifyEmailScreenForm from '../layouts/VerifyEmailForm';
 import {NativeStackVerify} from '@navigation/';
@@ -22,7 +22,7 @@ export default function VerifyEmailScreen({
   }, [route]);
   if (!email) return null;
   return (
-    <ScreenContainer>
+    <Container>
       <Stack h="100%" justifyContent="space-between">
         <AuthImageContainer>
           <ResetPasswordSvg />
@@ -48,6 +48,6 @@ export default function VerifyEmailScreen({
           )}
         </View>
       </Stack>
-    </ScreenContainer>
+    </Container>
   );
 }

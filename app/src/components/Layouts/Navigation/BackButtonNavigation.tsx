@@ -28,8 +28,6 @@ export default function BackButtonNavigation({
       px="8px"
       h="70px"
       justify="center"
-      borderBottomColor="border"
-      borderBottomWidth="2px"
       {...props}>
       <Flex flexDir="row" justify="space-between">
         <HStack alignItems="center" maxHeight="50px">
@@ -38,10 +36,10 @@ export default function BackButtonNavigation({
             onPress={handleNavigateBack}
             as={AntDesign}
             name="arrowleft"
-            iconProps={{color: 'invert'}}
+            iconProps={{color: 'text'}}
           />
           {headerTitle && (
-            <Heading textTransform="capitalize" color="invert">
+            <Heading textTransform="capitalize" color="text">
               {headerTitle}
             </Heading>
           )}
@@ -54,7 +52,7 @@ export default function BackButtonNavigation({
           <ButtonIcon
             as={MaterialCommunityIcons}
             name="bell"
-            iconProps={{color: 'invert'}}
+            iconProps={{color: 'text'}}
           />
           <ImageAvatar uri={getAvatar(user.user.avatar)} size="35px" />
         </HStack>

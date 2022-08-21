@@ -1,22 +1,12 @@
 import React from 'react';
-import ScreenContainer from '@components/Containers/ScreenContainer';
-import {
-  Button,
-  Divider,
-  Flex,
-  Heading,
-  HStack,
-  Input,
-  ScrollView,
-  Stack,
-  Text,
-} from 'native-base';
-import ImageAvatar from '@components/Elements/ImageAvatar';
-import {getAvatar} from '@shared/constants/functions/getAvatar';
+import Container from '@components/Containers/ScreenContainer';
+import {Button, ScrollView, Stack, Text, View} from 'native-base';
 import {removeUser, useGetUser} from '@redux/slices/user';
 import Preloader from '@components/Layouts/Preloader';
-import FormikFormContollerErrorHandler from '@components/Layouts/Form/FormikFormContollerErrorHandler';
 import {useDispatch} from 'react-redux';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import LabelIcon from '../layouts/LabelIcon';
 
 export default function AccountScreen() {
   const user = useGetUser();
@@ -26,72 +16,48 @@ export default function AccountScreen() {
   };
   if (!user) return <Preloader />;
   return (
-    <ScreenContainer>
+    <View>
       <ScrollView pt="20px">
-        <Stack space={10} mb="50px">
-          <Flex flexDir="row" align="center" justify="space-between">
-            <Heading color="primary">My Account</Heading>
-            <Button
-              mr="5px"
-              px="20px"
-              variant="solid"
-              bg="red.500"
-              _text={{color: 'invert'}}
-              onPress={handleLogout}>
-              Logout
-            </Button>
-          </Flex>
+        <Stack space={5}>
           <Stack space={2}>
-            <Heading fontSize="subheader">Personal information</Heading>
-            <HStack space={5} alignItems="center">
-              <ImageAvatar uri={getAvatar(user.user.avatar)} size="100px" />
-              <Button variant="primary-outline">Update Profile Avatar</Button>
-            </HStack>
-            <FormikFormContollerErrorHandler
-              label="First name"
-              touched={{}}
-              errors={{}}
-              name="">
-              <Input
-                value={user.user.username}
-                textTransform="capitalize"
-                placeholder="First name"
+            <Container>
+              <Text color="subtext">Account Settings</Text>
+            </Container>
+            <Stack>
+              <LabelIcon label="Profile" name="user" as={AntDesign} />
+              <LabelIcon
+                label="Account information"
+                name="infocirlceo"
+                as={AntDesign}
               />
-            </FormikFormContollerErrorHandler>
-            <FormikFormContollerErrorHandler
-              label="Last name"
-              touched={{}}
-              errors={{}}
-              name="">
-              <Input
-                value="Elbarry"
-                textTransform="capitalize"
-                placeholder="Last name"
-              />
-            </FormikFormContollerErrorHandler>
-            <FormikFormContollerErrorHandler
-              label="Username"
-              touched={{}}
-              errors={{}}
-              name="">
-              <Input value={user.user.username + 'zz'} placeholder="Username" />
-            </FormikFormContollerErrorHandler>
+            </Stack>
           </Stack>
-          <Divider />
           <Stack space={2}>
-            <Heading fontSize="subheader">Email Adrress</Heading>
-            <Text>{user.user.email}</Text>
-            <Button variant="primary-outline">Change email address</Button>
+            <Container>
+              <Text color="subtext">Contact Details</Text>
+            </Container>
+            <Stack>
+              <LabelIcon label="Email address" name="at" as={Ionicons} />
+              <LabelIcon label="Phone number" name="phone" as={AntDesign} />
+            </Stack>
           </Stack>
-          <Divider />
           <Stack space={2}>
-            <Heading fontSize="subheader">Password</Heading>
-            <Text>Change your login password</Text>
-            <Button variant="primary-outline">Enter A New Password</Button>
+            <Container>
+              <Text color="subtext">Security Settings</Text>
+            </Container>
+            <LabelIcon label="Password reset" name="lock" as={AntDesign} />
           </Stack>
-          <Button variant="primary">Save Changes</Button>
+          <Stack space={2}>
+            <Container>
+              <Text color="subtext">App Settings</Text>
+            </Container>
+            <LabelIcon label="Notifications" name="bells" as={AntDesign} />
+          </Stack>
+          <Button bg="red.500" onPress={handleLogout}>
+            <Text color="invert">Logout</Text>
+          </Button>
         </Stack>
       </ScrollView>
-    </ScreenContainer>
+    </View>
   );
 }

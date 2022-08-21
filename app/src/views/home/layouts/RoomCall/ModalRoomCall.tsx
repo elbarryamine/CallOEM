@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import ScreenContainer from '@components/Containers/ScreenContainer';
+import Container from '@components/Containers/ScreenContainer';
 import * as Modal from 'react-native-modalize';
 import {Heading} from 'native-base';
 import {Dimensions, StyleSheet} from 'react-native';
@@ -21,9 +21,9 @@ export default function ModalRoomCall() {
       handleStyle={styles.handle}
       modalStyle={styles.modal}
       modalHeight={Dimensions.get('window').height * 0.9}>
-      <ScreenContainer bg="dark" pt="50px">
+      <Container bg="dark" pt="50px">
         <Heading color="invert">Room Members</Heading>
-      </ScreenContainer>
+      </Container>
     </Modalize>
   );
 }

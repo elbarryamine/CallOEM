@@ -22,7 +22,7 @@ export default function RenderTabBar({
             flex={1}
             alignItems="center"
             p="3">
-            <Text color="invert">{route.title}</Text>
+            <Text color="text">{route.title}</Text>
           </Button>
         );
       })}

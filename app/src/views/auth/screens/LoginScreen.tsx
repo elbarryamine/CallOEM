@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Heading, Stack, Text, View} from 'native-base';
 import LoginSvg from '@assets/images/login.svg';
 import AuthImageContainer from '../layouts/AuthImageContainer';
-import ScreenContainer from '@components/Containers/ScreenContainer';
+import Container from '@components/Containers/ScreenContainer';
 import useKeyboardShowing from '@shared/hooks/useKeyboardShowing';
 import LoginScreenForm from '../layouts/LoginScreenForm';
 import {NativeStackLogin} from '@navigation/';
@@ -11,7 +11,7 @@ export default function LoginScreen({navigation}: NativeStackLogin) {
   const {isKeyboardShowing} = useKeyboardShowing();
 
   return (
-    <ScreenContainer>
+    <Container>
       <Stack h="100%" justifyContent="space-between">
         <AuthImageContainer>
           <LoginSvg />
@@ -36,6 +36,6 @@ export default function LoginScreen({navigation}: NativeStackLogin) {
           )}
         </View>
       </Stack>
-    </ScreenContainer>
+    </Container>
   );
 }

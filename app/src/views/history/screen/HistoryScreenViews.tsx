@@ -9,7 +9,7 @@ import {
   Text,
   View,
 } from 'native-base';
-import ScreenContainer from '@components/Containers/ScreenContainer';
+import Container from '@components/Containers/ScreenContainer';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import CircleIcon from '@components/Elements/CircleIcon';
 import colors from '@shared/constants/colors';
@@ -18,7 +18,7 @@ const randomIcons = ['picture', 'heart', 'dingding', 'videocamera', 'cloud'];
 
 export default function HistoryScreenViews() {
   return (
-    <ScreenContainer>
+    <Container>
       <View pt="20px">
         <FlatList
           ListFooterComponent={() => <Spacer my="20px" />}
@@ -41,19 +41,19 @@ export default function HistoryScreenViews() {
                 flex="1"
                 mb="10px"
                 p="20px"
-                borderRadius="20px"
+                borderRadius="5px"
                 bg="primaryBrighter"
                 overflow="hidden">
                 <Text>08:00</Text>
                 <Heading noOfLines={1} fontSize="subheader">
                   I am feeling better now but i have some questions
                 </Heading>
-                <Text color="subText">Room owner : AmineZz</Text>
+                <Text color="subtext">Room owner : AmineZz</Text>
               </Stack>
             </HStack>
           )}
         />
       </View>
-    </ScreenContainer>
+    </Container>
   );
 }

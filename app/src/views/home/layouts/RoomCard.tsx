@@ -14,7 +14,7 @@ export default function RoomCard({room}: {room: Room}) {
   whenAdded = whenAdded[0].toUpperCase() + whenAdded.slice(1);
   return (
     <View p="2px">
-      <View borderRadius="20px" overflow="hidden" bg="white" shadow="1">
+      <View borderRadius="5px" overflow="hidden" bg="white" shadow="1">
         <View
           bg="secondary"
           overflow="hidden"

@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {Stack, View} from 'native-base';
 import RoomCard from '../layouts/RoomCard';
-import ScreenContainer from '@components/Containers/ScreenContainer';
 import RoomListScreenHeader from '../layouts/RoomList/RoomListScreenHeader';
 import RoomSearchFilters from '../layouts/RoomSearchFilters';
 import useGetRooms from '@shared/api/room/useGetRooms';
@@ -9,6 +8,7 @@ import {useSearchResultsContext} from '@context/SearchContext';
 import Preloader from '@components/Layouts/Preloader';
 import LoadMoreList from '@components/Layouts/LoadMoreList';
 import {Room} from '@shared/types/Room';
+import Container from '@components/Containers/ScreenContainer';
 
 export default function RoomsListScreen() {
   const {data, loading, refetch} = useGetRooms();
@@ -19,7 +19,7 @@ export default function RoomsListScreen() {
   useEffect(() => setIsSearchScreen(false), []);
 
   return (
-    <ScreenContainer>
+    <Container>
       {!loaded ? (
         <Preloader />
       ) : (
@@ -36,6 +36,6 @@ export default function RoomsListScreen() {
           </Stack>
         </View>
       )}
-    </ScreenContainer>
+    </Container>
   );
 }

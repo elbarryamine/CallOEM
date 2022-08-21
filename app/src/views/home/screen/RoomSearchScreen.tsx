@@ -1,4 +1,4 @@
-import ScreenContainer from '@components/Containers/ScreenContainer';
+import Container from '@components/Containers/ScreenContainer';
 import {useSearchResultsContext} from '@context/SearchContext';
 import React, {useEffect} from 'react';
 import RoomSearchFilters from '../layouts/RoomSearchFilters';
@@ -11,9 +11,9 @@ export default function RoomSearchScreen() {
   }, []);
 
   return (
-    <ScreenContainer>
+    <Container>
       <RoomSearchFilters />
       <RoomSearchResults />
-    </ScreenContainer>
+    </Container>
   );
 }
