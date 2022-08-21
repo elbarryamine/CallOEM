@@ -23,10 +23,10 @@ export default function RoomsListScreen() {
       {!loaded ? (
         <Preloader />
       ) : (
-        <View flex="1">
+        <View flex="1" pt="20px">
           <Stack space={5}>
-            <RoomListScreenHeader />
             <RoomSearchFilters />
+            <RoomListScreenHeader />
             <LoadMoreList
               loadMoreEnded={loading}
               renderItem={({item}) => <RoomCard room={item as Room} />}

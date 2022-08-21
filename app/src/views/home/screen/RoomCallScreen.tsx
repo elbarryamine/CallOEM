@@ -4,10 +4,10 @@ import Preloader from '@components/Layouts/Preloader';
 import {View} from 'native-base';
 
 import RoomCalling from '../layouts/RoomCall/RoomCalling';
-import {CallNativeStack} from '@navigation/AppStack';
 import ModalRoomCall from '../layouts/RoomCall/ModalRoomCall';
+import {NativeStackCall} from '@navigation/';
 
-export default function RoomCallScreen({route}: CallNativeStack) {
+export default function RoomCallScreen({route}: NativeStackCall) {
   const roomId = route.params.id;
   const [runRoomQuery, {data, loading}] = useGetRoom();
   const loaded = !loading && data && data?.GetRoom;

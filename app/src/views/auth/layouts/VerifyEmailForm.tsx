@@ -5,10 +5,10 @@ import FormErrorMessage from '@components/Layouts/Form/FormErrorMessage';
 import verifyEmailSchema from '@shared/constants/schema/VerifyEmailSchema';
 import {NativeSyntheticEvent, TextInputChangeEventData} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {VerifyScreenProps} from '@navigation/AuthStack';
 import useVerifyCode from '@shared/api/auth/useVerifyCode';
 import FormGrpahqlErrorHandler from '@components/Layouts/Form/FormGrpahqlErrorHandler';
 import FormikFormContollerErrorHandler from '@components/Layouts/Form/FormikFormContollerErrorHandler';
+import {NativeStackVerify} from '@navigation/';
 
 export default function VerifyEmailScreenForm({
   userEmail,
@@ -16,7 +16,7 @@ export default function VerifyEmailScreenForm({
   userEmail: string;
 }) {
   const [verifyCode, {data, loading, error}] = useVerifyCode();
-  const navigation: VerifyScreenProps['navigation'] = useNavigation();
+  const navigation: NativeStackVerify['navigation'] = useNavigation();
 
   const handleVerifyEmail = async (values: {Code: string}) => {
     try {
@@ -38,7 +38,7 @@ export default function VerifyEmailScreenForm({
 
   useEffect(() => {
     if (data && data.VerifyEmailCode) {
-      navigation.navigate('auth:login');
+      navigation.navigate('login');
     }
   }, [data]);
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
-import {Flex, Heading, HStack, View} from 'native-base';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import {Flex, Heading, HStack} from 'native-base';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {IViewProps} from 'native-base/lib/typescript/components/basic/View/types';
 import ButtonIcon from '@components/Elements/ButtonIcon';
 
@@ -13,11 +13,12 @@ export default function HeaderNavigation(props: IViewProps) {
 
   if (!user) return null;
   return (
-    <View
+    <Flex
       shadow="md"
       bg="navigation"
       px="8px"
-      h="50px"
+      h="70px"
+      justify="center"
       borderBottomColor="border"
       borderBottomWidth="2px"
       {...props}>
@@ -29,13 +30,13 @@ export default function HeaderNavigation(props: IViewProps) {
         </HStack>
         <HStack alignItems="center" space={2} alignSelf="flex-end">
           <ButtonIcon
-            as={AntDesign}
-            name="bells"
-            iconProps={{color: 'invert', size: '20px'}}
+            as={MaterialCommunityIcons}
+            name="bell"
+            iconProps={{color: 'invert'}}
           />
           <ImageAvatar uri={getAvatar(user.user.avatar)} size="35px" />
         </HStack>
       </Flex>
-    </View>
+    </Flex>
   );
 }

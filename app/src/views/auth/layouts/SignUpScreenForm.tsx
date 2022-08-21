@@ -4,11 +4,11 @@ import Feather from 'react-native-vector-icons/Feather';
 import {Formik} from 'formik';
 import SignupSchema from '@shared/constants/schema/SignupSchema';
 import useSignup from '@shared/api/auth/useSignup';
-import {SignupScreenProps} from '@navigation/AuthStack';
 import {useNavigation} from '@react-navigation/native';
 import useSendVerifyCodeEmail from '@shared/api/auth/useSendVerifyCodeEmail';
 import FormGrpahqlErrorHandler from '@components/Layouts/Form/FormGrpahqlErrorHandler';
 import FormikFormContollerErrorHandler from '@components/Layouts/Form/FormikFormContollerErrorHandler';
+import {NativeStackSignup} from '@navigation/';
 
 export default function SignUpScreenForm() {
   const [userEmail, setUserEmail] = useState<string | null>();
@@ -18,7 +18,7 @@ export default function SignUpScreenForm() {
   const onPassConfirmToggle = () => setPassConfirmShowing(!passConfirmShowing);
   const [signUp, {data, loading, error}] = useSignup();
   const [sendCode] = useSendVerifyCodeEmail();
-  const navigation: SignupScreenProps['navigation'] = useNavigation();
+  const navigation: NativeStackSignup['navigation'] = useNavigation();
 
   const handleSignUp = async (values: {
     Username: string;
@@ -44,7 +44,7 @@ export default function SignUpScreenForm() {
 
   useEffect(() => {
     if (data && data.SignUp && userEmail) {
-      navigation.navigate('auth:verify', {email: userEmail});
+      navigation.navigate('verify', {email: userEmail});
     }
   }, [data, userEmail]);
   return (

@@ -3,12 +3,10 @@ import {Button, Heading, Stack, Text, View} from 'native-base';
 import ResetPasswordSvg from '@assets/images/reset-password.svg';
 import AuthImageContainer from '../layouts/AuthImageContainer';
 import ScreenContainer from '@components/Containers/ScreenContainer';
-import {ForgotPasswordScreenProps} from '@navigation/AuthStack';
 import useKeyboardShowing from '@shared/hooks/useKeyboardShowing';
+import {NativeStackForgot} from '@navigation/';
 
-export default function ForgotPasswordScreen({
-  navigation,
-}: ForgotPasswordScreenProps) {
+export default function ForgotPasswordScreen({navigation}: NativeStackForgot) {
   const {isKeyboardShowing} = useKeyboardShowing();
   return (
     <ScreenContainer>
@@ -29,7 +27,7 @@ export default function ForgotPasswordScreen({
           {!isKeyboardShowing && (
             <Button
               textAlign="center"
-              onPress={() => navigation.navigate('auth:login')}>
+              onPress={() => navigation.navigate('login')}>
               <Text color="primary">Login</Text>
             </Button>
           )}

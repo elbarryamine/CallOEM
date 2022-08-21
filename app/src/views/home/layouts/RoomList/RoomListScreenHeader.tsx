@@ -20,7 +20,7 @@ export default function RoomListScreenHeader() {
 
   return (
     <>
-      <HStack>
+      <HStack alignSelf="flex-end">
         <Stack flex="1">
           <Heading color="primary">Latest Rooms</Heading>
           <Text fontSize="sub" color="subText" flexWrap="wrap">

@@ -2,6 +2,7 @@ import React from 'react';
 import ScreenContainer from '@components/Containers/ScreenContainer';
 import {
   Button,
+  Divider,
   Flex,
   Heading,
   HStack,
@@ -26,8 +27,8 @@ export default function AccountScreen() {
   if (!user) return <Preloader />;
   return (
     <ScreenContainer>
-      <ScrollView>
-        <Stack space={5} mb="50px">
+      <ScrollView pt="20px">
+        <Stack space={10} mb="50px">
           <Flex flexDir="row" align="center" justify="space-between">
             <Heading color="primary">My Account</Heading>
             <Button
@@ -76,11 +77,13 @@ export default function AccountScreen() {
               <Input value={user.user.username + 'zz'} placeholder="Username" />
             </FormikFormContollerErrorHandler>
           </Stack>
+          <Divider />
           <Stack space={2}>
             <Heading fontSize="subheader">Email Adrress</Heading>
             <Text>{user.user.email}</Text>
             <Button variant="primary-outline">Change email address</Button>
           </Stack>
+          <Divider />
           <Stack space={2}>
             <Heading fontSize="subheader">Password</Heading>
             <Text>Change your login password</Text>

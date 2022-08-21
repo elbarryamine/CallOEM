@@ -12,19 +12,19 @@ import {Formik} from 'formik';
 import LoginSchema from '@shared/constants/schema/LoginSchema';
 import useSignIn from '@shared/api/auth/useLogin';
 import {useNavigation} from '@react-navigation/native';
-import {LoginScreenProps} from '@navigation/AuthStack';
 import useSendVerifyCodeEmail from '@shared/api/auth/useSendVerifyCodeEmail';
 import {useDispatch} from 'react-redux';
 import {setUser} from '@redux/slices/user';
 import FormGrpahqlErrorHandler from '@components/Layouts/Form/FormGrpahqlErrorHandler';
 import FormikFormContollerErrorHandler from '@components/Layouts/Form/FormikFormContollerErrorHandler';
+import {NativeStackLogin} from '@navigation/';
 
 export default function LoginScreenForm() {
   const [passShowing, setPassShowing] = useState<boolean>(false);
   const onPassToggle = () => setPassShowing(!passShowing);
   const [signIn, {data, loading, error}] = useSignIn();
   const [isloading, setLoading] = useState<boolean>(false);
-  const navigation: LoginScreenProps['navigation'] = useNavigation();
+  const navigation: NativeStackLogin['navigation'] = useNavigation();
   const [sendCode] = useSendVerifyCodeEmail();
   const dispatch = useDispatch();
 
@@ -51,7 +51,7 @@ export default function LoginScreenForm() {
         async function sendEmailCode() {
           await sendCode({variables: {email: data.SignIn.user.email}}).then(
             () => {
-              navigation.navigate('auth:verify', {
+              navigation.navigate('verify', {
                 email: data.SignIn.user.email,
               });
             },
@@ -119,7 +119,7 @@ export default function LoginScreenForm() {
           </KeyboardAvoidingView>
 
           <Button
-            onPress={() => navigation.navigate('auth:resetPassword')}
+            onPress={() => navigation.navigate('resetPassword')}
             alignSelf="flex-end">
             <Text color="primary">Forgot Password ?</Text>
           </Button>

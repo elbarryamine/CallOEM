@@ -1,5 +1,6 @@
 import React from 'react';
-import {Flex, Heading, HStack, View} from 'native-base';
+import {Flex, Heading, HStack} from 'native-base';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {IViewProps} from 'native-base/lib/typescript/components/basic/View/types';
 import ButtonIcon from '@components/Elements/ButtonIcon';
@@ -8,24 +9,25 @@ import {getAvatar} from '@shared/constants/functions/getAvatar';
 import {useGetUser} from '@redux/slices/user';
 import ImageAvatar from '@components/Elements/ImageAvatar';
 import {useNavigation} from '@react-navigation/native';
-import {SearchNativeStack} from '@navigation/HomeStack';
+import {NativeStackSearch} from '@navigation/';
 
 export default function BackButtonNavigation({
   headerTitle,
   ...props
 }: {headerTitle?: string} & IViewProps) {
   const user = useGetUser();
-  const navigation = useNavigation<SearchNativeStack['navigation']>();
+  const navigation = useNavigation<NativeStackSearch['navigation']>();
 
   const handleNavigateBack = () => navigation.goBack();
 
   if (!user) return null;
   return (
-    <View
+    <Flex
       shadow="md"
       bg="navigation"
       px="8px"
-      h="50px"
+      h="70px"
+      justify="center"
       borderBottomColor="border"
       borderBottomWidth="2px"
       {...props}>
@@ -36,7 +38,7 @@ export default function BackButtonNavigation({
             onPress={handleNavigateBack}
             as={AntDesign}
             name="arrowleft"
-            iconProps={{color: 'invert', size: '20px'}}
+            iconProps={{color: 'invert'}}
           />
           {headerTitle && (
             <Heading textTransform="capitalize" color="invert">
@@ -50,13 +52,13 @@ export default function BackButtonNavigation({
           alignSelf="flex-end"
           maxHeight="50px">
           <ButtonIcon
-            as={AntDesign}
-            name="bells"
-            iconProps={{color: 'invert', size: '20px'}}
+            as={MaterialCommunityIcons}
+            name="bell"
+            iconProps={{color: 'invert'}}
           />
           <ImageAvatar uri={getAvatar(user.user.avatar)} size="35px" />
         </HStack>
       </Flex>
-    </View>
+    </Flex>
   );
 }

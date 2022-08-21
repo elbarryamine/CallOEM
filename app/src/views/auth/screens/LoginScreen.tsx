@@ -3,11 +3,11 @@ import {Button, Heading, Stack, Text, View} from 'native-base';
 import LoginSvg from '@assets/images/login.svg';
 import AuthImageContainer from '../layouts/AuthImageContainer';
 import ScreenContainer from '@components/Containers/ScreenContainer';
-import {LoginScreenProps} from '@navigation/AuthStack';
 import useKeyboardShowing from '@shared/hooks/useKeyboardShowing';
 import LoginScreenForm from '../layouts/LoginScreenForm';
+import {NativeStackLogin} from '@navigation/';
 
-export default function LoginScreen({navigation}: LoginScreenProps) {
+export default function LoginScreen({navigation}: NativeStackLogin) {
   const {isKeyboardShowing} = useKeyboardShowing();
 
   return (
@@ -29,7 +29,7 @@ export default function LoginScreen({navigation}: LoginScreenProps) {
           {!isKeyboardShowing && (
             <>
               <Text textAlign="center">Don't have an account yet ? </Text>
-              <Button onPress={() => navigation.navigate('auth:signup')}>
+              <Button onPress={() => navigation.navigate('signup')}>
                 <Text color="primary">Register</Text>
               </Button>
             </>

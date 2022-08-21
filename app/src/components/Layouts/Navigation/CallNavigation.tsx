@@ -1,18 +1,18 @@
 import React, {useEffect} from 'react';
-import {Flex, Heading, HStack, View} from 'native-base';
+import {Flex, Heading, HStack} from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ButtonIcon from '@components/Elements/ButtonIcon';
 
 import {useGetUser} from '@redux/slices/user';
 import {useNavigation} from '@react-navigation/native';
-import {CallNativeStack} from '@navigation/AppStack';
 import useGetRoom from '@shared/api/room/useGetRoom';
 import {NativeStackHeaderProps} from '@react-navigation/native-stack';
+import {NativeStackCall} from '@navigation/';
 
 export default function CallNavigation(props: NativeStackHeaderProps) {
   const user = useGetUser();
-  const navigation = useNavigation<CallNativeStack['navigation']>();
-  const {id} = props.route.params as CallNativeStack['route']['params'];
+  const navigation = useNavigation<NativeStackCall['navigation']>();
+  const {id} = props.route.params as NativeStackCall['route']['params'];
   const [runRoomQuery, {data, loading}] = useGetRoom();
   const loaded = !loading && data && data?.GetRoom;
   const room = data?.GetRoom;
@@ -27,11 +27,12 @@ export default function CallNavigation(props: NativeStackHeaderProps) {
 
   if (!user || !loaded) return null;
   return (
-    <View
+    <Flex
       shadow="md"
       bg="dark"
       px="8px"
-      h="50px"
+      h="70px"
+      justify="center"
       borderBottomColor="border"
       borderBottomWidth="2px">
       <Flex flexDir="row" justify="space-between">
@@ -54,6 +55,6 @@ export default function CallNavigation(props: NativeStackHeaderProps) {
           )}
         </HStack>
       </Flex>
-    </View>
+    </Flex>
   );
 }

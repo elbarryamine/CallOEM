@@ -19,7 +19,7 @@ const randomIcons = ['picture', 'heart', 'dingding', 'videocamera', 'cloud'];
 export default function HistoryScreenCalls() {
   return (
     <ScreenContainer>
-      <View>
+      <View pt="20px">
         <FlatList
           ListFooterComponent={() => <Spacer my="20px" />}
           data={Array.from({length: 12})}

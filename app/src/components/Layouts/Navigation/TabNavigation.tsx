@@ -1,6 +1,6 @@
 import React from 'react';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
-import {View, Flex} from 'native-base';
+import {Flex} from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ButtonIcon from '@components/Elements/ButtonIcon';
 
@@ -13,10 +13,11 @@ export const routes = [
 
 export default function TabNavigation({state, navigation}: BottomTabBarProps) {
   return (
-    <View
-      h="60px"
+    <Flex
       py="5px"
       w="100%"
+      h="60px"
+      justify="center"
       bg="secondary"
       borderTopColor="border"
       borderTopWidth="1px">
@@ -41,6 +42,6 @@ export default function TabNavigation({state, navigation}: BottomTabBarProps) {
           );
         })}
       </Flex>
-    </View>
+    </Flex>
   );
 }

@@ -3,20 +3,20 @@ import {Button, Heading, Stack, Text, View} from 'native-base';
 import ResetPasswordSvg from '@assets/images/reset-password.svg';
 import AuthImageContainer from '../layouts/AuthImageContainer';
 import ScreenContainer from '@components/Containers/ScreenContainer';
-import {VerifyScreenProps} from '@navigation/AuthStack';
 import useKeyboardShowing from '@shared/hooks/useKeyboardShowing';
 import VerifyEmailScreenForm from '../layouts/VerifyEmailForm';
+import {NativeStackVerify} from '@navigation/';
 
 export default function VerifyEmailScreen({
   navigation,
   route,
-}: VerifyScreenProps) {
+}: NativeStackVerify) {
   const {isKeyboardShowing} = useKeyboardShowing();
   const [email, setEmail] = useState<string | null>(null);
   useEffect(() => {
     const {params} = route;
     if (!params || !params.email) {
-      return navigation.navigate('auth:signup');
+      return navigation.navigate('signup');
     }
     setEmail(params.email);
   }, [route]);
@@ -42,7 +42,7 @@ export default function VerifyEmailScreen({
           {!isKeyboardShowing && (
             <Button
               textAlign="center"
-              onPress={() => navigation.navigate('auth:login')}>
+              onPress={() => navigation.navigate('login')}>
               <Text color="primary">Go back</Text>
             </Button>
           )}

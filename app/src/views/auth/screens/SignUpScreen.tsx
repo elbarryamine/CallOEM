@@ -3,11 +3,11 @@ import {Heading, Stack, Text, ScrollView, View, Button} from 'native-base';
 import SignupSvg from '@assets/images/signup.svg';
 import AuthImageContainer from '../layouts/AuthImageContainer';
 import ScreenContainer from '@components/Containers/ScreenContainer';
-import {SignupScreenProps} from '@navigation/AuthStack';
 import SignUpScreenForm from '../layouts/SignUpScreenForm';
 import useKeyboardShowing from '@shared/hooks/useKeyboardShowing';
+import {NativeStackSignup} from '@navigation/';
 
-export default function SignupScreen({navigation}: SignupScreenProps) {
+export default function SignupScreen({navigation}: NativeStackSignup) {
   const {isKeyboardShowing} = useKeyboardShowing();
   return (
     <ScreenContainer>
@@ -32,7 +32,7 @@ export default function SignupScreen({navigation}: SignupScreenProps) {
           {!isKeyboardShowing && (
             <>
               <Text textAlign="center"> Already have an account ?</Text>
-              <Button onPress={() => navigation.navigate('auth:login')}>
+              <Button onPress={() => navigation.navigate('login')}>
                 <Text color="primary">Login</Text>
               </Button>
             </>

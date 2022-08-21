@@ -3,18 +3,19 @@ import fontSizes from './fontSizes';
 
 export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
   const colors = {
-    primary: '#0070f3',
-    primaryBright: '#0070f320',
+    navigation: '#6900FF',
+    primary: '#6900FF',
+    primaryShade: '#8733ff',
+    primaryBright: '#6900FF20',
     primaryBrighter: '#0070f315',
-    ternary: '#ff6347',
-    secondary: '#ffffff',
-    navigation: '#00008B',
+    ternary: '#b480ff',
+    secondary: '#fefefe',
     dark: '#292C38',
-    error: '#ff534f',
+    error: '#FC3C3C',
     text: isDark ? '#292C38' : '#292C38',
-    invert: '#ffffff',
+    invert: '#fefefe',
     subText: '#818589',
-    primaryBg: '#ffffff',
+    primaryBg: '#FFFFFF',
     border: 'rgba(0,0,0,0.05)',
   };
   const fontTextConfig = {
@@ -34,14 +35,15 @@ export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
       Input: {
         defaultProps: {
           ...fontTextConfig,
-          _focus: {bg: 'transparent'},
+          bg: 'secondary',
           placeholderTextColor: colors.text,
         },
       },
       TextArea: {
         defaultProps: {
           ...fontTextConfig,
-          _focus: {bg: 'transparent'},
+          _focus: {bg: 'opa'},
+          bg: 'secondary',
           placeholderTextColor: colors.text,
         },
       },

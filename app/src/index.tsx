@@ -5,6 +5,7 @@ import ApolloAppProvider from '@shared/provider/ApolloAppProvider';
 import ReduxProvider from '@shared/provider/ReduxProvider';
 import NativeBaseProvider from '@shared/provider/NativeBaseProvider';
 import GestureHandlerProvider from '@shared/provider/GestureHandlerProvider';
+import SearchResultsContextProvider from '@shared/provider/SearchResultsContextProvider';
 
 export default function App() {
   return (
@@ -12,7 +13,9 @@ export default function App() {
       <NativeBaseProvider>
         <ApolloAppProvider>
           <GestureHandlerProvider>
-            <NavigationProvider />
+            <SearchResultsContextProvider>
+              <NavigationProvider />
+            </SearchResultsContextProvider>
           </GestureHandlerProvider>
         </ApolloAppProvider>
       </NativeBaseProvider>
