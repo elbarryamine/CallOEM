@@ -5,6 +5,7 @@ export function getDynamicTheme(nativeBaseTheme: ITheme, isDark: boolean) {
   const colors = {
     primary: '#0070f3',
     primaryBright: '#0070f320',
+    primaryBrighter: '#0070f315',
     ternary: '#ff6347',
     secondary: '#ffffff',
     navigation: '#00008B',

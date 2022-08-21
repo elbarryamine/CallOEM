@@ -13,6 +13,7 @@ export default function RenderTabBar({
         const color = index === i ? 'primary' : 'gray.200';
         return (
           <Button
+            key={i}
             borderRadius="0"
             onPress={() => setIndex(i)}
             bg="navigation"

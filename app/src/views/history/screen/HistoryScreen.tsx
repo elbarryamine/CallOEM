@@ -23,7 +23,6 @@ export default function HistoryScreen() {
     <TabView
       navigationState={{index, routes}}
       renderScene={renderScene}
-      key={index}
       renderTabBar={props => (
         <RenderTabBar index={index} setIndex={setIndex} {...props} />
       )}

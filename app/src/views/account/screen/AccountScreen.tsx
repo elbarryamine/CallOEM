@@ -77,7 +77,7 @@ export default function AccountScreen() {
             </FormikFormContollerErrorHandler>
           </Stack>
           <Stack space={2}>
-            <Heading fontSize="subheader">Email Adress</Heading>
+            <Heading fontSize="subheader">Email Adrress</Heading>
             <Text>{user.user.email}</Text>
             <Button variant="primary-outline">Change email address</Button>
           </Stack>
