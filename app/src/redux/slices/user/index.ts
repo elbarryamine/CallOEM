@@ -38,4 +38,5 @@ export const useGetUser = () => {
   return useSelector((state: StateType) => state.auth.user);
 };
 export const {setUser, removeUser} = userSlice.actions;
-export default userSlice.reducer;
+const userReducer = userSlice.reducer;
+export default userReducer;
