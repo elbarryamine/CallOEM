@@ -1,5 +1,4 @@
 import {configureStore} from '@reduxjs/toolkit';
-import userReducer from '@redux/slices/user';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   persistStore,
@@ -12,15 +11,22 @@ import {
   REGISTER,
 } from 'redux-persist';
 
+import userReducer from '@redux/slices/user';
+import historyReducer from '@redux/slices/history';
+
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
 };
 
 const persistedUserReducer = persistReducer(persistConfig, userReducer);
+const persistedHistoryReducer = persistReducer(persistConfig, historyReducer);
 
 const store = configureStore({
-  reducer: {auth: persistedUserReducer},
+  reducer: {
+    auth: persistedUserReducer,
+    history: persistedHistoryReducer,
+  },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {

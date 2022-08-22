@@ -6,12 +6,20 @@ import ImageAvatar from '@components/Elements/ImageAvatar';
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 import {NativeStackApp} from '@navigation/';
+import {useDispatch} from 'react-redux';
+import {addViewsHistory} from '@redux/slices/history';
 
 export default function RoomCard({room}: {room: Room}) {
   const navigation = useNavigation<NativeStackApp['navigation']>();
+  const dispatch = useDispatch();
 
   let whenAdded = moment(room.createdAt).local().fromNow();
   whenAdded = whenAdded[0].toUpperCase() + whenAdded.slice(1);
+
+  const handleViewRoom = () => {
+    dispatch(addViewsHistory({...room, addedAt: new Date()}));
+    navigation.navigate('call', {id: room.id});
+  };
   return (
     <View p="2px">
       <View borderRadius="5px" overflow="hidden" bg="white" shadow="1">
@@ -71,7 +79,7 @@ export default function RoomCard({room}: {room: Room}) {
               </Text>
               <Button
                 alignSelf="flex-end"
-                onPress={() => navigation.navigate('call', {id: room.id})}
+                onPress={handleViewRoom}
                 bg="primary"
                 _text={{color: 'invert'}}
                 px="30px"

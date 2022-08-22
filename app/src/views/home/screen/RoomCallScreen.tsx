@@ -12,6 +12,7 @@ export default function RoomCallScreen({route}: NativeStackCall) {
   const [runRoomQuery, {data, loading}] = useGetRoom();
   const loaded = !loading && data && data?.GetRoom;
   const room = data?.GetRoom;
+
   useEffect(() => {
     if (!roomId) return;
     const getRoom = async () => await runRoomQuery({variables: {id: roomId}});

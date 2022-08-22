@@ -16,6 +16,8 @@ export interface Room {
   roomType: 'public' | 'private';
   createdAt: Date;
 }
+export type HistoryRoom = {addedAt: Date} & Room;
+
 export interface RoomOffer {
   roomId: string;
   callDescription: string;
