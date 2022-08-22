@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {useSelector} from 'react-redux';
 import {StateType} from '@redux/store';
-import {HistoryRoom} from '@shared/types/Room';
+import {HistoryRoom, Room} from '@shared/types/Room';
 
 type State = {
   views: HistoryRoom[];
@@ -17,11 +17,17 @@ export const historySlice = createSlice({
   name: 'history',
   initialState,
   reducers: {
-    addCallHistory(state: State, action: PayloadAction<HistoryRoom>) {
-      state.calls.push(action.payload);
+    addCallHistory(state: State, action: PayloadAction<Room>) {
+      state.calls.push({
+        ...action.payload,
+        addedAt: new Date().toISOString(),
+      });
     },
-    addViewsHistory(state: State, action: PayloadAction<HistoryRoom>) {
-      state.views.push(action.payload);
+    addViewsHistory(state: State, action: PayloadAction<Room>) {
+      state.views.push({
+        ...action.payload,
+        addedAt: new Date().toISOString(),
+      });
     },
     clearCallsHistory(state: State) {
       state.calls = [];

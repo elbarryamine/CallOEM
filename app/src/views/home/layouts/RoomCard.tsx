@@ -17,7 +17,7 @@ export default function RoomCard({room}: {room: Room}) {
   whenAdded = whenAdded[0].toUpperCase() + whenAdded.slice(1);
 
   const handleViewRoom = () => {
-    dispatch(addViewsHistory({...room, addedAt: new Date()}));
+    dispatch(addViewsHistory(room));
     navigation.navigate('call', {id: room.id});
   };
   return (

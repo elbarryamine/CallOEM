@@ -21,6 +21,7 @@ export default function HistoryList({data}: {data: HistoryRoom[]}) {
     <FlatList
       ListFooterComponent={() => <Spacer my="20px" />}
       data={data}
+      keyExtractor={(_, index) => String(index)}
       renderItem={({item, index}) => (
         <HStack space={2} h="140px" overflow="hidden">
           <Stack alignItems="center" w="50px">
