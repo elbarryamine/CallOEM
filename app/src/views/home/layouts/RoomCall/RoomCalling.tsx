@@ -8,11 +8,17 @@ import ButtonIcon from '@components/Elements/ButtonIcon';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ImageAvatar from '@components/Elements/ImageAvatar';
 import {getAvatar} from '@shared/constants/functions/getAvatar';
+import {useDispatch} from 'react-redux';
+import {addCallHistory} from '@redux/slices/history';
 
 const RtcViewer = (props: any) => <RTCView {...props} />;
 export default function RoomCallingGroup({room}: {room: Room}) {
   const {createCall, joinCall, localStream, remoteStream} = useWebRtc(room.id);
-
+  const dispatch = useDispatch();
+  const onCallJoin = () => {
+    createCall();
+    dispatch(addCallHistory(room));
+  };
   return (
     <Flex
       align="center"
@@ -58,7 +64,7 @@ export default function RoomCallingGroup({room}: {room: Room}) {
               size="50px"
               as={MaterialCommunityIcons}
               name={'phone'}
-              onPress={createCall}
+              onPress={onCallJoin}
               iconProps={{color: 'black'}}
             />
           </Flex>
