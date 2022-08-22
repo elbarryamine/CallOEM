@@ -41,7 +41,7 @@ export default function HistoryList({data}: {data: HistoryRoom[]}) {
             mb="10px"
             p="20px"
             borderRadius="5px"
-            bg="primaryBrighter"
+            bg="primary.200"
             overflow="hidden">
             <Text>{moment(item.addedAt).format('HH:mm MMM')}</Text>
             <Heading noOfLines={1} fontSize="subheader">

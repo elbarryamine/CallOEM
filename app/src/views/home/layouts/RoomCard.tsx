@@ -22,12 +22,13 @@ export default function RoomCard({room}: {room: Room}) {
   };
   return (
     <View p="2px">
-      <View borderRadius="5px" overflow="hidden" bg="white" shadow="1">
+      <View overflow="hidden" bg="white">
         <View
           bg="secondary"
           overflow="hidden"
+          borderRadius="5px"
           borderWidth="1px"
-          borderColor="border">
+          borderColor="primary.100">
           <Stack justifyContent="center" space={5} p="12px">
             <Stack flex="1">
               <Heading

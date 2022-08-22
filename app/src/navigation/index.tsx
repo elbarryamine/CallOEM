@@ -20,7 +20,9 @@ export default function NavigationProvider() {
   const user = useGetUser();
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="auth">
+      <Stack.Navigator
+        initialRouteName="auth"
+        screenOptions={{animation: 'slide_from_left'}}>
         {!user ? (
           <Stack.Screen
             name="auth"

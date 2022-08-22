@@ -10,7 +10,7 @@ export default function RenderTabBar({
   return (
     <Box flexDirection="row">
       {props.navigationState.routes.map((route: any, i: any) => {
-        const color = index === i ? 'primaryShade' : 'gray.200';
+        const color = index === i ? 'primary.50' : 'gray.200';
         return (
           <Button
             key={i}

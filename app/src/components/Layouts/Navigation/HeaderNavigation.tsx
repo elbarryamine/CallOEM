@@ -1,5 +1,5 @@
 import React from 'react';
-import {Flex, Heading, HStack} from 'native-base';
+import {Flex, Heading, HStack, Text} from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {IViewProps} from 'native-base/lib/typescript/components/basic/View/types';
 import ButtonIcon from '@components/Elements/ButtonIcon';
@@ -22,8 +22,8 @@ export default function HeaderNavigation(props: IViewProps) {
       {...props}>
       <Flex flexDir="row" justify="space-between">
         <HStack alignItems="center" space={2}>
-          <Heading color="text" textAlign="center">
-            Callsm
+          <Heading textTransform="none" color="text" textAlign="center">
+            CA<Text color="primary">LL</Text>OEM
           </Heading>
         </HStack>
         <HStack alignItems="center" space={2} alignSelf="flex-end">
