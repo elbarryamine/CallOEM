@@ -40,7 +40,9 @@ export default function NavigationProvider() {
             <Stack.Screen
               name="profile"
               component={AccountProfileScreen}
-              options={sharedOptions}
+              options={{
+                header: () => <BackButtonNavigation headerTitle="Profile" />,
+              }}
             />
             <Stack.Screen
               name="search"
