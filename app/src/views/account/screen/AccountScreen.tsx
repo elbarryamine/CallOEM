@@ -7,14 +7,19 @@ import {useDispatch} from 'react-redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LabelIcon from '../layouts/LabelIcon';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackApp} from '@navigation/';
 
 export default function AccountScreen() {
   const user = useGetUser();
   const dispatch = useDispatch();
+  const {navigate} = useNavigation<NativeStackApp['navigation']>();
   const handleLogout = () => {
     dispatch(removeUser());
   };
+
   if (!user) return <Preloader />;
+
   return (
     <View>
       <ScrollView pt="20px">
@@ -24,8 +29,14 @@ export default function AccountScreen() {
               <Text color="subtext">Account Settings</Text>
             </Container>
             <Stack>
-              <LabelIcon label="Profile" name="user" as={AntDesign} />
               <LabelIcon
+                action={() => navigate('profile')}
+                label="Profile"
+                name="user"
+                as={AntDesign}
+              />
+              <LabelIcon
+                action={() => navigate('profile')}
                 label="Account information"
                 name="infocirlceo"
                 as={AntDesign}
@@ -37,21 +48,41 @@ export default function AccountScreen() {
               <Text color="subtext">Contact Details</Text>
             </Container>
             <Stack>
-              <LabelIcon label="Email address" name="at" as={Ionicons} />
-              <LabelIcon label="Phone number" name="phone" as={AntDesign} />
+              <LabelIcon
+                action={() => navigate('profile')}
+                label="Email address"
+                name="at"
+                as={Ionicons}
+              />
+              <LabelIcon
+                action={() => navigate('profile')}
+                label="Phone number"
+                name="phone"
+                as={AntDesign}
+              />
             </Stack>
           </Stack>
           <Stack space={2}>
             <Container>
               <Text color="subtext">Security Settings</Text>
             </Container>
-            <LabelIcon label="Password reset" name="lock" as={AntDesign} />
+            <LabelIcon
+              action={() => navigate('profile')}
+              label="Password reset"
+              name="lock"
+              as={AntDesign}
+            />
           </Stack>
           <Stack space={2}>
             <Container>
               <Text color="subtext">App Settings</Text>
             </Container>
-            <LabelIcon label="Notifications" name="bells" as={AntDesign} />
+            <LabelIcon
+              action={() => navigate('profile')}
+              label="Notifications"
+              name="bells"
+              as={AntDesign}
+            />
           </Stack>
           <Button bg="red.500" onPress={handleLogout}>
             <Text color="invert">Logout</Text>

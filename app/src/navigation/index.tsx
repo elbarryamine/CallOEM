@@ -12,6 +12,7 @@ import BackButtonNavigation from '@components/Layouts/Navigation/BackButtonNavig
 import CallNavigation from '@components/Layouts/Navigation/CallNavigation';
 import RoomSearchScreen from '@views/home/screen/RoomSearchScreen';
 import RoomCallScreen from '@views/home/screen/RoomCallScreen';
+import AccountProfileScreen from '@views/account/screen/AccountProfileScreen';
 
 const sharedOptions: NativeStackNavigationOptions = {headerShown: false};
 const Stack = createNativeStackNavigator();
@@ -34,6 +35,11 @@ export default function NavigationProvider() {
             <Stack.Screen
               name="app"
               component={TabStack}
+              options={sharedOptions}
+            />
+            <Stack.Screen
+              name="profile"
+              component={AccountProfileScreen}
               options={sharedOptions}
             />
             <Stack.Screen
@@ -74,6 +80,9 @@ export type Param = {
   //-----------------------------
   search: undefined; // screen
   call: {id: string}; // screen
+
+  // account screens
+  profile: undefined; // screen
 };
 
 export type NativeStackApp = NativeStackScreenProps<Param, 'root'>;

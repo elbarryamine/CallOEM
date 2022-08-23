@@ -1,25 +1,26 @@
 import React from 'react';
 import Container from '@components/Containers/ScreenContainer';
-import {HStack, IIconProps, Text, Icon, Flex} from 'native-base';
+import {HStack, IIconProps, Text, Icon, Flex, Pressable} from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-export default function LabelIcon({
-  label,
-  ...props
-}: {label: string} & IIconProps) {
+type Props = {label: string; action?: () => void} & IIconProps;
+export default function LabelIcon({label, action, ...props}: Props) {
   return (
-    <Container
+    <Pressable
+      onPress={action}
       bg="secondary"
-      py="15px"
+      w="100%"
       borderBottomWidth="1px"
-      borderColor="border">
-      <Flex flexDir="row" align="center" justify="space-between">
-        <HStack space={5} alignItems="center">
-          <Icon {...props} />
-          <Text color="subtext">{label}</Text>
-        </HStack>
-        <Icon name="arrowright" as={AntDesign} />
-      </Flex>
-    </Container>
+      borderBottomColor="border">
+      <Container py="10px">
+        <Flex flex="1" flexDir="row" align="center" justify="space-between">
+          <HStack space={5} alignItems="center">
+            <Icon {...props} />
+            <Text color="subtext">{label}</Text>
+          </HStack>
+          <Icon name="arrowright" as={AntDesign} />
+        </Flex>
+      </Container>
+    </Pressable>
   );
 }

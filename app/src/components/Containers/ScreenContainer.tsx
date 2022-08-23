@@ -7,7 +7,7 @@ export default function Container({
   ...props
 }: {children: ReactNode} & IViewProps) {
   return (
-    <View flex="1" px="10px" bg="primaryBg" {...props}>
+    <View flex="1" px="10px" {...props}>
       {children}
     </View>
   );
