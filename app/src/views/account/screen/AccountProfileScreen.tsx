@@ -1,10 +1,13 @@
 import React from 'react';
-import {Button, Flex, Input, Stack, Text} from 'native-base';
+import {Button, Flex, Icon, Input, Stack, Text, View} from 'native-base';
 import Container from '@components/Containers/ScreenContainer';
-import ImageAvatar from '@components/Elements/ImageAvatar';
 import {getAvatar} from '@shared/constants/functions/getAvatar';
 import {useGetUser} from '@redux/slices/user';
 import FormikFormContollerErrorHandler from '@components/Layouts/Form/FormikFormContollerErrorHandler';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import ImageAvatarBackground from '@components/Elements/ImageAvatarBackground';
+import CastOverlay from '@components/Elements/CastOverlay';
+import {Pressable} from 'react-native';
 
 export default function AccountProfileScreen() {
   const user = useGetUser();
@@ -12,8 +15,30 @@ export default function AccountProfileScreen() {
   return (
     <Container bg="primaryBg">
       <Stack pt="20px" space={5}>
-        <Flex py="50px" align="center" justify="center">
-          <ImageAvatar size="80px" uri={getAvatar(user.user.avatar)} />
+        <Flex align="center" justify="center">
+          <Pressable onPress={() => {}}>
+            <View
+              h="150px"
+              w="150px"
+              borderRadius="full"
+              overflow="hidden"
+              position="relative">
+              <CastOverlay opacity={0.3} />
+              <ImageAvatarBackground uri={getAvatar(user.user.avatar)} />
+              <Flex
+                position="absolute"
+                top="0"
+                left="0"
+                w="100%"
+                h="100%"
+                zIndex="2"
+                align="center"
+                justify="center">
+                <Icon color="white" name="camerao" as={AntDesign} size="2xl" />
+              </Flex>
+            </View>
+          </Pressable>
+
           <Text color="subtext">Change Profile Picture</Text>
         </Flex>
         <Stack>

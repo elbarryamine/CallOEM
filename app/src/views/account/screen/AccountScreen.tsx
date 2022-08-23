@@ -28,20 +28,12 @@ export default function AccountScreen() {
             <Container>
               <Text color="subtext">Account Settings</Text>
             </Container>
-            <Stack>
-              <LabelIcon
-                action={() => navigate('profile')}
-                label="Profile"
-                name="user"
-                as={AntDesign}
-              />
-              <LabelIcon
-                action={() => navigate('profile')}
-                label="Account information"
-                name="infocirlceo"
-                as={AntDesign}
-              />
-            </Stack>
+            <LabelIcon
+              action={() => navigate('profile')}
+              label="Profile"
+              name="user"
+              as={AntDesign}
+            />
           </Stack>
           <Stack space={2}>
             <Container>

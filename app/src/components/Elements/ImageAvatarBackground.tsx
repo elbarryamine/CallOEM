@@ -1,10 +1,11 @@
 import React from 'react';
-import {Flex, IImageProps, Image} from 'native-base';
+import {Flex, IBoxProps, IFlexProps, IImageProps, Image} from 'native-base';
 import {SvgCssUri} from 'react-native-svg';
 
 export default function ImageAvatarBackground({
   uri,
-}: {uri: string} & IImageProps) {
+  ...props
+}: {uri: string} & IBoxProps) {
   if (!uri.toLowerCase().endsWith('svg')) {
     return (
       <Image
@@ -16,6 +17,7 @@ export default function ImageAvatarBackground({
         h="100%"
         w="100%"
         alt="call-image"
+        {...(props as IImageProps)}
       />
     );
   }
@@ -28,7 +30,8 @@ export default function ImageAvatarBackground({
       top="0"
       left="0"
       h="100%"
-      w="100%">
+      w="100%"
+      {...(props as IFlexProps)}>
       <SvgCssUri width="500%" height="100%" uri={uri} />
     </Flex>
   );
