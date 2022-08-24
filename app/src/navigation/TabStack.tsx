@@ -5,11 +5,11 @@ import TabNavigation from '@components/Layouts/Navigation/TabNavigation';
 
 import HistoryScreen from '@views/history/screen/HistoryScreen';
 import AccountScreen from '@views/account/screen/AccountScreen';
-import SettingsScreen from '@views/settings/screen/SettingsScreen';
 import RoomsListScreen from '@views/home/screen/RoomListScreen';
 
 import BackButtonNavigation from '@components/Layouts/Navigation/BackButtonNavigation';
 import HeaderNavigation from '@components/Layouts/Navigation/HeaderNavigation';
+import NotificationScreen from '@views/notification/screen/NotificationScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -27,9 +27,9 @@ const navigatonRoutes = [
     ),
   },
   {
-    name: 'settings',
-    component: SettingsScreen,
-    header: () => <BackButtonNavigation headerTitle="Settings" />,
+    name: 'notification',
+    component: NotificationScreen,
+    header: () => <BackButtonNavigation headerTitle="Notification" />,
   },
   {
     name: 'account',

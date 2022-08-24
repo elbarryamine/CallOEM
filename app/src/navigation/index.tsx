@@ -13,6 +13,7 @@ import CallNavigation from '@components/Layouts/Navigation/CallNavigation';
 import RoomSearchScreen from '@views/home/screen/RoomSearchScreen';
 import RoomCallScreen from '@views/home/screen/RoomCallScreen';
 import AccountProfileScreen from '@views/account/screen/AccountProfileScreen';
+import RoomChatScreen from '@views/home/screen/RoomChatScreen';
 
 const sharedOptions: NativeStackNavigationOptions = {headerShown: false};
 const Stack = createNativeStackNavigator();
@@ -52,6 +53,14 @@ export default function NavigationProvider() {
               }}
             />
             <Stack.Screen
+              name="chat"
+              component={RoomChatScreen}
+              options={{
+                headerShown: true,
+                header: () => <BackButtonNavigation headerTitle="Chat" />,
+              }}
+            />
+            <Stack.Screen
               name="call"
               component={RoomCallScreen}
               options={{
@@ -82,6 +91,7 @@ export type Param = {
   //-----------------------------
   search: undefined; // screen
   call: {id: string}; // screen
+  chat: {id: string}; // screen
 
   // account screens
   profile: undefined; // screen
@@ -101,3 +111,4 @@ export type NativeStackAccount = NativeStackScreenProps<Param, 'account'>;
 //-----------------------------------------------------------------------
 export type NativeStackSearch = NativeStackScreenProps<Param, 'search'>;
 export type NativeStackCall = NativeStackScreenProps<Param, 'call'>;
+export type NativeStackChat = NativeStackScreenProps<Param, 'chat'>;

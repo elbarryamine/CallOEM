@@ -13,7 +13,7 @@ import {addCallHistory} from '@redux/slices/history';
 
 const RtcViewer = (props: any) => <RTCView {...props} />;
 export default function RoomCallingGroup({room}: {room: Room}) {
-  const {createCall, joinCall, localStream, remoteStream} = useWebRtc(room.id);
+  const {createCall, localStream, remoteStream} = useWebRtc(room.id);
   const dispatch = useDispatch();
   const onCallJoin = () => {
     createCall();
@@ -68,7 +68,7 @@ export default function RoomCallingGroup({room}: {room: Room}) {
               iconProps={{color: 'black'}}
             />
           </Flex>
-          <Flex align="center" bg="red.500" borderRadius="25px">
+          {/* <Flex align="center" bg="red.500" borderRadius="25px">
             <ButtonIcon
               size="50px"
               as={MaterialCommunityIcons}
@@ -76,7 +76,7 @@ export default function RoomCallingGroup({room}: {room: Room}) {
               onPress={joinCall}
               iconProps={{color: 'white'}}
             />
-          </Flex>
+          </Flex> */}
         </Flex>
       </View>
     </Flex>

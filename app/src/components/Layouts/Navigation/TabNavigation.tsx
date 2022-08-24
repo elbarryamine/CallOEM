@@ -7,7 +7,7 @@ import ButtonIcon from '@components/Elements/ButtonIcon';
 export const routes = [
   {name: 'home', iconProvider: AntDesign, title: 'Rooms'},
   {name: 'profile', iconProvider: AntDesign, title: 'History'},
-  {name: 'setting', iconProvider: AntDesign, title: 'Settings'},
+  {name: 'bells', iconProvider: AntDesign, title: 'Notification'},
   {name: 'user', iconProvider: AntDesign, title: 'Account'},
 ];
 
@@ -19,6 +19,7 @@ export default function TabNavigation({state, navigation}: BottomTabBarProps) {
           return (
             <ButtonIcon
               key={idx}
+              flex="1"
               onPress={() => navigation.navigate(state.routes[idx].name)}
               textProps={{
                 color: state.index === idx ? 'primary' : 'text',
