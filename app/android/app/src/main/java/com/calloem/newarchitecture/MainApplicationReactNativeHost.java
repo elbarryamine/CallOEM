@@ -1,4 +1,4 @@
-package com.talktosomeone.newarchitecture;
+package com.calloem.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.talktosomeone.BuildConfig;
-import com.talktosomeone.newarchitecture.components.MainComponentsRegistry;
-import com.talktosomeone.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.calloem.BuildConfig;
+import com.calloem.newarchitecture.components.MainComponentsRegistry;
+import com.calloem.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

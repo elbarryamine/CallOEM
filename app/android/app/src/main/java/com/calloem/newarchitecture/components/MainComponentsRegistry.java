@@ -1,4 +1,4 @@
-package com.talktosomeone.newarchitecture.components;
+package com.calloem.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;
